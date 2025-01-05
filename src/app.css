@@ -1,0 +1,296 @@
+.app {
+  background-color: black;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 40px;
+  transition: background-color 0.3s ease;
+}
+.navbar {
+  padding: 0 40px;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  background-color: transparent;
+}
+
+.navbar.scrolled {
+  background-color: #faf9f928;
+}
+
+.icon-hover,
+.link-hover {
+  position: relative;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.icon-hover {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  font-size: 1.4rem;
+  border-radius: 50%;
+  color: rgb(205, 204, 204);
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-hover:hover {
+  background-color: #e1b04f;
+  color: #fff;
+}
+
+.nav-item {
+  margin-left: 20px;
+  margin-top: 0;
+}
+
+.nav-link {
+  color: rgb(205, 204, 204);
+  text-decoration: none;
+  display: flex;
+  font-size: 1.3rem;
+  text-transform: capitalize;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fcbb46 !important;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  bottom: -11.5px;
+  left: 0;
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  height: 5.5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #fcbb46;
+}
+
+/* Hero Section  */
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  max-width: 600px;
+  text-align: left;
+}
+
+.highlighted-text {
+  color: #fcbb46;
+}
+
+.hero-image {
+  width: 50%;
+  top: 0;
+  padding-right: 100px;
+  padding-top: 100px;
+  bottom: 0;
+  height: 98vh;
+  right: 0;
+  position: absolute;
+}
+
+.lead {
+  font-size: 2.1rem;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 100px;
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #fcbb46;
+  color: #000;
+}
+
+/* About  */
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  padding: 50px;
+  height: 100vh;
+  font-family: "Arial", sans-serif;
+}
+
+.avatar {
+  overflow: hidden;
+  margin-right: 150px;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  padding: 30px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+  filter: grayscale(100%); /* Image starts with grayscale */
+}
+
+.avatar:hover {
+  transform: scale(1.1); /* Zoom effect on hover */
+  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  filter: grayscale(0%); /* Remove grayscale on hover */
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #00bcd4;
+  object-fit: cover;
+}
+
+.about-content {
+  max-width: 800px;
+  text-align: left;
+}
+
+.bio {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.project-complete p {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffeb3b;
+  margin-top: 20px;
+}
+
+.download-btn {
+  background-color: #00bcd4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.download-btn:hover {
+  background-color: #0097a7;
+}
+
+.abt {
+  color: #fff;
+  font-size: 2.7rem;
+}
+
+.abt::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 3px;
+  background-color: #fcbb46;
+  margin-bottom: 20px;
+}
+
+strong {
+  color: #fcbb46;
+}
+
+/* Project */
+.project {
+  text-align: center;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+}
+.project-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  gap: 100px;
+  font-family: "Arial", sans-serif;
+}
+.card {
+  width: 190px;
+  background: white;
+  padding: 0.4em;
+  border-radius: 6px;
+}
+
+.card-image {
+  background-color: rgb(236, 236, 236);
+  width: 100%;
+  height: 130px;
+  border-radius: 6px 6px 0 0;
+}
+
+.card-image:hover {
+  transform: scale(0.98);
+}
+
+.category {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(63, 121, 230);
+  padding: 10px 7px 0;
+}
+
+.category:hover {
+  cursor: pointer;
+}
+
+.heading {
+  font-weight: 600;
+  color: rgb(88, 87, 87);
+  padding: 7px;
+}
+
+.heading:hover {
+  cursor: pointer;
+}
+
+.author {
+  color: gray;
+  font-weight: 400;
+  font-size: 11px;
+  padding-top: 20px;
+}
+
+.name {
+  font-weight: 600;
+}
+
+.name:hover {
+  cursor: pointer;
+}
+
+/* projecct */
