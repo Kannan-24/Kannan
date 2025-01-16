@@ -3,11 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://Kannan-24.github.io/Kannan",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -19,11 +22,13 @@
     "emailjs-com": "^3.2.0",
     "firebase": "^11.1.0",
     "framer-motion": "^11.18.0",
+    "latest": "^0.2.0",
     "nodemailer": "^6.9.16",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1",
+    "react-scroll": "^1.9.0",
     "react-simple-typewriter": "^5.0.1"
   },
   "devDependencies": {
@@ -35,6 +40,7 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
+    "gh-pages": "^6.3.0",
     "globals": "^15.14.0",
     "vite": "^6.0.5"
   }

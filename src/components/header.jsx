@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("home");
@@ -100,6 +101,7 @@ const Header = () => {
                 }`}
                 href={section === "home" ? "/home" : `#${section}`}
                 onClick={() => setActiveLink(section)}
+                style={{ color: "white" }}
               >
                 {section.charAt(0).toUpperCase() + section.slice(1)}
               </a>
