@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "../assets/contact.svg";
+import Image from "../assets/contact.svg"; // Your contact image
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +10,8 @@ const Contact = () => {
     email: "",
     message: "",
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +23,7 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true); // Disable button during submission
 
     toast.info("Sending your message...", {
       position: "top-right",
@@ -28,7 +31,7 @@ const Contact = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/send-email", {
+      const response = await fetch("/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -37,22 +40,33 @@ const Contact = () => {
       const result = await response.json();
 
       if (result.success) {
-        toast.success("Message sent successfully!", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        setFormData({ name: "", email: "", message: "" });
+        toast.success(
+          "Message sent successfully! We'll get back to you soon.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
+        setFormData({ name: "", email: "", message: "" }); // Reset form
       } else {
-        toast.error("Failed to send message.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.error(
+          result.message || "Failed to send your message. Please try again.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
       }
     } catch (error) {
-      toast.error("An error occurred.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error(
+        "An unexpected error occurred. Please check your connection and try again.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
+    } finally {
+      setIsSubmitting(false); // Re-enable the button
     }
   };
 
@@ -104,8 +118,9 @@ const Contact = () => {
                 type="submit"
                 className="w-lg-25 mt-3"
                 style={{ backgroundColor: "#fcbb46", borderColor: "#fcbb46" }}
+                disabled={isSubmitting} // Disable button during submission
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </Form>
           </Col>
