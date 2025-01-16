@@ -1,20 +1,35 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../app.css"; // Import custom CSS for active link styling
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
-
-  const handleLinkClick = (section) => {
-    setActiveLink(section);
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleScroll = () => {
-    if (window.scrollY > 100) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
+    // Change the navbar style on scroll
+    setScrolled(window.scrollY > 100);
+
+    // Update active link based on scroll position
+    const sections = ["home", "about", "projects", "contact", "resume"];
+    let foundSection = false;
+
+    sections.forEach((section) => {
+      const sectionElement = document.getElementById(section);
+      if (sectionElement) {
+        const rect = sectionElement.getBoundingClientRect();
+        if (
+          rect.top <= window.innerHeight / 2 &&
+          rect.bottom >= window.innerHeight / 2
+        ) {
+          setActiveLink(section);
+          foundSection = true;
+        }
+      }
+    });
+
+    // Debugging: Log the current state
+    if (!foundSection) {
+      console.log("No section is currently active.");
     }
   };
 
@@ -23,6 +38,10 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleMenuToggle = () => {
+    setMenuOpen(!menuOpen);
+  };
+
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light ${
@@ -30,7 +49,11 @@ const Header = () => {
       }`}
     >
       <div className="d-flex">
-        <a href="https://github.com/Kannan-24" className="icon-hover me-3">
+        <a
+          href="https://github.com/Kannan-24"
+          className="icon-hover me-3 "
+          style={{ marginLeft: "30px" }}
+        >
           <i className="bi bi-github"></i>
         </a>
         <a
@@ -47,75 +70,41 @@ const Header = () => {
         </a>
       </div>
 
-      <div className="collapse navbar-collapse justify-content-end">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "home" ? "active" : ""
-              }`}
-              href="/home"
-              onClick={() => handleLinkClick("home")}
-            >
-              Home
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "about" ? "active" : ""
-              }`}
-              href="#about"
-              onClick={() => handleLinkClick("about")}
-            >
-              About
-            </a>
-          </li>
+      <button
+        className={`navbar-toggler custom-toggler ${menuOpen ? "open" : ""}`}
+        type="button"
+        onClick={handleMenuToggle}
+        aria-controls="navbarNav"
+        aria-expanded={menuOpen}
+        aria-label="Toggle navigation"
+      >
+        <div className="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
 
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "projects" ? "active" : ""
-              }`}
-              href="#projects"
-              onClick={() => handleLinkClick("projects")}
-            >
-              Project
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "skills" ? "active" : ""
-              }`}
-              href="#skills"
-              onClick={() => handleLinkClick("skills")}
-            >
-              Skills
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "contact" ? "active" : ""
-              }`}
-              href="#contact"
-              onClick={() => handleLinkClick("contact")}
-            >
-              Contact
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              className={`nav-link link-hover ${
-                activeLink === "resume" ? "active" : ""
-              }`}
-              href="#resume"
-              onClick={() => handleLinkClick("resume")}
-            >
-              Resume
-            </a>
-          </li>
+      <div
+        className={`collapse navbar-collapse justify-content-end ${
+          menuOpen ? "show" : ""
+        }`}
+        id="navbarNav"
+      >
+        <ul className="navbar-nav">
+          {["home", "about", "projects", "contact", "resume"].map((section) => (
+            <li className="nav-item" key={section}>
+              <a
+                className={`nav-link link-hover ${
+                  activeLink === section ? "active" : ""
+                }`}
+                href={section === "home" ? "/home" : `#${section}`}
+                onClick={() => setActiveLink(section)}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
