@@ -19,12 +19,12 @@ const About = () => {
       case "personal":
         return (
           <div className="col-12">
-            <p className=" about mt-4">
+            <p className="about mt-4">
               A passionate learner, constantly exploring innovative solutions in
               technology and web development. I believe in leveraging my skills
               to create impactful and efficient digital experiences.
             </p>
-            <div className="col-12  about-details col-md-6">
+            <div className="about-details">
               <p>
                 <strong>Name:</strong> Kannan M
               </p>
@@ -118,43 +118,46 @@ const About = () => {
   };
 
   return (
-    <section className="about-container container" id="about">
-      <div className="row"></div>
-      <div className="avatar col-12 col-md-4 text-center ">
-        <img src={Image} alt="Your Avatar" className="img-fluid" />
-      </div>
-      <div className="about-content col-md-8">
-        <h2 className="abt d-none d-md-block">About Me</h2>
-        <div className="btns-group-container">
-          <button
-            type="button"
-            className={`btns ${
-              activeTab === "personal" ? "btns-highlight" : "btns-default"
-            }`}
-            onClick={() => setActiveTab("personal")}
-          >
-            Personal Info
-          </button>
-          <button
-            type="button"
-            className={`btns ${
-              activeTab === "qualifications" ? "btns-highlight" : "btns-default"
-            }`}
-            onClick={() => setActiveTab("qualifications")}
-          >
-            Education
-          </button>
-          <button
-            type="button"
-            className={`btns ${
-              activeTab === "skills" ? "btns-highlight" : "btns-default"
-            }`}
-            onClick={() => setActiveTab("skills")}
-          >
-            Skills
-          </button>
+    <section className="about-container" id="about">
+      <div className="container d-flex justify-content-between">
+        <div className="image">
+          <img src={Image} alt="Your image" className="img-fluid" />
         </div>
-        <div className="about-content">{renderContent()}</div>
+        <div className="about-content col-12 col-md-8">
+          <h2 className="abt d-none d-md-block">About Me</h2>
+          <div className="btns-group-container">
+            <button
+              type="button"
+              className={`btns ${
+                activeTab === "personal" ? "btns-highlight" : "btns-default"
+              }`}
+              onClick={() => setActiveTab("personal")}
+            >
+              Personal Info
+            </button>
+            <button
+              type="button"
+              className={`btns ${
+                activeTab === "qualifications"
+                  ? "btns-highlight"
+                  : "btns-default"
+              }`}
+              onClick={() => setActiveTab("qualifications")}
+            >
+              Education
+            </button>
+            <button
+              type="button"
+              className={`btns ${
+                activeTab === "skills" ? "btns-highlight" : "btns-default"
+              }`}
+              onClick={() => setActiveTab("skills")}
+            >
+              Skills
+            </button>
+          </div>
+          <div className="about-content">{renderContent()}</div>
+        </div>
       </div>
     </section>
   );
