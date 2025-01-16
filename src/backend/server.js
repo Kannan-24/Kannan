@@ -1,23 +1,20 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import cors from "cors";
-import dotenv from "dotenv";
-
-dotenv.config(); // Load environment variables from .env file
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Configure the email transporter using environment variables
+// Configure the email transporter
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER, // Set in Vercel environment variables
-    pass: process.env.EMAIL_PASS, // Set in Vercel environment variables
+    user: "kannanmuruganandham1@gmail.com", // Replace with your email
+    pass: "vmreiohmaozxthpu", // Replace with your generated App Password
   },
 });
 
@@ -28,8 +25,8 @@ app.post("/send-email", (req, res) => {
   // Send email to the admin
   const mailOptionsAdmin = {
     from: email, // Sender's email (from the contact form)
-    to: process.env.ADMIN_EMAIL, // Admin's email (set in environment variables)
-    subject: `New message from ${name}`,
+    to: "kannanmuruganandham1@gmail.com", // Admin's email
+    subject: `New message from ${name}`, // Email subject
     html: `
     <div style="font-family: Arial, sans-serif; color: #333;">
       <h2 style="color: #2c3e50;">New Message from ${name}</h2>
@@ -43,11 +40,11 @@ app.post("/send-email", (req, res) => {
   `,
   };
 
-  // Send confirmation email to the user
+  // Send confirmation email to the user (sender)
   const mailOptionsUser = {
-    from: process.env.EMAIL_USER, // Your email
+    from: "kannanmuruganandham1@gmail.com", // Your email
     to: email, // User's email
-    subject: "Thank you for your message!",
+    subject: "Thank you for your message!", // Subject for the confirmation email
     html: `
     <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; color: #333;">
       <div style="background-color: #2c3e50; color: white; padding: 10px; border-radius: 5px;">
@@ -93,7 +90,7 @@ app.post("/send-email", (req, res) => {
   });
 });
 
-// Start the server (this will run on Vercel)
+// Start the server
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
