@@ -15,7 +15,7 @@ nav {
 
 /* Navbar styling */
 .navbar {
-  height: 70px;
+  height: 63px;
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -131,7 +131,7 @@ nav {
   .navbar-collapse {
     background-color: rgba(10, 25, 47, 0.9);
     backdrop-filter: blur(10px);
-    margin-top: 12px;
+    margin-top: 5px;
     text-align: center;
   }
 
