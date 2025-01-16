@@ -7,19 +7,21 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = "scale(1.02)";
         e.currentTarget.querySelector(".card-title").style.color = "#17a2b8";
-        e.currentTarget.querySelector(".bi-folder").style.color = "#17a2b8";
+        e.currentTarget.querySelector(".custom-folder-icon").style.color =
+          "#17a2b8";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.transform = "scale(1.0)";
         e.currentTarget.querySelector(".card-title").style.color = "white";
-        e.currentTarget.querySelector(".bi-folder").style.color = "white";
+        e.currentTarget.querySelector(".custom-folder-icon").style.color =
+          "white";
       }}
     >
       <div
         className="card-header d-flex justify-content-between align-items-center border-0"
         id="projects"
       >
-        <i className="bi bi-folder folder-icon"></i>
+        <i className="bi bi-folder custom-folder-icon"></i>
         <div>
           {githubLink && (
             <a
@@ -28,7 +30,7 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
               rel="noopener noreferrer"
               className="text-white me-2 icon-hover"
             >
-              <i className="bi bi-github link-icon"></i>
+              <i className="bi bi-github custom-link-icon"></i>
             </a>
           )}
           {externalLink && (
@@ -38,7 +40,7 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
               rel="noopener noreferrer"
               className="text-white icon-hover"
             >
-              <i className="bi bi-box-arrow-up-right link-icon"></i>
+              <i className="bi bi-box-arrow-up-right custom-link-icon"></i>
             </a>
           )}
         </div>
@@ -62,8 +64,8 @@ const Project = () => {
   const cardData = [
     {
       title: "Arjun Vision Solutions",
-      text: "Designed and developed the Arjun Vision Solutions website (www.arjunvision.com) to showcase the institute services in the field of Education Fields.",
-      tags: ["PHP", "HTML", "CSS", "JavaScript"],
+      text: "Developed the Arjun Vision Solutions website to showcase educational services in technical fields. The platform focuses on offering professional development programs with a user-friendly and responsive design for a seamless learning experience.",
+      tags: ["PHP", "HTML", "CSS", "JavaScript", "Bootstrap"],
       githubLink: "", // Add GitHub URL if available
       externalLink: "http://www.arjunvision.com",
     },
@@ -78,7 +80,7 @@ const Project = () => {
       title: "Higher Energizer",
       text: "A modern web platform to showcase product details, customer testimonials, and innovative solutions with an integrated admin panel for seamless content management.",
       tags: ["PHP", "Bootstrap", "JavaScript", "MySQL"],
-      githubLink: "https://github.com/Kannan-24/Higher-Energizer", // Add GitHub URL if available
+      githubLink: "https://github.com/Kannan-24/HigherEnergizer", // Add GitHub URL if available
       externalLink: "https://higherenergizer.com", // Add external link if available
     },
 
@@ -86,7 +88,7 @@ const Project = () => {
       title: "Bulk Email Sender",
       text: "A tool to send bulk emails efficiently. Manage email lists, create templates, and track email delivery and open rates.",
       tags: ["PHP", "Bootstrap", "JavaScript"],
-      githubLink: "", // Add GitHub URL if available
+      githubLink: "https://github.com/Kannan-24/bulk-email", // Add GitHub URL if available
       externalLink: "", // Add external link if available
     },
   ];

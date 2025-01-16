@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Image from "../assets/contact.svg";
+
+const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    toast.info("Sending your message...", {
+      position: "top-right",
+      autoClose: 3000,
+    });
+
+    try {
+      const response = await fetch("http://localhost:5000/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Message sent successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      toast.error("An error occurred.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  };
+
+  return (
+    <section className="py-5 text-white" id="contact">
+      <Container>
+        <h2 className="text-center mb-4">Contact Us</h2>
+        <Row>
+          <Col lg={6}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formName" className="mb-3">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Enter your name"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formEmail" className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formMessage" className="mb-3">
+                <Form.Label>Message</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Write your message"
+                  required
+                />
+              </Form.Group>
+
+              <Button
+                type="submit"
+                className="w-lg-25 mt-3"
+                style={{ backgroundColor: "#fcbb46", borderColor: "#fcbb46" }}
+              >
+                Send Message
+              </Button>
+            </Form>
+          </Col>
+          <Col
+            lg={6}
+            className="d-none d-lg-flex align-items-center justify-content-center illustration"
+            style={{ width: "400px", height: "400px", margin: "0 auto" }}
+          >
+            <img
+              src={Image}
+              alt="Illustration"
+              className="img-fluid hero-image"
+            />
+          </Col>
+        </Row>
+      </Container>
+      <ToastContainer />
+    </section>
+  );
+};
+
+export default Contact;

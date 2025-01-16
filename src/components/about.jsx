@@ -119,7 +119,7 @@ const About = () => {
 
   return (
     <section className="about-container" id="about">
-      <div className="container d-flex justify-content-between">
+      <div className="container-about container ">
         <div className="image">
           <img src={Image} alt="Your image" className="img-fluid" />
         </div>

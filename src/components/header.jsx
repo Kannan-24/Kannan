@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredIcon, setHoveredIcon] = useState(null);
 
   const handleScroll = () => {
-    // Change the navbar style on scroll
     setScrolled(window.scrollY > 100);
 
-    // Update active link based on scroll position
     const sections = ["home", "about", "projects", "contact", "resume"];
     let foundSection = false;
 
@@ -28,7 +26,6 @@ const Header = () => {
       }
     });
 
-    // Debugging: Log the current state
     if (!foundSection) {
       console.log("No section is currently active.");
     }
@@ -43,6 +40,19 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleMouseEnter = (icon) => {
+    setHoveredIcon(icon);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredIcon(null);
+  };
+
+  const iconStyle = (icon) => ({
+    color: hoveredIcon === icon ? "#fff" : "white",
+    backgroundColor: hoveredIcon === icon ? "#e1b04f" : "transparent",
+  });
+
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light ${
@@ -52,20 +62,28 @@ const Header = () => {
       <div className="d-flex">
         <a
           href="https://github.com/Kannan-24"
-          className="icon-hover me-3 "
-          style={{ marginLeft: "30px" }}
+          className="icon-hover me-3"
+          style={iconStyle("github")}
+          onMouseEnter={() => handleMouseEnter("github")}
+          onMouseLeave={handleMouseLeave}
         >
           <i className="bi bi-github"></i>
         </a>
         <a
           href="mailto:kannanmuruganandham1@gmail.com"
           className="icon-hover me-3"
+          style={iconStyle("email")}
+          onMouseEnter={() => handleMouseEnter("email")}
+          onMouseLeave={handleMouseLeave}
         >
           <i className="bi bi-envelope"></i>
         </a>
         <a
           href="https://linkedin.com/in/m-kannan-/"
           className="icon-hover me-3"
+          style={iconStyle("linkedin")}
+          onMouseEnter={() => handleMouseEnter("linkedin")}
+          onMouseLeave={handleMouseLeave}
         >
           <i className="bi bi-linkedin"></i>
         </a>
@@ -99,7 +117,7 @@ const Header = () => {
                 className={`nav-link link-hover ${
                   activeLink === section ? "active" : ""
                 }`}
-                href={section === "home" ? "/home" : `#${section}`}
+                href={`#${section}`}
                 onClick={() => setActiveLink(section)}
                 style={{ color: "white" }}
               >
