@@ -32,7 +32,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "https://kannna-backend.onrender.com/send-email",
+        "https://kannna-backend.onrender.com/send-email", // Backend API endpoint
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
