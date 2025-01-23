@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "../assets/contact.svg";
+import Image from "../assets/contact.svg"; // Your contact illustration image
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -31,31 +31,43 @@ const Contact = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/send-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "https://kannna-backend.onrender.com/send-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await response.json();
 
       if (result.success) {
-        toast.success("Message sent successfully! We'll get back to you soon.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.success(
+          "Message sent successfully! We'll get back to you soon.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
         setFormData({ name: "", email: "", message: "" }); // Reset form
       } else {
-        toast.error(result.message || "Failed to send your message. Please try again.", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.error(
+          result.message || "Failed to send your message. Please try again.",
+          {
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
       }
     } catch (error) {
-      toast.error("An unexpected error occurred. Please check your connection and try again.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error(
+        "An unexpected error occurred. Please check your connection and try again.",
+        {
+          position: "top-right",
+          autoClose: 3000,
+        }
+      );
     } finally {
       setIsSubmitting(false); // Re-enable the button
     }
