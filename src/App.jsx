@@ -10,6 +10,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import SkillsList from "./components/skills";
 
 function App() {
   const [isVisible, setIsVisible] = useState(false);
@@ -59,7 +60,7 @@ function App() {
           <div
             className="spinner-border"
             role="status"
-            style={{ color: "#fcbb46", width: "80px", height: "80px" }}
+            style={{ color: "#64ffda", width: "80px", height: "80px" }}
           >
             <span className="visually-hidden">Loading...</span>
           </div>
@@ -69,6 +70,7 @@ function App() {
           <Header />
           <Herosection />
           <About />
+          <SkillsList />
           <Project />
           <Contact />
           <Resume />
@@ -84,14 +86,14 @@ function App() {
             position: "fixed",
             bottom: "30px",
             right: "30px",
-            backgroundColor: "#fcbb46", // Golden yellow color
             color: "#fff",
+            backgroundColor: "#64ffda", // Button color matching the theme
             border: "none",
             width: "50px",
             height: "50px",
             fontSize: "18px",
             borderRadius: "50%",
-            boxShadow: "0 6px 15px rgba(252, 187, 70, 0.5)", // Glowing effect
+            boxShadow: "0 6px 15px rgba(100, 255, 218, 0.5)", // Glowing effect with #64ffda
             cursor: "pointer",
             zIndex: 1000, // Ensure the button is on top of other content
             transition: "all 0.3s ease-in-out",

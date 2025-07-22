@@ -25,32 +25,13 @@ const Resume = () => {
       </h2>
 
       <div className="text-center mb-4">
-        <a href={resumePath} download="/Kannan_resume.pdf">
-          <button
-            className="btn btn-lg"
-            style={{
-              border: "2px solid #00e5ff",
-              color: "#fff",
-              padding: "15px 30px",
-              fontSize: "20px",
-              borderRadius: "8px",
-              backgroundColor: "#212121",
-              boxShadow: "0 6px 15px rgba(0, 229, 255, 0.2)",
-              transition: "all 0.3s ease-in-out",
-              fontWeight: "600",
-              textTransform: "uppercase",
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.transform = "scale(1.1)";
-              e.target.style.boxShadow = "0 10px 25px rgba(0, 229, 255, 0.3)";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = "scale(1)";
-              e.target.style.boxShadow = "0 6px 15px rgba(0, 229, 255, 0.2)";
-            }}
-          >
-            Download My Resume
-          </button>
+        <a href={resumePath} download="/Kannan_resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-btn"
+        >
+          <i className="bi bi-envelop me-2"></i>
+          Download My Resume
         </a>
 
         <p

@@ -9,7 +9,7 @@ const Header = () => {
   const handleScroll = () => {
     setScrolled(window.scrollY > 100);
 
-    const sections = ["home", "about", "projects", "contact", "resume"];
+    const sections = ["home", "about", "skills", "projects", "contact", "resume"];
     let foundSection = false;
 
     sections.forEach((section) => {
@@ -49,15 +49,15 @@ const Header = () => {
   };
 
   const iconStyle = (icon) => ({
-    color: hoveredIcon === icon ? "#fff" : "white",
-    backgroundColor: hoveredIcon === icon ? "#e1b04f" : "transparent",
+    color: hoveredIcon === icon ? "#64ffda" : "#fff",
+    backgroundColor: hoveredIcon === icon ? "#333" : "transparent", // Slightly lighter hover bg
+    transition: "background-color 0.2s, color 0.2s",
   });
 
   return (
     <nav
-      className={`navbar navbar-expand-lg navbar-light ${
-        scrolled ? "scrolled" : ""
-      }`}
+      className={`navbar navbar-expand-lg navbar-light ${scrolled ? "scrolled" : ""
+        }`}
     >
       <div className="d-flex">
         <a
@@ -105,18 +105,16 @@ const Header = () => {
       </button>
 
       <div
-        className={`collapse navbar-collapse justify-content-end ${
-          menuOpen ? "show" : ""
-        }`}
+        className={`collapse navbar-collapse justify-content-end ${menuOpen ? "show" : ""
+          }`}
         id="navbarNav"
       >
         <ul className="navbar-nav">
-          {["home", "about", "projects", "contact", "resume"].map((section) => (
+          {["home", "about", "skills", "projects", "contact", "resume"].map((section) => (
             <li className="nav-item" key={section}>
               <a
-                className={`nav-link link-hover ${
-                  activeLink === section ? "active" : ""
-                }`}
+                className={`nav-link link-hover ${activeLink === section ? "active" : ""
+                  }`}
                 href={`#${section}`}
                 onClick={() => setActiveLink(section)}
                 style={{ color: "white" }}

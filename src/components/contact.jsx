@@ -76,7 +76,7 @@ const Contact = () => {
   return (
     <section className="py-5 text-white" id="contact">
       <Container>
-        <h2 className="text-center mb-4">Contact Us</h2>
+        <h2 className="text-center mb-4">Contact Me</h2>
         <Row>
           <Col lg={6}>
             <Form onSubmit={handleSubmit}>
@@ -119,8 +119,7 @@ const Contact = () => {
 
               <Button
                 type="submit"
-                className="w-lg-25 mt-3"
-                style={{ backgroundColor: "#fcbb46", borderColor: "#fcbb46" }}
+                className="btn btn-outline-accent"
                 disabled={isSubmitting} // Disable button during submission
               >
                 {isSubmitting ? "Sending..." : "Send Message"}

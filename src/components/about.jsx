@@ -9,6 +9,9 @@ import {
   FaFigma,
   FaGitAlt,
   FaPhp,
+  FaJava,
+  FaPython,
+  FaTools,
 } from "react-icons/fa";
 
 const About = () => {
@@ -67,7 +70,7 @@ const About = () => {
                 <li>
                   <h5>Erode Sengunthar Engineering College</h5>
                   <p>
-                    B.E. Computer Science and Engineering <br /> 2021 - Present
+                    B.E. Computer Science and Engineering <br /> 2021 - 2025
                     (7.96 CGPA)
                   </p>
                 </li>
@@ -75,44 +78,7 @@ const About = () => {
             </div>
           </div>
         );
-      case "skills":
-        return (
-          <div className="row" id="skills">
-            <div className="col-6 col-md-3 text-center mt-4">
-              <FaPhp size={50} className="text-light mb-2" />
-              <p>PHP</p>
-            </div>
-            <div className="col-6 col-md-3 text-center mt-4">
-              <FaHtml5 size={50} className="text-light mb-2" />
-              <p>HTML5</p>
-            </div>
-            <div className="col-6 col-md-3 text-center mt-4">
-              <FaCss3 size={50} className="text-light mb-2" />
-              <p>CSS3</p>
-            </div>
-            <div className="col-6 col-md-3 text-center mb-4 mt-4">
-              <FaBootstrap size={50} className="text-light mb-2" />
-              <p>Bootstrap</p>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <FaFigma size={50} className="text-light mb-2" />
-              <p>Figma</p>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <FaReact size={50} className="text-light mb-2" />
-              <p>React</p>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <FaDatabase size={50} className="text-light mb-2" />
-              <p>Database</p>
-            </div>
-            <div className="col-6 col-md-3 text-center">
-              <FaGitAlt size={50} className="text-light mb-2" />
-              <p>Git</p>
-            </div>
-          </div>
-        );
-      default:
+       default:
         return null;
     }
   };
@@ -128,32 +94,21 @@ const About = () => {
           <div className="btns-group-container">
             <button
               type="button"
-              className={`btns ${
-                activeTab === "personal" ? "btns-highlight" : "btns-default"
-              }`}
+              className={`btns ${activeTab === "personal" ? "btns-highlight" : "btns-default"
+                }`}
               onClick={() => setActiveTab("personal")}
             >
               Personal Info
             </button>
             <button
               type="button"
-              className={`btns ${
-                activeTab === "qualifications"
-                  ? "btns-highlight"
-                  : "btns-default"
-              }`}
+              className={`btns ${activeTab === "qualifications"
+                ? "btns-highlight"
+                : "btns-default"
+                }`}
               onClick={() => setActiveTab("qualifications")}
             >
               Education
-            </button>
-            <button
-              type="button"
-              className={`btns ${
-                activeTab === "skills" ? "btns-highlight" : "btns-default"
-              }`}
-              onClick={() => setActiveTab("skills")}
-            >
-              Skills
             </button>
           </div>
           <div className="about-content">{renderContent()}</div>
@@ -164,3 +119,4 @@ const About = () => {
 };
 
 export default About;
+  
