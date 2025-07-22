@@ -272,7 +272,7 @@ nav {
   top: 0;
   width: 10px;
   height: 10px;
-  background-color: #f05454;
+  background-color: #64ffda;
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(240, 84, 84, 0.2);
 }
@@ -284,12 +284,9 @@ nav {
   top: 10px;
   width: 2px;
   height: calc(100% - 10px);
-  background-color: #f05454;
+  background-color: #64ffda;
 }
 
-.timeline li:hover {
-  transform: scale(1.05);
-}
 
 .btns-default {
   background-color: #f8f9fa;
@@ -496,4 +493,29 @@ strong {
     padding: 0.1;
     font-size: 0.8rem;
   }
+}
+/* Customize default Chrome scrollbar */
+/* Customize default Chrome scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0a192f;
+  border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #64ffda;
+  border-radius: 8px;
+  border: 2px solid #0a192f;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #52e0c4;
+}
 }

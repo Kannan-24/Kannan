@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import SkillsList from "./components/skills";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 
 function App() {
   const [isVisible, setIsVisible] = useState(false);
@@ -67,6 +68,7 @@ function App() {
         </div>
       ) : (
         <>
+          <ScrollProgressBar />
           <Header />
           <Herosection />
           <About />
