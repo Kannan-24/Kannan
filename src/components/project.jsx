@@ -1,11 +1,16 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
-const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
+const CardComponent = ({ title, text, tags, githubLink, externalLink, colors, theme }) => {
   return (
     <div className="col-lg-4 col-md-6 mb-4">
-      <div className="project-card h-100">
+      <div className="project-card h-100" style={{ 
+        backgroundColor: colors.cardBg,
+        borderColor: colors.border,
+        color: colors.text
+      }}>
         <div className="card-header d-flex justify-content-between align-items-center">
-          <i className="bi bi-folder folder-icon"></i>
+          <i className="bi bi-folder folder-icon" style={{ color: colors.text }}></i>
           <div className="project-links">
             {githubLink && (
               <a
@@ -14,6 +19,7 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
                 rel="noopener noreferrer"
                 className="project-link me-3"
                 title="View Code"
+                style={{ color: colors.text }}
               >
                 <i className="bi bi-github"></i>
               </a>
@@ -25,6 +31,7 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
                 rel="noopener noreferrer"
                 className="project-link"
                 title="Live Demo"
+                style={{ color: colors.text }}
               >
                 <i className="bi bi-box-arrow-up-right"></i>
               </a>
@@ -33,11 +40,19 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
         </div>
 
         <div className="card-body d-flex flex-column">
-          <h5 className="project-title mb-3">{title}</h5>
-          <p className="project-description flex-grow-1 mb-4">{text}</p>
+          <h5 className="project-title mb-3" style={{ color: colors.text }}>{title}</h5>
+          <p className="project-description flex-grow-1 mb-4" style={{ color: colors.textSecondary }}>{text}</p>
           <div className="technology-tags mt-auto">
             {tags.map((tag, index) => (
-              <span key={index} className="tech-tag">
+              <span 
+                key={index} 
+                className="tech-tag"
+                style={{ 
+                  backgroundColor: `${colors.accent}33`,
+                  color: colors.accent,
+                  borderColor: `${colors.accent}4d`
+                }}
+              >
                 {tag}
               </span>
             ))}
@@ -49,6 +64,7 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink }) => {
 };
 
 const Project = () => {
+  const { theme, colors } = useTheme();
   const cardData = [
     {
       title: "Automated Transport Management System",
@@ -77,8 +93,8 @@ const Project = () => {
     <section className="projects-section py-5" id="projects">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="section-title text-white fw-bold mb-3">Projects</h2>
-          <p className="section-subtitle text-light opacity-75">
+          <h2 className="section-title fw-bold mb-3" style={{ color: colors.text }}>Projects</h2>
+          <p className="section-subtitle" style={{ color: colors.textSecondary }}>
             A showcase of my recent work and technical capabilities
           </p>
         </div>
@@ -92,6 +108,8 @@ const Project = () => {
               tags={card.tags}
               githubLink={card.githubLink}
               externalLink={card.externalLink}
+              colors={colors}
+              theme={theme}
             />
           ))}
         </div>
@@ -115,12 +133,12 @@ const Project = () => {
         }
 
         .project-card {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: ${colors.cardBg};
+          border: 1px solid ${colors.border};
           border-radius: 15px;
           transition: all 0.3s ease;
           backdrop-filter: blur(10px);
-          color: white;
+          color: ${colors.text};
           padding: 0;
           overflow: hidden;
           position: relative;
@@ -133,7 +151,7 @@ const Project = () => {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(135deg, rgba(23, 162, 184, 0.1), rgba(100, 255, 218, 0.1));
+          background: linear-gradient(135deg, ${colors.accent}1a, ${colors.accent}0d);
           opacity: 0;
           transition: opacity 0.3s ease;
           z-index: 0;
@@ -145,8 +163,8 @@ const Project = () => {
 
         .project-card:hover {
           transform: translateY(-10px);
-          border-color: rgba(23, 162, 184, 0.3);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+          border-color: ${colors.accent};
+          box-shadow: 0 20px 40px ${theme === "dark" ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.1)"};
         }
 
         .card-header {
@@ -159,12 +177,12 @@ const Project = () => {
 
         .folder-icon {
           font-size: 1.5rem;
-          color: #ffffff;
+          color: ${colors.text};
           transition: all 0.3s ease;
         }
 
         .project-card:hover .folder-icon {
-          color: #17a2b8;
+          color: ${colors.accent};
           transform: scale(1.1);
         }
 
@@ -174,7 +192,7 @@ const Project = () => {
         }
 
         .project-link {
-          color: #ffffff;
+          color: ${colors.text};
           font-size: 1.2rem;
           transition: all 0.3s ease;
           text-decoration: none;
@@ -186,8 +204,8 @@ const Project = () => {
         }
 
         .project-link:hover {
-          color: #17a2b8;
-          background: rgba(23, 162, 184, 0.1);
+          color: ${colors.accent};
+          background: ${colors.accent}1a;
           transform: scale(1.1);
         }
 
@@ -239,8 +257,8 @@ const Project = () => {
         }
 
         .github-btn {
-          background: linear-gradient(45deg, #17a2b8, #20c997);
-          color: white;
+          background: ${colors.accent};
+          color: ${theme === "dark" ? "#0a192f" : "#ffffff"};
           padding: 0.8rem 2rem;
           border-radius: 50px;
           text-decoration: none;
@@ -249,23 +267,21 @@ const Project = () => {
           transition: all 0.3s ease;
           display: inline-flex;
           align-items: center;
-          box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+          box-shadow: 0 4px 15px ${theme === "dark" ? "rgba(100, 255, 218, 0.3)" : "rgba(30, 58, 138, 0.3)"};
         }
 
         .github-btn:hover {
           background: transparent;
-          border-color: #17a2b8;
-          color: #17a2b8;
+          border-color: ${colors.accent};
+          color: ${colors.accent};
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+          box-shadow: 0 8px 25px ${theme === "dark" ? "rgba(100, 255, 218, 0.4)" : "rgba(30, 58, 138, 0.4)"};
         }
 
         .section-title {
           font-size: 2.5rem;
-          background: linear-gradient(45deg, #64ffda, #17a2b8);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          color: ${colors.text};
+        }
         }
 
         .section-subtitle {

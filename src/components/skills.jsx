@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 import {
   FaPhp,
   FaHtml5,
@@ -48,11 +49,13 @@ const skills = [
 ];
 
 const Skills = () => {
+  const { theme, colors } = useTheme();
+  
   return (
     <section className="py-5" id="skills">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="text-white fw-bold mb-3">Professional Skill Set & Tools</h2>x
+          <h2 className="section-title fw-bold mb-3" style={{ color: colors.text }}>Professional Skill Set & Tools</h2>
         </div>
 
         <div className="row g-4 justify-content-center">
@@ -62,7 +65,7 @@ const Skills = () => {
                 <div className="skill-icon mb-3">
                   {skill.icon}
                 </div>
-                <h6 className="skill-label text-white mb-0">
+                <h6 className="skill-label mb-0" style={{ color: colors.text }}>
                   {skill.label}
                 </h6>
               </div>
@@ -73,8 +76,8 @@ const Skills = () => {
 
       <style jsx>{`
         .skill-card {
-          background: linear-gradient(145deg, #1a1a1a, #2d2d2d );
-          border: 1px solid #333;
+          background: ${theme === "dark" ? "linear-gradient(145deg, #1a1a1a, #2d2d2d)" : "linear-gradient(145deg, #ffffff, #f0f0f0)"};
+          border: 1px solid ${colors.border};
           border-radius: 15px;
           transition: all 0.3s ease;
           position: relative;
@@ -103,18 +106,18 @@ const Skills = () => {
         .skill-card:hover {
           transform: translateY(-8px);
           box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-          border-color: #555;
+          border-color: ${colors.accent};
         }
 
         .skill-icon {
-          color: #ffffff;
+          color: ${colors.text};
           transition: all 0.3s ease;
           position: relative;
           z-index: 1;
         }
 
         .skill-card:hover .skill-icon {
-          color: #64ffda;
+          color: ${colors.accent};
           transform: scale(1.15);
           filter: drop-shadow(0 0 10px rgba(100, 255, 218, 0.3));
         }
@@ -128,7 +131,7 @@ const Skills = () => {
         }
 
         .skill-card:hover .skill-label {
-          color: #64ffda !important;
+          color: ${colors.accent} !important;
         }
 
         @keyframes gradientShift {

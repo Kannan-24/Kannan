@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "../assets/Kannan.png";
+import { useTheme } from "../context/ThemeContext";
 import {
   FaReact,
   FaBootstrap,
@@ -15,6 +16,7 @@ import {
 } from "react-icons/fa";
 
 const About = () => {
+  const { colors } = useTheme();
   const [activeTab, setActiveTab] = useState("personal");
 
   const renderContent = () => {
@@ -90,28 +92,32 @@ const About = () => {
           <img src={Image} alt="Your image" className="img-fluid" />
         </div>
         <div className="about-content col-12 col-md-8">
-          <h2 className="abt d-none d-md-block">About Me</h2>
+          <h2 className="abt d-none d-md-block section-title" style={{ color: colors.text }}>About Me</h2>
           <div className="btns-group-container">
             <button
               type="button"
-              className={`btns ${activeTab === "personal" ? "btns-highlight" : "btns-default"
-                }`}
+              className={`btns ${activeTab === "personal" ? "btns-highlight" : "btns-default"}`}
               onClick={() => setActiveTab("personal")}
+              style={{ 
+                color: activeTab === "personal" ? (colors.text === "#1a1a1a" ? "#fff" : "#000") : colors.text,
+                backgroundColor: activeTab === "personal" ? colors.accent : "transparent"
+              }}
             >
               Personal Info
             </button>
             <button
               type="button"
-              className={`btns ${activeTab === "qualifications"
-                ? "btns-highlight"
-                : "btns-default"
-                }`}
+              className={`btns ${activeTab === "qualifications" ? "btns-highlight" : "btns-default"}`}
               onClick={() => setActiveTab("qualifications")}
+              style={{ 
+                color: activeTab === "qualifications" ? (colors.text === "#1a1a1a" ? "#fff" : "#000") : colors.text,
+                backgroundColor: activeTab === "qualifications" ? colors.accent : "transparent"
+              }}
             >
               Education
             </button>
           </div>
-          <div className="about-content">{renderContent()}</div>
+          <div className="about-content" style={{ color: colors.text }}>{renderContent()}</div>
         </div>
       </div>
     </section>

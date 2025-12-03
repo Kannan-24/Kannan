@@ -1,6 +1,8 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
 
 const Resume = () => {
+  const { colors } = useTheme();
   const resumePath = "/Kannan_resume.pdf"; // Updated path for Netlify
 
   return (
@@ -13,12 +15,12 @@ const Resume = () => {
       }}
     >
       <h2
-        className="text-center text-white mb-4"
+        className="text-center mb-4 section-title"
         style={{
           fontFamily: "Arial, sans-serif",
           fontWeight: "700",
           fontSize: "32px",
-          color: "#f0f0f0",
+          color: colors.text,
         }}
       >
         My Resume
@@ -35,12 +37,12 @@ const Resume = () => {
         </a>
 
         <p
-          className="text-center text-white mb-4"
+          className="text-center mb-4"
           style={{
             fontSize: "18px",
             fontStyle: "italic",
             fontFamily: "Georgia, serif",
-            color: "#8bc34a",
+            color: colors.accent,
             marginTop: "25px",
           }}
         >

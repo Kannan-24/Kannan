@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "../assets/contact.svg"; // Your contact illustration image
+import Image from "../assets/contact.svg";
+import { useTheme } from "../context/ThemeContext";
 
 const Contact = () => {
+  const { colors } = useTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,9 +76,9 @@ const Contact = () => {
   };
 
   return (
-    <section className="py-5 text-white" id="contact">
+    <section className="py-5" id="contact" style={{ color: colors.text }}>
       <Container>
-        <h2 className="text-center mb-4">Contact Me</h2>
+        <h2 className="text-center mb-4 section-title" style={{ color: colors.text }}>Contact Me</h2>
         <Row>
           <Col lg={6}>
             <Form onSubmit={handleSubmit}>

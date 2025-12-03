@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/header";
 import Herosection from "./components/hero";
 import About from "./components/about";
+import Experience from "./components/experience";
 import Project from "./components/project";
 import Footer from "./components/footer";
 import Contact from "./components/contact";
@@ -12,10 +13,12 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import SkillsList from "./components/skills";
 import ScrollProgressBar from "./components/ScrollProgressBar";
+import { useTheme } from "./context/ThemeContext";
 
 function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setLoading] = useState(true); // State to handle loading
+  const { theme, colors } = useTheme();
 
   // Toggle visibility of the Scroll to Top button
   const toggleVisibility = () => {
@@ -50,18 +53,18 @@ function App() {
 
   return (
     <div
-      style={{ backgroundColor: "black", color: "white", minHeight: "100vh" }}
+      style={{ backgroundColor: colors.background, color: colors.text, minHeight: "100vh", transition: "background-color 0.3s ease, color 0.3s ease" }}
     >
       {loading ? (
         // Loading Spinner
         <div
           className="d-flex justify-content-center align-items-center"
-          style={{ height: "100vh" }}
+          style={{ height: "100vh", backgroundColor: colors.background }}
         >
           <div
             className="spinner-border"
             role="status"
-            style={{ color: "#64ffda", width: "80px", height: "80px" }}
+            style={{ color: colors.accent, width: "80px", height: "80px" }}
           >
             <span className="visually-hidden">Loading...</span>
           </div>
@@ -72,6 +75,7 @@ function App() {
           <Header />
           <Herosection />
           <About />
+          <Experience />
           <SkillsList />
           <Project />
           <Contact />
@@ -88,16 +92,16 @@ function App() {
             position: "fixed",
             bottom: "30px",
             right: "30px",
-            color: "#fff",
-            backgroundColor: "#64ffda", // Button color matching the theme
+            color: theme === "dark" ? "#0a192f" : "#fff",
+            backgroundColor: colors.accent,
             border: "none",
             width: "50px",
             height: "50px",
             fontSize: "18px",
             borderRadius: "50%",
-            boxShadow: "0 6px 15px rgba(100, 255, 218, 0.5)", // Glowing effect with #64ffda
+            boxShadow: `0 6px 15px ${theme === "dark" ? "rgba(100, 255, 218, 0.5)" : "rgba(0, 168, 132, 0.5)"}`,
             cursor: "pointer",
-            zIndex: 1000, // Ensure the button is on top of other content
+            zIndex: 1000,
             transition: "all 0.3s ease-in-out",
             display: "flex",
             alignItems: "center",

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Illustration from "../assets/illustration.svg";
+import { useTheme } from "../context/ThemeContext";
 
-const roles = ["Full Stack Developer", "Manual Tester", "DevOps Explorer"];
+const roles = ["Trainee Software Engineer"];
 
 const HeroSection = () => {
+  const { theme, colors } = useTheme();
   const [currentText, setCurrentText] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -32,17 +34,24 @@ const HeroSection = () => {
       <div className="container">
         <div className="row align-items-center">
           {/* Left Side: Text */}
-          <div className="col-lg-7 text-white">
+          <div className="col-lg-7" style={{ color: colors.text }}>
             <h1 className="fw-bold mb-2">
-              Hi, I'm <span className="text-accent">Kannan M</span>
+              Hi, I'm{" "}
+              <span className="text-accent" style={{ color: colors.accent }}>
+                Kannan M
+              </span>
             </h1>
-            <h3 className="role-text mb-3">{currentText || "\u00A0"}</h3>
-            <p className="lead opacity-75 mb-4">
-              I'm a fresher passionate about full stack development. Currently exploring DevOps tools and cloud platforms, while applying manual testing skills in real-time projects.
+            <h3 className="role-text mb-3" style={{ color: colors.text }}>
+              {currentText || "\u00A0"}
+            </h3>
+            <p className="lead mb-4" style={{ color: colors.textSecondary }}>
+              I'm a fresher passionate about full stack development. Currently
+              exploring DevOps tools and cloud platforms, while applying manual
+              testing skills in real-time projects.
             </p>
             <div className="d-flex gap-3 flex-wrap">
               <a href="#contact" className="btn btn-accent">
-                Hire Me
+                Let's Connect
               </a>
               <a
                 href="/Kannan_Resume.pdf"
@@ -70,16 +79,16 @@ const HeroSection = () => {
       <style jsx>{`
         .hero-section {
           height: 100vh;
-          color: #fff;
+          color: ${colors.text};
         }
 
         .text-accent {
-          color: #64ffda;
+          color: ${colors.accent};
         }
 
         .btn-accent {
-          background-color: #64ffda;
-          color: #0f0f0f;
+          background-color: ${colors.accent};
+          color: ${theme === "dark" ? "#0f0f0f" : "#fff"};
           font-weight: 600;
           border: none;
           padding: 10px 24px;
@@ -88,14 +97,17 @@ const HeroSection = () => {
         }
 
         .btn-accent:hover {
-          background-color: #52e0c4;
+          background-color: ${theme === "dark" ? "#52e0c4" : "#2563eb"};
           transform: translateY(-2px);
-          box-shadow: 0 8px 16px rgba(100, 255, 218, 0.3);
+          box-shadow: 0 8px 16px
+            ${theme === "dark"
+              ? "rgba(100, 255, 218, 0.3)"
+              : "rgba(30, 58, 138, 0.3)"};
         }
 
         .btn-outline-accent {
-          border: 2px solid #64ffda;
-          color: #64ffda;
+          border: 2px solid ${colors.accent};
+          color: ${colors.accent};
           background: transparent;
           font-weight: 600;
           padding: 10px 24px;
@@ -104,20 +116,25 @@ const HeroSection = () => {
         }
 
         .btn-outline-accent:hover {
-          background-color: #64ffda;
-          color: #0f0f0f;
+          background-color: ${colors.accent};
+          color: ${theme === "dark" ? "#0f0f0f" : "#fff"};
           transform: translateY(-2px);
         }
 
         .role-text {
           font-family: monospace;
           font-size: 1.2rem;
-          color: #64ffda;
+          color: ${colors.accent};
           white-space: nowrap;
           overflow: hidden;
         }
 
         @media (max-width: 768px) {
+          .hero-section {
+            padding-top: 150px;
+            margin-bottom: 100px;
+          }
+
           .hero-image {
             max-height: 300px;
           }
