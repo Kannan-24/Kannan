@@ -5,6 +5,22 @@ import { useTheme } from "../context/ThemeContext";
 const Experience = () => {
   const { colors } = useTheme();
   
+  // Calculate experience duration
+  const startDate = new Date("2025-10-06"); 
+  const currentDate = new Date();
+  
+  const calculateExperience = () => {
+    const diffTime = Math.abs(currentDate - startDate);
+    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
+    const years = Math.floor(diffMonths / 12);
+    const months = diffMonths % 12;
+    
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''} ${months} month${months !== 1 ? 's' : ''}`;
+    }
+    return `${months} month${months !== 1 ? 's' : ''}`;
+  };
+  
   return (
     <section id="experience" className="py-5">
       <div className="container">
@@ -31,7 +47,7 @@ const Experience = () => {
                     <div className="meta-info">
                       <p>
                         <FaCalendarAlt className="me-2 icon" />
-                        October 2024 - Present
+                        October 2025 - Present ({calculateExperience()})
                       </p>
                       <p>
                         <FaMapMarkerAlt className="me-2 icon" />
