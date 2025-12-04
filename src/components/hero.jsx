@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Illustration from "../assets/illustration.svg";
 import { useTheme } from "../context/ThemeContext";
 
-const roles = ["Trainee Software Engineer"];
+const roles = ["Trainee Software Engineer", "Laravel Developer", "React Developer"];
 
 const HeroSection = () => {
   const { theme, colors } = useTheme();
@@ -45,21 +45,14 @@ const HeroSection = () => {
               {currentText || "\u00A0"}
             </h3>
             <p className="lead mb-4" style={{ color: colors.textSecondary }}>
-              I'm a fresher passionate about full stack development. Currently
-              exploring DevOps tools and cloud platforms, while applying manual
-              testing skills in real-time projects.
+              I'm a Trainee Software Engineer focusing on React development with
+              API integrations, supported by experience in Laravel, AWS, Git,
+              and DevOps tools. I apply my skills to real-world projects while
+              continuously learning and improving.
             </p>
             <div className="d-flex gap-3 flex-wrap">
               <a href="#contact" className="btn btn-accent">
                 Let's Connect
-              </a>
-              <a
-                href="/Kannan_Resume.pdf"
-                className="btn btn-outline-accent"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Resume
               </a>
             </div>
           </div>
