@@ -7,6 +7,8 @@ import { useTheme } from "../context/ThemeContext";
 
 const Contact = () => {
   const { colors } = useTheme();
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const contactApiUrl = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, "")}/send-email` : "";
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +27,15 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!apiBaseUrl) {
+      toast.error("Contact API is not configured. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     setIsSubmitting(true); // Disable button during submission
 
     toast.info("Sending your message...", {
@@ -34,7 +45,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "https://kannna-backend.onrender.com/send-email", // Backend API endpoint
+        contactApiUrl, // Backend API endpoint from env
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

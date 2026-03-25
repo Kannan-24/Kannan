@@ -7,7 +7,7 @@ import Project from "./components/project";
 import Footer from "./components/footer";
 import Contact from "./components/contact";
 import Resume from "./components/resume";
-import "./App.css";
+import "./app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
