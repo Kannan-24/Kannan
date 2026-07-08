@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import { usePortfolioContent } from "../context/PortfolioContentContext";
 import {
   FaPhp,
   FaHtml5,
@@ -24,32 +25,32 @@ import {
   FaBug,
 } from "react-icons/fa";
 
-const skills = [
-  { icon: <FaJava size={50} />, label: "Java" },
-  { icon: <FaJs size={50} />, label: "JavaScript" },
-  { icon: <FaPhp size={50} />, label: "PHP" },
-  { icon: <FaPython size={50} />, label: "Python" },
-  { icon: <FaHtml5 size={50} />, label: "HTML5" },
-  { icon: <FaCss3Alt size={50} />, label: "CSS3" },
-  { icon: <FaLaravel size={50} />, label: "Laravel" },
-  { icon: <FaReact size={50} />, label: "React" },
-  { icon: <FaBootstrap size={50} />, label: "Bootstrap" },
-  { icon: <FaPalette size={50} />, label: "Tailwind CSS" },
-  { icon: <FaDatabase size={50} />, label: "MySQL" },
-  // { icon: <FaDocker size={50} />, label: "Docker" },
-  { icon: <FaGithub size={50} />, label: "GitHub Actions" },
-  { icon: <FaLinux size={50} />, label: "Linux" },
-  // { icon: <FaAws size={50} />, label: "AWS" },
-  // { icon: <FaCogs size={50} />, label: "CI/CD" },
-  { icon: <FaGitAlt size={50} />, label: "Git" },
-  { icon: <FaCode size={50} />, label: "VS Code" },
-  { icon: <FaFigma size={50} />, label: "Figma" },
-  { icon: <FaCloud size={50} />, label: "Netlify" },
-  { icon: <FaBug size={50} />, label: "Manual Testing" },
-];
+const iconBySkill = {
+  java: FaJava,
+  javascript: FaJs,
+  php: FaPhp,
+  python: FaPython,
+  html5: FaHtml5,
+  css3: FaCss3Alt,
+  laravel: FaLaravel,
+  react: FaReact,
+  bootstrap: FaBootstrap,
+  "tailwind css": FaPalette,
+  mysql: FaDatabase,
+  "github actions": FaGithub,
+  linux: FaLinux,
+  git: FaGitAlt,
+  "vs code": FaCode,
+  figma: FaFigma,
+  netlify: FaCloud,
+  "manual testing": FaBug,
+  "ci/cd": FaCogs,
+};
 
 const Skills = () => {
   const { theme, colors } = useTheme();
+  const { content } = usePortfolioContent();
+  const skills = content.skills;
   
   return (
     <section className="py-5" id="skills">
@@ -59,18 +60,22 @@ const Skills = () => {
         </div>
 
         <div className="row g-4 justify-content-center">
-          {skills.map((skill) => (
-            <div key={skill.label} className="col-6 col-md-4 col-lg-3 col-xl-2">
+          {skills.map((skill, index) => {
+            const resolvedKey = (skill.iconKey || skill.label).toLowerCase();
+            const Icon = iconBySkill[resolvedKey] || FaCode;
+            return (
+            <div key={`${skill.label}-${index}`} className="col-6 col-md-4 col-lg-3 col-xl-2">
               <div className="skill-card text-center p-4 h-100">
                 <div className="skill-icon mb-3">
-                  {skill.icon}
+                  <Icon size={50} />
                 </div>
                 <h6 className="skill-label mb-0" style={{ color: colors.text }}>
                   {skill.label}
                 </h6>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

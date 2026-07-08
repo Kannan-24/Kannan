@@ -1,0 +1,65 @@
+{
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Kannan M",
+    "description": "I'm a Trainee Software Engineer focusing on React development with API integrations, supported by experience in Laravel, AWS, Git, and DevOps tools. I apply my skills to real-world projects while continuously learning and improving.",
+    "ctaText": "Let's Connect",
+    "roles": [
+      "Trainee Software Engineer",
+      "Laravel Developer",
+      "React Developer"
+    ]
+  },
+  "skills": [
+    { "label": "Java", "iconKey": "java" },
+    { "label": "JavaScript", "iconKey": "javascript" },
+    { "label": "PHP", "iconKey": "php" },
+    { "label": "Python", "iconKey": "python" },
+    { "label": "HTML5", "iconKey": "html5" },
+    { "label": "CSS3", "iconKey": "css3" },
+    { "label": "Laravel", "iconKey": "laravel" },
+    { "label": "React", "iconKey": "react" },
+    { "label": "Bootstrap", "iconKey": "bootstrap" },
+    { "label": "Tailwind CSS", "iconKey": "tailwind css" },
+    { "label": "MySQL", "iconKey": "mysql" },
+    { "label": "GitHub Actions", "iconKey": "github actions" },
+    { "label": "Linux", "iconKey": "linux" },
+    { "label": "Git", "iconKey": "git" },
+    { "label": "VS Code", "iconKey": "vs code" },
+    { "label": "Figma", "iconKey": "figma" },
+    { "label": "Netlify", "iconKey": "netlify" },
+    { "label": "Manual Testing", "iconKey": "manual testing" }
+  ],
+  "projects": [
+    {
+      "title": "Automated Transport Management System",
+      "text": "Developed a web-based solution to streamline campus transportation. Integrated live tracking, attendance monitoring, and automated reporting to reduce errors and improve operational efficiency.",
+      "tags": ["Laravel", "Tailwind CSS", "MySQL"],
+      "githubLink": "https://github.com/Kannan-24/atms",
+      "externalLink": ""
+    },
+    {
+      "title": "Invoice Management System",
+      "text": "Built a comprehensive tool to create, manage, and track GST-compliant invoices. Automated payment reminders and financial reporting to enhance billing accuracy and efficiency.",
+      "tags": ["Laravel", "Tailwind CSS", "MySQL"],
+      "githubLink": "https://github.com/Kannan-24/ims",
+      "externalLink": ""
+    },
+    {
+      "title": "Spotify Clone (Music Streaming UI)",
+      "text": "Designed and implemented a responsive Spotify-inspired UI using React.js. Built dynamic pages for playlists and music categories with reusable components and modern design practices.",
+      "tags": ["React", "HTML", "CSS"],
+      "githubLink": "https://github.com/Kannan-24/music-player",
+      "externalLink": "https://kannanmp.netlify.app"
+    }
+  ],
+  "experiences": [
+    {
+      "company": "NuWare Systems LLP",
+      "role": "Trainee Software Engineer",
+      "period": "October 2025 - Present",
+      "location": "Bangalore, India",
+      "summary": "Working on full-stack development tasks with a focus on frontend implementation and API integrations."
+    }
+  ]
+}

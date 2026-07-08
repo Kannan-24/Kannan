@@ -1,25 +1,12 @@
 import React from "react";
-import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
+import { FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
+import { usePortfolioContent } from "../context/PortfolioContentContext";
 
 const Experience = () => {
   const { colors } = useTheme();
-  
-  // Calculate experience duration
-  const startDate = new Date("2025-10-06"); 
-  const currentDate = new Date();
-  
-  const calculateExperience = () => {
-    const diffTime = Math.abs(currentDate - startDate);
-    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30.44));
-    const years = Math.floor(diffMonths / 12);
-    const months = diffMonths % 12;
-    
-    if (years > 0) {
-      return `${years} year${years > 1 ? 's' : ''} ${months} month${months !== 1 ? 's' : ''}`;
-    }
-    return `${months} month${months !== 1 ? 's' : ''}`;
-  };
+  const { content } = usePortfolioContent();
+  const experiences = content.experiences;
   
   return (
     <section id="experience" className="py-5">
@@ -38,24 +25,26 @@ const Experience = () => {
             <div className="experience-timeline">
               <ul className="timeline list-unstyled">
 
-                {/* Experience Item */}
-                <li className="experience-item">
-                  <div className="experience-content shadow-sm">
-                    <h5 className="role-title">NuWare Systems LLP</h5>
-                    <h6 className="role-subtitle">Trainee Software Engineer</h6>
+                {experiences.map((item, index) => (
+                  <li className="experience-item" key={`${item.company}-${index}`}>
+                    <div className="experience-content shadow-sm">
+                      <h5 className="role-title">{item.company}</h5>
+                      <h6 className="role-subtitle">{item.role}</h6>
 
-                    <div className="meta-info">
-                      <p>
-                        <FaCalendarAlt className="me-2 icon" />
-                        October 2025 - Present ({calculateExperience()})
-                      </p>
-                      <p>
-                        <FaMapMarkerAlt className="me-2 icon" />
-                        Bangalore, India
-                      </p>
+                      <div className="meta-info">
+                        <p>
+                          <FaCalendarAlt className="me-2 icon" />
+                          {item.period}
+                        </p>
+                        <p>
+                          <FaMapMarkerAlt className="me-2 icon" />
+                          {item.location}
+                        </p>
+                        {item.summary ? <p>{item.summary}</p> : null}
+                      </div>
                     </div>
-                  </div>
-                </li>
+                  </li>
+                ))}
 
               </ul>
             </div>

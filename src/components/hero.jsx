@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Illustration from "../assets/illustration.svg";
 import { useTheme } from "../context/ThemeContext";
-
-const roles = ["Trainee Software Engineer", "Laravel Developer", "React Developer"];
+import { usePortfolioContent } from "../context/PortfolioContentContext";
 
 const HeroSection = () => {
   const { theme, colors } = useTheme();
+  const { content } = usePortfolioContent();
+  const hero = content.hero;
+  const roles = hero.roles.length ? hero.roles : ["Software Engineer"];
   const [currentText, setCurrentText] = useState("");
   const [roleIndex, setRoleIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -36,24 +39,24 @@ const HeroSection = () => {
           {/* Left Side: Text */}
           <div className="col-lg-7" style={{ color: colors.text }}>
             <h1 className="fw-bold mb-2">
-              Hi, I'm{" "}
+              {hero.greeting}{" "}
               <span className="text-accent" style={{ color: colors.accent }}>
-                Kannan M
+                {hero.name}
               </span>
             </h1>
             <h3 className="role-text mb-3" style={{ color: colors.text }}>
               {currentText || "\u00A0"}
             </h3>
             <p className="lead mb-4" style={{ color: colors.textSecondary }}>
-              I'm a Trainee Software Engineer focusing on React development with
-              API integrations, supported by experience in Laravel, AWS, Git,
-              and DevOps tools. I apply my skills to real-world projects while
-              continuously learning and improving.
+              {hero.description}
             </p>
             <div className="d-flex gap-3 flex-wrap">
               <a href="#contact" className="btn btn-accent">
-                Let's Connect
+                {hero.ctaText}
               </a>
+              <Link to="/admin" className="btn btn-outline-accent">
+                Admin Panel
+              </Link>
             </div>
           </div>
 

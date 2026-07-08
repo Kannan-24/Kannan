@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
 const Header = () => {
@@ -141,6 +142,15 @@ const Header = () => {
               </a>
             </li>
           ))}
+          <li className="nav-item">
+            <Link
+              className="nav-link link-hover"
+              to="/admin"
+              style={{ color: theme === "dark" ? "white" : "#1a1a1a" }}
+            >
+              Admin
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
+import { usePortfolioContent } from "../context/PortfolioContentContext";
 
 const CardComponent = ({ title, text, tags, githubLink, externalLink, colors, theme }) => {
   return (
@@ -65,29 +66,8 @@ const CardComponent = ({ title, text, tags, githubLink, externalLink, colors, th
 
 const Project = () => {
   const { theme, colors } = useTheme();
-  const cardData = [
-    {
-      title: "Automated Transport Management System",
-      text: "Developed a web-based solution to streamline campus transportation. Integrated live tracking, attendance monitoring, and automated reporting to reduce errors and improve operational efficiency.",
-      tags: ["Laravel", "Tailwind CSS", "MySQL"],
-      githubLink: "https://github.com/Kannan-24/atms",
-      externalLink: "", // Add if hosted
-    },
-    {
-      title: "Invoice Management System",
-      text: "Built a comprehensive tool to create, manage, and track GST-compliant invoices. Automated payment reminders and financial reporting to enhance billing accuracy and efficiency.",
-      tags: ["Laravel", "Tailwind CSS", "MySQL"],
-      githubLink: "https://github.com/Kannan-24/ims",
-      externalLink: "", // Add if hosted
-    },
-    {
-      title: "Spotify Clone (Music Streaming UI)",
-      text: "Designed and implemented a responsive Spotify-inspired UI using React.js. Built dynamic pages for playlists and music categories with reusable components and modern design practices.",
-      tags: ["React", "HTML", "CSS"],
-      githubLink: "https://github.com/Kannan-24/music-player",
-      externalLink: "https://kannanmp.netlify.app",
-    },
-  ];
+  const { content } = usePortfolioContent();
+  const cardData = content.projects;
 
   return (
     <section className="projects-section py-5" id="projects">
@@ -282,8 +262,6 @@ const Project = () => {
           font-size: 2.5rem;
           color: ${colors.text};
         }
-        }
-
         .section-subtitle {
           font-size: 1.1rem;
           max-width: 600px;
