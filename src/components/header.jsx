@@ -3,147 +3,138 @@ import { useTheme } from "../context/ThemeContext";
 
 const Header = () => {
   const [activeLink, setActiveLink] = useState("home");
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hoveredIcon, setHoveredIcon] = useState(null);
   const { theme, toggleTheme, colors } = useTheme();
 
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 100);
-
-    const sections = ["home", "about", "experience", "skills", "projects", "contact", "resume"];
-    let foundSection = false;
-
-    sections.forEach((section) => {
-      const sectionElement = document.getElementById(section);
-      if (sectionElement) {
-        const rect = sectionElement.getBoundingClientRect();
-        if (
-          rect.top <= window.innerHeight / 2 &&
-          rect.bottom >= window.innerHeight / 2
-        ) {
-          setActiveLink(section);
-          foundSection = true;
-        }
-      }
-    });
-
-    if (!foundSection) {
-      console.log("No section is currently active.");
-    }
-  };
+  const navItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "skills", label: "Skills" },
+    { id: "experience", label: "Experience" },
+    { id: "projects", label: "Featured Projects" },
+    { id: "additional", label: "Additional Work" },
+    { id: "contributions", label: "Contributions" },
+    { id: "contact", label: "Contact" },
+  ];
 
   useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 180;
+      navItems.forEach(({ id }) => {
+        const element = document.getElementById(id);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveLink(id);
+          }
+        }
+      });
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-
-  const handleMouseEnter = (icon) => {
-    setHoveredIcon(icon);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredIcon(null);
-  };
-
-  const iconStyle = (icon) => ({
-    color: hoveredIcon === icon ? colors.accent : (theme === "dark" ? "#fff" : "#1a1a1a"),
-    backgroundColor: hoveredIcon === icon ? (theme === "dark" ? "#333" : "#e2e8f0") : "transparent",
-    transition: "background-color 0.2s, color 0.2s",
-  });
-
   return (
-    <nav
-      className={`navbar navbar-expand-lg navbar-light ${scrolled ? "scrolled" : ""}`}
-      style={{ backgroundColor: scrolled ? colors.navBg : "transparent", transition: "background-color 0.3s ease" }}
-    >
-      <div className="d-flex align-items-center">
-        <a
-          href="https://github.com/Kannan-24"
-          className="icon-hover me-3"
-          style={iconStyle("github")}
-          onMouseEnter={() => handleMouseEnter("github")}
-          onMouseLeave={handleMouseLeave}
-        >
-          <i className="bi bi-github"></i>
+    <header className="navbar-cyber">
+      <div className="container d-flex align-items-center justify-content-between">
+        {/* Brand Logo */}
+        <a href="#home" className="d-flex align-items-center text-decoration-none gap-2">
+          <div
+            className="fw-bold fs-4 tracking-tight"
+            style={{ color: colors.text, fontFamily: "var(--font-sans)" }}
+          >
+            Kannan <span style={{ color: colors.accent }}>M</span>
+          </div>
         </a>
-        <a
-          href="mailto:kannanmuruganandham1@gmail.com"
-          className="icon-hover me-3"
-          style={iconStyle("email")}
-          onMouseEnter={() => handleMouseEnter("email")}
-          onMouseLeave={handleMouseLeave}
-        >
-          <i className="bi bi-envelope"></i>
-        </a>
-        <a
-          href="https://linkedin.com/in/m-kannan-/"
-          className="icon-hover me-3"
-          style={iconStyle("linkedin")}
-          onMouseEnter={() => handleMouseEnter("linkedin")}
-          onMouseLeave={handleMouseLeave}
-        >
-          <i className="bi bi-linkedin"></i>
-        </a>
-        
-        {/* Theme Toggle Button */}
-        <button
-          onClick={toggleTheme}
-          className="icon-hover"
-          style={{
-            ...iconStyle("theme"),
-            border: "none",
-            background: "transparent",
-            cursor: "pointer",
-          }}
-          onMouseEnter={() => handleMouseEnter("theme")}
-          onMouseLeave={handleMouseLeave}
-          aria-label="Toggle theme"
-        >
-          <i className={`bi ${theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"}`}></i>
-        </button>
-      </div>
 
-      <button
-        className={`navbar-toggler custom-toggler ${menuOpen ? "open" : ""}`}
-        type="button"
-        onClick={handleMenuToggle}
-        aria-controls="navbarNav"
-        aria-expanded={menuOpen}
-        aria-label="Toggle navigation"
-      >
-        <div className="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </button>
-
-      <div
-        className={`collapse navbar-collapse justify-content-end ${menuOpen ? "show" : ""}`}
-        id="navbarNav"
-        style={{ backgroundColor: menuOpen ? colors.navBg : "transparent" }}
-      >
-        <ul className="navbar-nav">
-          {["home", "about", "experience", "skills", "projects", "contact", "resume"].map((section) => (
-            <li className="nav-item" key={section}>
-              <a
-                className={`nav-link link-hover ${activeLink === section ? "active" : ""}`}
-                href={`#${section}`}
-                onClick={() => setActiveLink(section)}
-                style={{ color: theme === "dark" ? "white" : "#1a1a1a" }}
-              >
-                {section.charAt(0).toUpperCase() + section.slice(1)}
-              </a>
-            </li>
+        {/* Desktop Navigation Links */}
+        <nav className="d-none d-xl-flex align-items-center gap-3">
+          {navItems.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={() => setActiveLink(id)}
+              className="text-decoration-none px-2 py-1 transition-all"
+              style={{
+                color: activeLink === id ? colors.accent : colors.textSecondary,
+                fontWeight: activeLink === id ? "600" : "500",
+                fontSize: "0.86rem",
+                borderBottom: activeLink === id ? `2px solid ${colors.accent}` : "2px solid transparent",
+                transition: "all 0.2s ease",
+              }}
+            >
+              {label}
+            </a>
           ))}
-        </ul>
+        </nav>
+
+        {/* Action Buttons & Theme Toggle */}
+        <div className="d-flex align-items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="social-icon-btn border-0"
+            aria-label="Toggle Theme"
+            title="Toggle theme"
+          >
+            <i className={`bi ${theme === "dark" ? "bi-sun-fill" : "bi-moon-stars-fill"}`}></i>
+          </button>
+
+          <a href="#contact" className="btn-cyber-primary text-decoration-none d-none d-sm-inline-flex py-2 px-3 small">
+            <i className="bi bi-envelope-fill me-1"></i> Contact Me
+          </a>
+
+          {/* Mobile Hamburger Toggle */}
+          <button
+            className="btn d-xl-none p-2 border-0 text-light"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Mobile Menu"
+          >
+            <i className={`bi ${menuOpen ? "bi-x-lg" : "bi-list"} fs-2`} style={{ color: colors.text }}></i>
+          </button>
+        </div>
       </div>
-    </nav>
+
+      {/* Mobile Drawer Menu */}
+      {menuOpen && (
+        <div
+          className="d-xl-none w-100 p-4 border-top mt-2"
+          style={{
+            backgroundColor: colors.background,
+            borderColor: colors.border,
+          }}
+        >
+          <div className="d-flex flex-column gap-2">
+            {navItems.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => {
+                  setActiveLink(id);
+                  setMenuOpen(false);
+                }}
+                className="text-decoration-none py-2 px-3 rounded"
+                style={{
+                  color: activeLink === id ? colors.accent : colors.text,
+                  backgroundColor: activeLink === id ? "rgba(56, 189, 248, 0.1)" : "transparent",
+                  fontWeight: "600",
+                }}
+              >
+                {label}
+              </a>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="btn-cyber-primary text-center mt-2 text-decoration-none"
+            >
+              Contact Me
+            </a>
+          </div>
+        </div>
+      )}
+    </header>
   );
 };
 

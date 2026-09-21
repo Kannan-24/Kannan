@@ -1,123 +1,106 @@
-import React, { useState } from "react";
-import Image from "../assets/Kannan.png";
+import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import {
-  FaReact,
-  FaBootstrap,
-  FaDatabase,
-  FaHtml5,
-  FaCss3,
-  FaFigma,
-  FaGitAlt,
-  FaPhp,
-  FaJava,
-  FaPython,
-  FaTools,
-} from "react-icons/fa";
 
 const About = () => {
   const { colors } = useTheme();
-  const [activeTab, setActiveTab] = useState("personal");
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case "personal":
-        return (
-          <div className="col-12">
-            <p className="about mt-4">
-              A passionate learner, constantly exploring innovative solutions in
-              technology and web development. I believe in leveraging my skills
-              to create impactful and efficient digital experiences.
-            </p>
-            <div className="about-details">
-              <p>
-                <strong>Name:</strong> Kannan M
-              </p>
-              <p>
-                <strong>Date of Birth:</strong> September 24, 2004
-              </p>
-              <p>
-                <strong>Email:</strong> kannanmuruganandham1@gmail.com
-              </p>
-              <p>
-                <strong>Phone:</strong> +91-63825-11495
-              </p>
-              <p>
-                <strong>Address:</strong> Tamil Nadu, India
-              </p>
-            </div>
-          </div>
-        );
-      case "qualifications":
-        return (
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <ul className="timeline mt-4 list-unstyled">
-                <li>
-                  <h5>SRK Matric Higher Secondary School</h5>
-                  <p>
-                    HSC <br /> 2020 - 2021
-                  </p>
-                </li>
-                <li>
-                  <h5>Sengunthar Matric Hr Sec School</h5>
-                  <p>
-                    SSLC <br /> 2018 - 2019
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div className="col-12 col-md-6">
-              <ul className="timeline list-unstyled mt-4">
-                <li>
-                  <h5>Erode Sengunthar Engineering College</h5>
-                  <p>
-                    B.E. Computer Science and Engineering <br /> 2021 - 2025
-                    (7.96 CGPA)
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </div>
-        );
-       default:
-        return null;
-    }
-  };
 
   return (
-    <section className="about-container" id="about">
-      <div className="container-about container ">
-        <div className="image">
-          <img src={Image} alt="Your image" className="img-fluid" />
-        </div>
-        <div className="about-content col-12 col-md-8">
-          <h2 className="abt d-none d-md-block section-title" style={{ color: colors.text }}>About Me</h2>
-          <div className="btns-group-container">
-            <button
-              type="button"
-              className={`btns ${activeTab === "personal" ? "btns-highlight" : "btns-default"}`}
-              onClick={() => setActiveTab("personal")}
-              style={{ 
-                color: activeTab === "personal" ? (colors.text === "#1a1a1a" ? "#fff" : "#000") : colors.text,
-                backgroundColor: activeTab === "personal" ? colors.accent : "transparent"
-              }}
-            >
-              Personal Info
-            </button>
-            <button
-              type="button"
-              className={`btns ${activeTab === "qualifications" ? "btns-highlight" : "btns-default"}`}
-              onClick={() => setActiveTab("qualifications")}
-              style={{ 
-                color: activeTab === "qualifications" ? (colors.text === "#1a1a1a" ? "#fff" : "#000") : colors.text,
-                backgroundColor: activeTab === "qualifications" ? colors.accent : "transparent"
-              }}
-            >
-              Education
-            </button>
+    <section className="py-5 position-relative" id="about">
+      <div className="container">
+        {/* Section Header */}
+        <div className="mb-5">
+          <div className="section-title-tag">
+            <i className="bi bi-person-badge"></i> ABOUT ME
           </div>
-          <div className="about-content" style={{ color: colors.text }}>{renderContent()}</div>
+          <h2 className="section-title-heading">
+            Developer Overview & Focus
+          </h2>
+        </div>
+
+        <div className="row g-4 align-items-stretch">
+          {/* Main Profile Overview Text */}
+          <div className="col-lg-7">
+            <div className="cyber-card p-4 p-md-5 h-100 cyber-card-glow d-flex flex-column justify-content-between">
+              <div>
+                <h3 className="fw-bold text-white fs-4 mb-3">
+                  Software Developer | Full-Stack Development & Python Automation
+                </h3>
+                <p style={{ color: colors.textSecondary, lineHeight: "1.75", fontSize: "0.95rem" }} className="mb-3">
+                  Software Developer with hands-on experience across frontend development, backend processing, Python automation, SQL/database work, API integration, document processing, and enterprise application enhancements.
+                </p>
+                <p style={{ color: colors.textSecondary, lineHeight: "1.75", fontSize: "0.95rem" }} className="mb-3">
+                  I enjoy understanding business requirements from the user's perspective and building practical solutions that reduce manual effort, improve validation, and make workflows easier to use.
+                </p>
+                <p style={{ color: colors.textSecondary, lineHeight: "1.75", fontSize: "0.95rem" }} className="mb-0">
+                  My recent work includes full-stack claim verification, Python-based AG automation, dynamic enterprise application modules, application migration, search optimization, and document processing.
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-top" style={{ borderColor: "rgba(56, 189, 248, 0.15)" }}>
+                <div className="d-flex flex-wrap gap-2">
+                  <span className="tech-tag">Full-Stack Development</span>
+                  <span className="tech-tag">Python Automation</span>
+                  <span className="tech-tag">Enterprise Applications</span>
+                  <span className="tech-tag">Data Extraction</span>
+                  <span className="tech-tag">Claim Verification</span>
+                  <span className="tech-tag">API Integration</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Facts Card */}
+          <div className="col-lg-5">
+            <div className="cyber-card p-4 p-md-5 h-100 cyber-card-glow d-flex flex-column justify-content-between">
+              <div>
+                <h4 className="fw-bold text-white fs-5 mb-4">
+                  Quick Details
+                </h4>
+
+                <div className="d-flex flex-column gap-3 mb-4">
+                  <div className="d-flex align-items-start gap-3">
+                    <i className="bi bi-building fs-5 mt-1" style={{ color: colors.accent }}></i>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>CURRENT COMPANY</div>
+                      <span className="text-white fw-semibold">NuWare Systems LLP</span>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-start gap-3">
+                    <i className="bi bi-briefcase fs-5 mt-1" style={{ color: colors.accent }}></i>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>ROLE</div>
+                      <span className="text-white fw-semibold">Software Engineer</span>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-start gap-3">
+                    <i className="bi bi-geo-alt fs-5 mt-1" style={{ color: colors.accent }}></i>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>LOCATION</div>
+                      <span className="text-white fw-semibold">Bangalore, India</span>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-start gap-3">
+                    <i className="bi bi-mortarboard fs-5 mt-1" style={{ color: colors.accent }}></i>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>EDUCATION</div>
+                      <span className="text-white fw-semibold">B.E. Computer Science & Engineering</span>
+                      <div className="text-muted small">2021 – 2025 | 7.96 CGPA</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-3" style={{ background: "rgba(15, 23, 42, 0.6)", border: "1px solid rgba(56, 189, 248, 0.1)" }}>
+                <div className="text-muted small" style={{ fontSize: "0.75rem" }}>PRIMARY CONTACT EMAIL</div>
+                <a href="mailto:kannanmuruganandham1@gmail.com" className="text-cyan fw-bold text-decoration-none small" style={{ color: colors.accent }}>
+                  kannanmuruganandham1@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -125,4 +108,3 @@ const About = () => {
 };
 
 export default About;
-  

@@ -1,169 +1,89 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
-import {
-  FaPhp,
-  FaHtml5,
-  FaCss3Alt,
-  FaBootstrap,
-  FaFigma,
-  FaReact,
-  FaDatabase,
-  FaGitAlt,
-  FaJava,
-  FaPython,
-  FaJs,
-  FaLaravel,
-  // FaDocker,
-  FaGithub,
-  FaLinux,
-  // FaAws,
-  FaCode,
-  FaCogs,
-  FaCloud,
-  FaPalette,
-  FaBug,
-} from "react-icons/fa";
 
-const skills = [
-  { icon: <FaJava size={50} />, label: "Java" },
-  { icon: <FaJs size={50} />, label: "JavaScript" },
-  { icon: <FaPhp size={50} />, label: "PHP" },
-  { icon: <FaPython size={50} />, label: "Python" },
-  { icon: <FaHtml5 size={50} />, label: "HTML5" },
-  { icon: <FaCss3Alt size={50} />, label: "CSS3" },
-  { icon: <FaLaravel size={50} />, label: "Laravel" },
-  { icon: <FaReact size={50} />, label: "React" },
-  { icon: <FaBootstrap size={50} />, label: "Bootstrap" },
-  { icon: <FaPalette size={50} />, label: "Tailwind CSS" },
-  { icon: <FaDatabase size={50} />, label: "MySQL" },
-  // { icon: <FaDocker size={50} />, label: "Docker" },
-  { icon: <FaGithub size={50} />, label: "GitHub Actions" },
-  { icon: <FaLinux size={50} />, label: "Linux" },
-  // { icon: <FaAws size={50} />, label: "AWS" },
-  // { icon: <FaCogs size={50} />, label: "CI/CD" },
-  { icon: <FaGitAlt size={50} />, label: "Git" },
-  { icon: <FaCode size={50} />, label: "VS Code" },
-  { icon: <FaFigma size={50} />, label: "Figma" },
-  { icon: <FaCloud size={50} />, label: "Netlify" },
-  { icon: <FaBug size={50} />, label: "Manual Testing" },
-];
+const SkillsList = () => {
+  const { colors } = useTheme();
 
-const Skills = () => {
-  const { theme, colors } = useTheme();
-  
+  const skillCategories = [
+    {
+      category: "Frontend Development",
+      icon: "bi-layout-sidebar-inset",
+      description: "Building responsive, modern user interfaces and interactive components.",
+      skills: ["React", "JavaScript", "HTML", "CSS", "UI Development"],
+    },
+    {
+      category: "Backend & APIs",
+      icon: "bi-server",
+      description: "Developing backend logic, handling REST APIs, and integrating system services.",
+      skills: ["Python", "Node.js", "Backend Development", "REST / API Integration"],
+    },
+    {
+      category: "Database & Data Work",
+      icon: "bi-database",
+      description: "Writing efficient database queries, schema interaction, and performance tuning.",
+      skills: ["SQL", "Database Integration", "Query Optimization"],
+    },
+    {
+      category: "Automation & Document Processing",
+      icon: "bi-gear-wide-connected",
+      description: "Automating repetitive file workflows and parsing structured document formats.",
+      skills: ["Python Automation", "File Processing", "Workflow Automation", "Data Extraction", "PDF", "TIFF", "Excel"],
+    },
+    {
+      category: "Domain & Tooling Experience",
+      icon: "bi-check2-square",
+      description: "Working with domain-specific tools, map integrations, and deployment support.",
+      skills: ["AWS Map", "Claim Processing", "Claim Verification", "Manual Testing", "Deployment Support", "Git"],
+    },
+  ];
+
   return (
-    <section className="py-5" id="skills">
+    <section className="py-5 position-relative" id="skills">
       <div className="container">
-        <div className="text-center mb-5">
-          <h2 className="section-title fw-bold mb-3" style={{ color: colors.text }}>Professional Skill Set & Tools</h2>
+        {/* Section Header */}
+        <div className="mb-5">
+          <div className="section-title-tag">
+            <i className="bi bi-tools"></i> TECHNICAL SKILLS
+          </div>
+          <h2 className="section-title-heading">
+            Technical Stack & Core Skills
+          </h2>
+          <p className="small mt-2" style={{ color: colors.textSecondary, maxWidth: "640px" }}>
+            Technologies and technical capabilities applied in enterprise application development, automation, and full-stack projects.
+          </p>
         </div>
 
-        <div className="row g-4 justify-content-center">
-          {skills.map((skill) => (
-            <div key={skill.label} className="col-6 col-md-4 col-lg-3 col-xl-2">
-              <div className="skill-card text-center p-4 h-100">
-                <div className="skill-icon mb-3">
-                  {skill.icon}
+        {/* Skill Categories Grid */}
+        <div className="row g-4">
+          {skillCategories.map((cat, idx) => (
+            <div className="col-md-6 col-lg-4" key={idx}>
+              <div className="cyber-card p-4 h-100 cyber-card-glow d-flex flex-column justify-content-between">
+                <div>
+                  <div className="d-flex align-items-center gap-3 mb-3">
+                    <div className="social-icon-btn border-0" style={{ background: "rgba(56, 189, 248, 0.12)", color: colors.accent }}>
+                      <i className={`bi ${cat.icon} fs-5`}></i>
+                    </div>
+                    <h4 className="fw-bold text-white fs-5 m-0">{cat.category}</h4>
+                  </div>
+                  <p className="small mb-4" style={{ color: colors.textSecondary, fontSize: "0.85rem", lineHeight: "1.6" }}>
+                    {cat.description}
+                  </p>
                 </div>
-                <h6 className="skill-label mb-0" style={{ color: colors.text }}>
-                  {skill.label}
-                </h6>
+
+                <div className="d-flex flex-wrap gap-2 pt-2 border-top" style={{ borderColor: "rgba(56, 189, 248, 0.12)" }}>
+                  {cat.skills.map((skill, sIdx) => (
+                    <span className="tech-tag" key={sIdx}>
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        .skill-card {
-          background: ${theme === "dark" ? "linear-gradient(145deg, #1a1a1a, #2d2d2d)" : "linear-gradient(145deg, #ffffff, #f0f0f0)"};
-          border: 1px solid ${colors.border};
-          border-radius: 15px;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .skill-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
-          background-size: 300% 300%;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: -1;
-          animation: gradientShift 3s ease infinite;
-        }
-
-        .skill-card:hover::before {
-          opacity: 0.1;
-        }
-
-        .skill-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-          border-color: ${colors.accent};
-        }
-
-        .skill-icon {
-          color: ${colors.text};
-          transition: all 0.3s ease;
-          position: relative;
-          z-index: 1;
-        }
-
-        .skill-card:hover .skill-icon {
-          color: ${colors.accent};
-          transform: scale(1.15);
-          filter: drop-shadow(0 0 10px rgba(100, 255, 218, 0.3));
-        }
-
-        .skill-label {
-          font-size: 0.9rem;
-          font-weight: 500;
-          transition: color 0.3s ease;
-          position: relative;
-          z-index: 1;
-        }
-
-        .skill-card:hover .skill-label {
-          color: ${colors.accent} !important;
-        }
-
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-
-        @media (max-width: 768px) {
-          .skill-icon svg {
-            width: 40px;
-            height: 40px;
-          }
-          
-          .skill-card {
-            padding: 1.5rem 1rem !important;
-          }
-          
-          .skill-label {
-            font-size: 0.8rem;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .skill-icon svg {
-            width: 35px;
-            height: 35px;
-          }
-        }
-      `}</style>
     </section>
   );
 };
 
-export default Skills;
+export default SkillsList;

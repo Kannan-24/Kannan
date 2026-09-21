@@ -1,331 +1,249 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
 
-const CardComponent = ({ title, text, tags, githubLink, externalLink, colors, theme }) => {
-  return (
-    <div className="col-lg-4 col-md-6 mb-4">
-      <div className="project-card h-100" style={{ 
-        backgroundColor: colors.cardBg,
-        borderColor: colors.border,
-        color: colors.text
-      }}>
-        <div className="card-header d-flex justify-content-between align-items-center">
-          <i className="bi bi-folder folder-icon" style={{ color: colors.text }}></i>
-          <div className="project-links">
-            {githubLink && (
-              <a
-                href={githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-link me-3"
-                title="View Code"
-                style={{ color: colors.text }}
-              >
-                <i className="bi bi-github"></i>
-              </a>
-            )}
-            {externalLink && (
-              <a
-                href={externalLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-link"
-                title="Live Demo"
-                style={{ color: colors.text }}
-              >
-                <i className="bi bi-box-arrow-up-right"></i>
-              </a>
-            )}
-          </div>
-        </div>
-
-        <div className="card-body d-flex flex-column">
-          <h5 className="project-title mb-3" style={{ color: colors.text }}>{title}</h5>
-          <p className="project-description flex-grow-1 mb-4" style={{ color: colors.textSecondary }}>{text}</p>
-          <div className="technology-tags mt-auto">
-            {tags.map((tag, index) => (
-              <span 
-                key={index} 
-                className="tech-tag"
-                style={{ 
-                  backgroundColor: `${colors.accent}33`,
-                  color: colors.accent,
-                  borderColor: `${colors.accent}4d`
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Project = () => {
-  const { theme, colors } = useTheme();
-  const cardData = [
-    {
-      title: "Automated Transport Management System",
-      text: "Developed a web-based solution to streamline campus transportation. Integrated live tracking, attendance monitoring, and automated reporting to reduce errors and improve operational efficiency.",
-      tags: ["Laravel", "Tailwind CSS", "MySQL"],
-      githubLink: "https://github.com/Kannan-24/atms",
-      externalLink: "", // Add if hosted
-    },
-    {
-      title: "Invoice Management System",
-      text: "Built a comprehensive tool to create, manage, and track GST-compliant invoices. Automated payment reminders and financial reporting to enhance billing accuracy and efficiency.",
-      tags: ["Laravel", "Tailwind CSS", "MySQL"],
-      githubLink: "https://github.com/Kannan-24/ims",
-      externalLink: "", // Add if hosted
-    },
-    {
-      title: "Spotify Clone (Music Streaming UI)",
-      text: "Designed and implemented a responsive Spotify-inspired UI using React.js. Built dynamic pages for playlists and music categories with reusable components and modern design practices.",
-      tags: ["React", "HTML", "CSS"],
-      githubLink: "https://github.com/Kannan-24/music-player",
-      externalLink: "https://kannanmp.netlify.app",
-    },
-  ];
+  const { colors } = useTheme();
 
   return (
-    <section className="projects-section py-5" id="projects">
+    <section className="py-5 position-relative" id="projects">
       <div className="container">
-        <div className="text-center mb-5">
-          <h2 className="section-title fw-bold mb-3" style={{ color: colors.text }}>Projects</h2>
-          <p className="section-subtitle" style={{ color: colors.textSecondary }}>
-            A showcase of my recent work and technical capabilities
+        {/* Section Header */}
+        <div className="mb-5">
+          <div className="section-title-tag">
+            <i className="bi bi-star-fill"></i> FEATURED ENGINEERING WORK
+          </div>
+          <h2 className="section-title-heading">
+            Featured Projects
+          </h2>
+          <p className="small mt-2" style={{ color: colors.textSecondary, maxWidth: "680px" }}>
+            Selected work across full-stack development, automation, enterprise applications, and claim-processing systems.
           </p>
         </div>
 
-        <div className="row justify-content-center">
-          {cardData.map((card, index) => (
-            <CardComponent
-              key={index}
-              title={card.title}
-              text={card.text}
-              tags={card.tags}
-              githubLink={card.githubLink}
-              externalLink={card.externalLink}
-              colors={colors}
-              theme={theme}
-            />
-          ))}
-        </div>
+        {/* 3 Main Featured Projects */}
+        <div className="d-flex flex-column gap-5">
+          {/* Project 01: Claim Verification Tool */}
+          <div className="cyber-card cyber-card-glow p-4 p-md-5">
+            <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+              <div className="d-flex align-items-center gap-2">
+                <span className="cyber-badge">PROJECT 01</span>
+                <span className="tech-tag" style={{ fontSize: "0.75rem" }}>Dental & Professional Claims</span>
+              </div>
+              <span className="text-muted font-monospace small">Full-Stack Development</span>
+            </div>
 
-        <div className="text-center mt-5">
-          <a
-            href="https://github.com/Kannan-24"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="github-btn"
-          >
-            <i className="bi bi-github me-2"></i>
-            See More Projects on GitHub
-          </a>
+            <div className="row g-4 align-items-center">
+              <div className="col-lg-6">
+                <h3 className="fw-bold text-white fs-3 mb-1">Claim Verification Tool</h3>
+                <div className="small text-muted mb-2 font-monospace">Dental & Professional Claims</div>
+                <h6 className="fw-semibold mb-3" style={{ color: colors.accent }}>
+                  Full-Stack Developer — Independently Developed
+                </h6>
+                <p className="small mb-3" style={{ color: colors.textSecondary, lineHeight: "1.7" }}>
+                  A full-stack application developed to simplify manual verification of extracted Dental and Professional claim data. The application integrates extracted values with source documents, providing confidence scores, coordinate information, field-level change tracking, and service-line validation alerts.
+                </p>
+
+                <h6 className="text-uppercase fw-semibold mb-2 small text-muted font-monospace">Key Features</h6>
+                <ul className="list-unstyled mb-3 small" style={{ color: colors.textMain }}>
+                  <li className="mb-2 d-flex align-items-start gap-2">
+                    <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                    <span>Full-stack verification interface integrating source document + extracted values</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-start gap-2">
+                    <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                    <span>Confidence score display & coordinate information showing extraction source area</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-start gap-2">
+                    <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                    <span>Field change tracking (captures column name, previous value, and new value)</span>
+                  </li>
+                  <li className="mb-2 d-flex align-items-start gap-2">
+                    <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                    <span>Service-line validation, Claim ID, and Received Date validation alerts</span>
+                  </li>
+                </ul>
+
+                <div className="p-3 rounded-3 mb-3" style={{ background: "rgba(56, 189, 248, 0.06)", border: "1px solid rgba(56, 189, 248, 0.15)" }}>
+                  <div className="text-uppercase font-monospace small fw-bold" style={{ color: colors.accent, fontSize: "0.72rem" }}>Impact</div>
+                  <div className="small text-white" style={{ fontSize: "0.85rem" }}>
+                    "Reduced manual verification effort and made claim validation more structured and user-friendly."
+                  </div>
+                </div>
+
+                <div className="d-flex flex-wrap gap-2">
+                  {["React", "Python", "SQL", "API Integration", "PDF/TIFF"].map((tag, idx) => (
+                    <span className="tech-tag" key={idx}>{tag}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Generic Fictional UI Demo Visual */}
+              <div className="col-lg-6">
+                <div
+                  className="p-3 rounded-3 border"
+                  style={{
+                    background: "#090e17",
+                    borderColor: "rgba(56, 189, 248, 0.2)",
+                  }}
+                >
+                  <div className="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                    <div className="d-flex align-items-center gap-2">
+                      <span className="code-dot red"></span>
+                      <span className="code-dot yellow"></span>
+                      <span className="code-dot green"></span>
+                      <span className="text-white font-monospace small">ClaimVerificationUI</span>
+                    </div>
+                    <span className="badge bg-secondary font-monospace" style={{ fontSize: "0.65rem" }}>DEMO INTERFACE</span>
+                  </div>
+
+                  <div className="p-2 mb-2 rounded bg-dark border" style={{ borderColor: "rgba(255,255,255,0.06)", fontSize: "0.72rem" }}>
+                    <div className="text-muted font-monospace mb-1">
+                      <i className="bi bi-file-earmark-pdf me-1"></i> SOURCE DOCUMENT: sample_claim.pdf
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center p-2 rounded" style={{ background: "rgba(56, 189, 248, 0.08)" }}>
+                      <span className="text-white font-monospace">CLAIM ID: CLM-XXXXXX</span>
+                      <span className="badge bg-success font-monospace" style={{ fontSize: "0.65rem" }}>CONFIDENCE SCORE: 94%</span>
+                    </div>
+                  </div>
+
+                  <div className="p-2 rounded bg-dark border" style={{ borderColor: "rgba(255,255,255,0.06)", fontSize: "0.72rem" }}>
+                    <div className="text-muted font-monospace mb-1">FIELD CHANGE TRACKING</div>
+                    <div className="d-flex align-items-center justify-content-between p-2 rounded" style={{ background: "rgba(255,255,255,0.03)" }}>
+                      <span className="text-white">Field: Received Date</span>
+                      <span className="text-muted">Prev: YYYY-MM-DD</span>
+                      <i className="bi bi-arrow-right text-info"></i>
+                      <span className="text-cyan fw-bold" style={{ color: colors.accent }}>Updated: YYYY-MM-DD</span>
+                    </div>
+                    <div className="mt-2 p-2 rounded" style={{ background: "rgba(245, 158, 11, 0.1)", border: "1px solid rgba(245, 158, 11, 0.25)" }}>
+                      <span className="text-warning font-monospace fw-bold"><i className="bi bi-exclamation-triangle me-1"></i> SERVICE LINE VALIDATION ALERT</span>
+                    </div>
+                  </div>
+
+                  <div className="text-center text-muted font-monospace mt-2" style={{ fontSize: "0.68rem" }}>
+                    * Demo interface using fictional data
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Project 02 & 03 Row */}
+          <div className="row g-4">
+            {/* Project 02: RAT */}
+            <div className="col-lg-6">
+              <div className="cyber-card h-100 cyber-card-glow p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div className="d-flex align-items-center justify-content-between mb-3">
+                    <span className="cyber-badge">PROJECT 02</span>
+                    <span className="tech-tag" style={{ fontSize: "0.72rem" }}>Enterprise Application</span>
+                  </div>
+
+                  <h3 className="fw-bold text-white fs-4 mb-1">RAT</h3>
+                  <div className="small text-muted mb-2 font-monospace">Dynamic Quality Measures & Enterprise Application</div>
+                  <h6 className="fw-semibold mb-3" style={{ color: colors.accent }}>
+                    Developer — Independent Module Development & Support
+                  </h6>
+                  <p className="small mb-3" style={{ color: colors.textSecondary, lineHeight: "1.6" }}>
+                    Enterprise application where I worked on dynamic Quality Measures, Coder Dashboard and Coder Review functionality, Member Chart enhancements, audit-log organization, and query/performance improvements.
+                  </p>
+
+                  <h6 className="text-uppercase fw-semibold mb-2 small text-muted font-monospace">Highlights & Work Done</h6>
+                  <ul className="list-unstyled mb-3 small" style={{ color: colors.textMain }}>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Dynamic, configuration-driven Quality Measure section for multiple measures/services</span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Coder Dashboard & Coder Review stored-query performance optimizations</span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Member Chart field enhancements & organized audit logs for improved tracking</span>
+                    </li>
+                  </ul>
+
+                  <div className="p-3 rounded-3 mb-3" style={{ background: "rgba(56, 189, 248, 0.06)", border: "1px solid rgba(56, 189, 248, 0.15)" }}>
+                    <div className="text-uppercase font-monospace small fw-bold" style={{ color: colors.accent, fontSize: "0.72rem" }}>Impact</div>
+                    <div className="small text-white" style={{ fontSize: "0.85rem" }}>
+                      "Reduced repeated hard-coded changes for configurable functionality and improved application maintainability and performance."
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="d-flex flex-wrap gap-2">
+                    {["React", "Python", "SQL", "API Integration", "Database"].map((tag, idx) => (
+                      <span className="tech-tag" key={idx}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Project 03: AG Extraction Automation & Version Tool */}
+            <div className="col-lg-6">
+              <div className="cyber-card h-100 cyber-card-glow p-4 d-flex flex-column justify-content-between">
+                <div>
+                  <div className="d-flex align-items-center justify-content-between mb-3">
+                    <span className="cyber-badge">PROJECT 03</span>
+                    <span className="tech-tag" style={{ fontSize: "0.72rem" }}>Python Automation</span>
+                  </div>
+
+                  <h3 className="fw-bold text-white fs-4 mb-1">AG Extraction Automation & Version Tool</h3>
+                  <div className="small text-muted mb-2 font-monospace">Python Automation & Data Processing</div>
+                  <h6 className="fw-semibold mb-3" style={{ color: colors.accent }}>
+                    Developer — AG Version Tool Independently Developed
+                  </h6>
+                  <p className="small mb-3" style={{ color: colors.textSecondary, lineHeight: "1.6" }}>
+                    Python-based processing workflow developed to automate file loading, file movement, 5-page trimming/splitting, extraction pipeline integration, database version management, and processing logging.
+                  </p>
+
+                  <h6 className="text-uppercase fw-semibold mb-2 small text-muted font-monospace">Highlights & Work Done</h6>
+                  <ul className="list-unstyled mb-3 small" style={{ color: colors.textMain }}>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Automated file loading, source-to-processing movement, and 5-page splitting/trimming</span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Independently developed AG Version Tool for extraction version tracking and database storage</span>
+                    </li>
+                    <li className="mb-2 d-flex align-items-start gap-2">
+                      <i className="bi bi-check-circle-fill mt-1" style={{ color: colors.accent }}></i>
+                      <span>Processing log tracking, left-out file handling, and CMD script execution</span>
+                    </li>
+                  </ul>
+
+                  <div className="p-3 rounded-3 mb-3" style={{ background: "rgba(56, 189, 248, 0.06)", border: "1px solid rgba(56, 189, 248, 0.15)" }}>
+                    <div className="text-uppercase font-monospace small fw-bold" style={{ color: colors.accent, fontSize: "0.72rem" }}>Impact</div>
+                    <div className="small text-white" style={{ fontSize: "0.85rem" }}>
+                      "Reduced repetitive manual processing and processing time while improving workflow structure and traceability."
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="p-2 rounded bg-dark border font-monospace mb-3" style={{ borderColor: "rgba(255,255,255,0.06)", fontSize: "0.7rem" }}>
+                    <div className="text-muted text-center py-1">
+                      Source Files → File Loading → File Movement → 5-Page Split → Extraction → Version Tracking → Database
+                    </div>
+                    <div className="text-center text-muted" style={{ fontSize: "0.65rem" }}>
+                      * Automated workflow architecture
+                    </div>
+                  </div>
+
+                  <div className="d-flex flex-wrap gap-2">
+                    {["Python", "SQL", "Database", "CMD", "Automation", "File Processing"].map((tag, idx) => (
+                      <span className="tech-tag" key={idx}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .projects-section {
-          background: transparent;
-        }
-
-        .project-card {
-          background: ${colors.cardBg};
-          border: 1px solid ${colors.border};
-          border-radius: 15px;
-          transition: all 0.3s ease;
-          backdrop-filter: blur(10px);
-          color: ${colors.text};
-          padding: 0;
-          overflow: hidden;
-          position: relative;
-        }
-
-        .project-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(135deg, ${colors.accent}1a, ${colors.accent}0d);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: 0;
-        }
-
-        .project-card:hover::before {
-          opacity: 1;
-        }
-
-        .project-card:hover {
-          transform: translateY(-10px);
-          border-color: ${colors.accent};
-          box-shadow: 0 20px 40px ${theme === "dark" ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0.1)"};
-        }
-
-        .card-header {
-          background: transparent;
-          border: none;
-          padding: 1.5rem 1.5rem 0.5rem;
-          position: relative;
-          z-index: 1;
-        }
-
-        .folder-icon {
-          font-size: 1.5rem;
-          color: ${colors.text};
-          transition: all 0.3s ease;
-        }
-
-        .project-card:hover .folder-icon {
-          color: ${colors.accent};
-          transform: scale(1.1);
-        }
-
-        .project-links {
-          display: flex;
-          align-items: center;
-        }
-
-        .project-link {
-          color: ${colors.text};
-          font-size: 1.2rem;
-          transition: all 0.3s ease;
-          text-decoration: none;
-          padding: 0.5rem;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .project-link:hover {
-          color: ${colors.accent};
-          background: ${colors.accent}1a;
-          transform: scale(1.1);
-        }
-
-        .card-body {
-          padding: 0.5rem 1.5rem 1.5rem;
-          position: relative;
-          z-index: 1;
-        }
-
-        .project-title {
-          color: #ffffff;
-          font-weight: 600;
-          font-size: 1.25rem;
-          transition: color 0.3s ease;
-          line-height: 1.3;
-        }
-
-        .project-card:hover .project-title {
-          color: #17a2b8;
-        }
-
-        .project-description {
-          color: rgba(255, 255, 255, 0.8);
-          font-size: 0.95rem;
-          line-height: 1.6;
-        }
-
-        .technology-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .tech-tag {
-          background: rgba(23, 162, 184, 0.2);
-          color: #64ffda;
-          padding: 0.4rem 0.8rem;
-          border-radius: 20px;
-          font-size: 0.8rem;
-          font-weight: 500;
-          border: 1px solid rgba(23, 162, 184, 0.3);
-          transition: all 0.3s ease;
-        }
-
-        .project-card:hover .tech-tag {
-          background: rgba(23, 162, 184, 0.3);
-          border-color: rgba(23, 162, 184, 0.5);
-          transform: translateY(-2px);
-        }
-
-        .github-btn {
-          background: ${colors.accent};
-          color: ${theme === "dark" ? "#0a192f" : "#ffffff"};
-          padding: 0.8rem 2rem;
-          border-radius: 50px;
-          text-decoration: none;
-          font-weight: 500;
-          border: 2px solid transparent;
-          transition: all 0.3s ease;
-          display: inline-flex;
-          align-items: center;
-          box-shadow: 0 4px 15px ${theme === "dark" ? "rgba(100, 255, 218, 0.3)" : "rgba(30, 58, 138, 0.3)"};
-        }
-
-        .github-btn:hover {
-          background: transparent;
-          border-color: ${colors.accent};
-          color: ${colors.accent};
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px ${theme === "dark" ? "rgba(100, 255, 218, 0.4)" : "rgba(30, 58, 138, 0.4)"};
-        }
-
-        .section-title {
-          font-size: 2.5rem;
-          color: ${colors.text};
-        }
-        }
-
-        .section-subtitle {
-          font-size: 1.1rem;
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        @media (max-width: 768px) {
-          .project-card {
-            margin-bottom: 1.5rem;
-          }
-          
-          .section-title {
-            font-size: 2rem;
-          }
-          
-          .project-title {
-            font-size: 1.1rem;
-          }
-          
-          .project-description {
-            font-size: 0.9rem;
-          }
-          
-          .tech-tag {
-            font-size: 0.75rem;
-            padding: 0.3rem 0.6rem;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .card-header,
-          .card-body {
-            padding-left: 1rem;
-            padding-right: 1rem;
-          }
-          
-          .github-btn {
-            padding: 0.7rem 1.5rem;
-            font-size: 0.9rem;
-          }
-        }
-      `}</style>
     </section>
   );
 };

@@ -2,25 +2,26 @@ import React, { useState, useEffect } from "react";
 import Header from "./components/header";
 import Herosection from "./components/hero";
 import About from "./components/about";
+import SkillsList from "./components/skills";
 import Experience from "./components/experience";
 import Project from "./components/project";
-import Footer from "./components/footer";
+import AdditionalProjects from "./components/additionalProjects";
+import Contributions from "./components/contributions";
 import Contact from "./components/contact";
-import Resume from "./components/resume";
+import Footer from "./components/footer";
+import ScrollProgressBar from "./components/ScrollProgressBar";
+import { useTheme } from "./context/ThemeContext";
+
 import "./app.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import SkillsList from "./components/skills";
-import ScrollProgressBar from "./components/ScrollProgressBar";
-import { useTheme } from "./context/ThemeContext";
 
 function App() {
   const [isVisible, setIsVisible] = useState(false);
-  const [loading, setLoading] = useState(true); // State to handle loading
-  const { theme, colors } = useTheme();
+  const [loading, setLoading] = useState(true);
+  const { colors } = useTheme();
 
-  // Toggle visibility of the Scroll to Top button
   const toggleVisibility = () => {
     if (window.scrollY > 300) {
       setIsVisible(true);
@@ -29,34 +30,35 @@ function App() {
     }
   };
 
-  // Listen for scroll events and toggle the button's visibility
   useEffect(() => {
     window.addEventListener("scroll", toggleVisibility);
-
-    // Simulating loading state, which will be turned off after 2 seconds
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setLoading(false);
-    }, 2000); // Adjust this time as needed
+    }, 400);
 
     return () => {
       window.removeEventListener("scroll", toggleVisibility);
+      clearTimeout(timer);
     };
   }, []);
 
-  // Scroll to the top of the page
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // Smooth scroll effect
+      behavior: "smooth",
     });
   };
 
   return (
     <div
-      style={{ backgroundColor: colors.background, color: colors.text, minHeight: "100vh", transition: "background-color 0.3s ease, color 0.3s ease" }}
+      style={{
+        backgroundColor: colors.background,
+        color: colors.text,
+        minHeight: "100vh",
+        transition: "background-color 0.3s ease, color 0.3s ease",
+      }}
     >
       {loading ? (
-        // Loading Spinner
         <div
           className="d-flex justify-content-center align-items-center"
           style={{ height: "100vh", backgroundColor: colors.background }}
@@ -64,7 +66,7 @@ function App() {
           <div
             className="spinner-border"
             role="status"
-            style={{ color: colors.accent, width: "80px", height: "80px" }}
+            style={{ color: colors.accent, width: "50px", height: "50px" }}
           >
             <span className="visually-hidden">Loading...</span>
           </div>
@@ -73,18 +75,21 @@ function App() {
         <>
           <ScrollProgressBar />
           <Header />
-          <Herosection />
-          <About />
-          <Experience />
-          <SkillsList />
-          <Project />
-          <Contact />
-          <Resume />
+          <main>
+            <Herosection />
+            <About />
+            <SkillsList />
+            <Experience />
+            <Project />
+            <AdditionalProjects />
+            <Contributions />
+            <Contact />
+          </main>
           <Footer />
         </>
       )}
 
-      {/* Scroll to Top Button */}
+      {/* Floating Scroll to Top Button */}
       {isVisible && (
         <button
           onClick={scrollToTop}
@@ -92,26 +97,24 @@ function App() {
             position: "fixed",
             bottom: "30px",
             right: "30px",
-            color: theme === "dark" ? "#0a192f" : "#fff",
+            color: "#080c14",
             backgroundColor: colors.accent,
             border: "none",
-            width: "50px",
-            height: "50px",
+            width: "44px",
+            height: "44px",
             fontSize: "18px",
-            borderRadius: "50%",
-            boxShadow: `0 6px 15px ${theme === "dark" ? "rgba(100, 255, 218, 0.5)" : "rgba(0, 168, 132, 0.5)"}`,
+            borderRadius: "10px",
+            boxShadow: "0 6px 20px rgba(56, 189, 248, 0.35)",
             cursor: "pointer",
             zIndex: 1000,
-            transition: "all 0.3s ease-in-out",
+            transition: "all 0.3s ease",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontWeight: "600",
-            textTransform: "uppercase",
           }}
+          aria-label="Scroll to top"
         >
-          {/* Scroll to Top Icon (angle-up) */}
-          <i className="bi bi-arrow-up" style={{ fontSize: "30px" }}></i>
+          <i className="bi bi-arrow-up-short fs-3"></i>
         </button>
       )}
     </div>

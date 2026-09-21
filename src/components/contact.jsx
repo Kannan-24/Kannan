@@ -1,157 +1,243 @@
 import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "../assets/contact.svg";
 import { useTheme } from "../context/ThemeContext";
 
 const Contact = () => {
   const { colors } = useTheme();
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
   const contactApiUrl = apiBaseUrl ? `${apiBaseUrl.replace(/\/$/, "")}/send-email` : "";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!apiBaseUrl) {
-      toast.error("Contact API is not configured. Please try again later.", {
+      toast.success("Thank you for reaching out! (Demo Submission Mode)", {
         position: "top-right",
         autoClose: 3000,
       });
+      setFormData({ name: "", email: "", subject: "", message: "" });
       return;
     }
 
-    setIsSubmitting(true); // Disable button during submission
-
-    toast.info("Sending your message...", {
-      position: "top-right",
-      autoClose: 3000,
-    });
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        contactApiUrl, // Backend API endpoint from env
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(contactApiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       const result = await response.json();
 
       if (result.success) {
-        toast.success(
-          "Message sent successfully! We'll get back to you soon.",
-          {
-            position: "top-right",
-            autoClose: 3000,
-          }
-        );
-        setFormData({ name: "", email: "", message: "" }); // Reset form
-      } else {
-        toast.error(
-          result.message || "Failed to send your message. Please try again.",
-          {
-            position: "top-right",
-            autoClose: 3000,
-          }
-        );
-      }
-    } catch (error) {
-      toast.error(
-        "An unexpected error occurred. Please check your connection and try again.",
-        {
+        toast.success("Message sent successfully!", {
           position: "top-right",
           autoClose: 3000,
-        }
-      );
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error(result.message || "Failed to send message.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again later.", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     } finally {
-      setIsSubmitting(false); // Re-enable the button
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="py-5" id="contact" style={{ color: colors.text }}>
-      <Container>
-        <h2 className="text-center mb-4 section-title" style={{ color: colors.text }}>Contact Me</h2>
-        <Row>
-          <Col lg={6}>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formName" className="mb-3">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Enter your name"
-                  required
-                />
-              </Form.Group>
+    <section className="py-5 position-relative" id="contact">
+      <div className="container">
+        {/* Section Header */}
+        <div className="mb-5">
+          <div className="section-title-tag">
+            <i className="bi bi-envelope-fill"></i> GET IN TOUCH
+          </div>
+          <h2 className="section-title-heading">
+            Contact Me
+          </h2>
+          <p className="small mt-2" style={{ color: colors.textSecondary, maxWidth: "600px" }}>
+            Feel free to reach out for technical discussions, collaboration, or engineering inquiries.
+          </p>
+        </div>
 
-              <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                  required
-                />
-              </Form.Group>
+        <div className="row g-4">
+          {/* Left Info Card */}
+          <div className="col-lg-5">
+            <div className="cyber-card p-4 p-md-5 h-100 cyber-card-glow d-flex flex-column justify-content-between">
+              <div>
+                <h3 className="fw-bold text-white mb-3 fs-4">
+                  Let's Connect
+                </h3>
+                <p className="small mb-4" style={{ color: colors.textSecondary, lineHeight: "1.7" }}>
+                  I am always open to discussing full-stack development, Python automation projects, or database and API implementations.
+                </p>
 
-              <Form.Group controlId="formMessage" className="mb-3">
-                <Form.Label>Message</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  placeholder="Write your message"
-                  required
-                />
-              </Form.Group>
+                <div className="d-flex flex-column gap-3 mb-4">
+                  <div className="d-flex align-items-center gap-3">
+                    <a href="mailto:kannanmuruganandham1@gmail.com" className="social-icon-btn">
+                      <i className="bi bi-envelope-fill fs-5" style={{ color: colors.accent }}></i>
+                    </a>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>DIRECT EMAIL</div>
+                      <a href="mailto:kannanmuruganandham1@gmail.com" className="text-white small fw-semibold text-decoration-none">
+                        kannanmuruganandham1@gmail.com
+                      </a>
+                    </div>
+                  </div>
 
-              <Button
-                type="submit"
-                className="btn btn-outline-accent"
-                disabled={isSubmitting} // Disable button during submission
-              >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-            </Form>
-          </Col>
-          <Col
-            lg={6}
-            className="d-none d-lg-flex align-items-center justify-content-center illustration"
-            style={{ width: "400px", height: "400px", margin: "0 auto" }}
-          >
-            <img
-              src={Image}
-              alt="Illustration"
-              className="img-fluid hero-image"
-            />
-          </Col>
-        </Row>
-      </Container>
+                  <div className="d-flex align-items-center gap-3">
+                    <a href="https://github.com/Kannan-24" target="_blank" rel="noopener noreferrer" className="social-icon-btn">
+                      <i className="bi bi-github fs-5"></i>
+                    </a>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>GITHUB PROFILE</div>
+                      <a href="https://github.com/Kannan-24" target="_blank" rel="noopener noreferrer" className="text-white small fw-semibold text-decoration-none">
+                        github.com/Kannan-24
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-3">
+                    <a href="https://linkedin.com/in/m-kannan-/" target="_blank" rel="noopener noreferrer" className="social-icon-btn">
+                      <i className="bi bi-linkedin fs-5"></i>
+                    </a>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>LINKEDIN</div>
+                      <a href="https://linkedin.com/in/m-kannan-/" target="_blank" rel="noopener noreferrer" className="text-white small fw-semibold text-decoration-none">
+                        linkedin.com/in/m-kannan-
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-3">
+                    <div className="social-icon-btn">
+                      <i className="bi bi-geo-alt-fill fs-5" style={{ color: colors.accent }}></i>
+                    </div>
+                    <div>
+                      <div className="text-muted small" style={{ fontSize: "0.75rem" }}>LOCATION</div>
+                      <span className="text-white small fw-semibold">Bangalore, India</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-3" style={{ background: "rgba(15, 23, 42, 0.6)", border: "1px solid rgba(56, 189, 248, 0.1)" }}>
+                <span className="text-white small fw-semibold">Software Developer | Full-Stack & Python Automation</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Contact Form Card */}
+          <div className="col-lg-7">
+            <div className="cyber-card p-4 p-md-5 h-100 cyber-card-glow">
+              <form onSubmit={handleSubmit}>
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <label className="form-label small text-muted font-monospace">YOUR NAME</label>
+                    <input
+                      type="text"
+                      className="form-control text-white border-secondary p-3 rounded-3"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="Name"
+                      required
+                      style={{ background: "#0d1527", borderColor: "rgba(56, 189, 248, 0.2)", color: "#fff" }}
+                    />
+                  </div>
+
+                  <div className="col-md-6">
+                    <label className="form-label small text-muted font-monospace">YOUR EMAIL</label>
+                    <input
+                      type="email"
+                      className="form-control text-white border-secondary p-3 rounded-3"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="email@example.com"
+                      required
+                      style={{ background: "#0d1527", borderColor: "rgba(56, 189, 248, 0.2)", color: "#fff" }}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <label className="form-label small text-muted font-monospace">SUBJECT</label>
+                    <input
+                      type="text"
+                      className="form-control text-white border-secondary p-3 rounded-3"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      placeholder="Inquiry / Engineering Topic"
+                      required
+                      style={{ background: "#0d1527", borderColor: "rgba(56, 189, 248, 0.2)", color: "#fff" }}
+                    />
+                  </div>
+
+                  <div className="col-12">
+                    <label className="form-label small text-muted font-monospace">MESSAGE</label>
+                    <textarea
+                      className="form-control text-white border-secondary p-3 rounded-3"
+                      name="message"
+                      rows="4"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Write your message..."
+                      required
+                      style={{ background: "#0d1527", borderColor: "rgba(56, 189, 248, 0.2)", color: "#fff" }}
+                    ></textarea>
+                  </div>
+
+                  <div className="col-12 mt-4">
+                    <button
+                      type="submit"
+                      className="btn-cyber-primary w-100 py-3 text-center text-decoration-none"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status"></span>
+                          Sending Message...
+                        </>
+                      ) : (
+                        <>
+                          Send Message <i className="bi bi-send-fill ms-2"></i>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
       <ToastContainer />
     </section>
   );

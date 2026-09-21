@@ -25,38 +25,40 @@ export const ThemeProvider = ({ children }) => {
     setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
   };
 
-const colors = {
+  const colors = {
     dark: {
-        background: "#000000",
-        text: "#ccd6f6",
-        textSecondary: "#8892b0",
-        accent: "#64ffda",
-        cardBg: "rgba(255, 255, 255, 0.05)",
-        border: "rgba(255, 255, 255, 0.1)",
-        borderRadius: "15px",
-        transition: "all 0.3s ease",
-        backdropFilter: "blur(10px)",
-        color: "white",
-        padding: "0",
-        overflow: "hidden",
-        navBg: "rgba(0, 0, 0, 0.9)",
+      background: "#080c14",
+      text: "#f1f5f9",
+      textSecondary: "#94a3b8",
+      accent: "#38bdf8",
+      accentGlow: "rgba(56, 189, 248, 0.3)",
+      cardBg: "rgba(13, 21, 39, 0.75)",
+      border: "rgba(56, 189, 248, 0.15)",
+      borderRadius: "16px",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      backdropFilter: "blur(12px)",
+      color: "#f1f5f9",
+      padding: "0",
+      overflow: "hidden",
+      navBg: "rgba(8, 12, 20, 0.85)",
     },
     light: {
-        background: "#f8f9fa",
-        text: "#1a1a1a",
-        textSecondary: "#4a5568",
-        accent: "#3ed2ec",
-        cardBg: "rgba(62, 210, 236, 0.05)",
-        border: "#e2e8f0",
-        borderRadius: "15px",
-        transition: "all 0.3s ease",
-        backdropFilter: "blur(10px)",
-        color: "white",
-        padding: "0",
-        overflow: "hidden",
-        navBg: "rgba(255, 255, 255, 0.9)",
+      background: "#f8fafc",
+      text: "#0f172a",
+      textSecondary: "#475569",
+      accent: "#0284c7",
+      accentGlow: "rgba(2, 132, 199, 0.2)",
+      cardBg: "rgba(255, 255, 255, 0.85)",
+      border: "rgba(203, 213, 225, 0.8)",
+      borderRadius: "16px",
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+      backdropFilter: "blur(12px)",
+      color: "#0f172a",
+      padding: "0",
+      overflow: "hidden",
+      navBg: "rgba(248, 250, 252, 0.85)",
     },
-};
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, colors: colors[theme] }}>
