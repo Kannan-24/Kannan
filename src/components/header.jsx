@@ -11,7 +11,8 @@ const Header = () => {
   const handleScroll = () => {
     setScrolled(window.scrollY > 100);
 
-    const sections = ["home", "about", "experience", "skills", "projects", "contact", "resume"];
+    const sections = ["home", "about", "experience", "skills", "projects", "resume"];
+    // const sections = ["home", "about", "experience", "skills", "projects", "contact", "resume"];
     let foundSection = false;
 
     sections.forEach((section) => {
@@ -64,10 +65,13 @@ const Header = () => {
       <div className="d-flex align-items-center">
         <a
           href="https://github.com/Kannan-24"
+          target="_blank"
+          rel="noopener noreferrer"
           className="icon-hover me-3"
           style={iconStyle("github")}
           onMouseEnter={() => handleMouseEnter("github")}
           onMouseLeave={handleMouseLeave}
+          title="GitHub Profile"
         >
           <i className="bi bi-github"></i>
         </a>
@@ -77,20 +81,23 @@ const Header = () => {
           style={iconStyle("email")}
           onMouseEnter={() => handleMouseEnter("email")}
           onMouseLeave={handleMouseLeave}
+          title="Send Email"
         >
           <i className="bi bi-envelope"></i>
         </a>
         <a
-          href="https://linkedin.com/in/m-kannan-/"
+          href="https://linkedin.com/in/m-kannan-"
+          target="_blank"
+          rel="noopener noreferrer"
           className="icon-hover me-3"
           style={iconStyle("linkedin")}
           onMouseEnter={() => handleMouseEnter("linkedin")}
           onMouseLeave={handleMouseLeave}
+          title="LinkedIn Profile"
         >
           <i className="bi bi-linkedin"></i>
         </a>
-        
-        {/* Theme Toggle Button */}
+         {/* 
         <button
           onClick={toggleTheme}
           className="icon-hover"
@@ -105,7 +112,7 @@ const Header = () => {
           aria-label="Toggle theme"
         >
           <i className={`bi ${theme === "dark" ? "bi-sun-fill" : "bi-moon-fill"}`}></i>
-        </button>
+        </button> */ }
       </div>
 
       <button
@@ -129,7 +136,8 @@ const Header = () => {
         style={{ backgroundColor: menuOpen ? colors.navBg : "transparent" }}
       >
         <ul className="navbar-nav">
-          {["home", "about", "experience", "skills", "projects", "contact", "resume"].map((section) => (
+          {["home", "about", "experience", "skills", "projects", "resume"].map((section) => (
+          // {["home", "about", "experience", "skills", "projects", "contact", "resume"].map((section) => (
             <li className="nav-item" key={section}>
               <a
                 className={`nav-link link-hover ${activeLink === section ? "active" : ""}`}
