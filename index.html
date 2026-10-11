@@ -1,42 +1,65 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="/src/assets/Kannan.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Primary Meta Tags -->
+  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <script>
+    try {
+      var t = localStorage.getItem("portfolio-theme");
+      if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+
   <title>Kannan M | Software & Full Stack Developer</title>
   <meta name="title" content="Kannan M | Software & Full Stack Developer" />
-  <meta name="description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, clean user interfaces, and automated workflows." />
-  <meta name="keywords" content="Kannan M, Software Developer, Full Stack Developer, Python Developer, Web Developer, React, Portfolio, JavaScript, Django, Flask, Frontend Developer, Backend Developer" />
+  <meta name="description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
+  <meta name="keywords" content="Kannan M, Software Developer, Full Stack Developer, Python Developer, React, Flask, AWS Textract, OCR, Portfolio" />
   <meta name="author" content="Kannan M" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://kannan-24.netlify.app/" />
 
-  <!-- Open Graph / Facebook -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/og-image.png" />
+  <meta name="theme-color" content="#05080b" />
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kannan-24.netlify.app/" />
   <meta property="og:title" content="Kannan M | Software & Full Stack Developer" />
-  <meta property="og:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, clean user interfaces, and automated workflows." />
+  <meta property="og:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
   <meta property="og:image" content="https://kannan-24.netlify.app/og-image.png" />
   <meta property="og:site_name" content="Kannan M Portfolio" />
 
-  <!-- Twitter Card -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://kannan-24.netlify.app/" />
   <meta name="twitter:title" content="Kannan M | Software & Full Stack Developer" />
-  <meta name="twitter:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, clean user interfaces, and automated workflows." />
+  <meta name="twitter:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
   <meta name="twitter:image" content="https://kannan-24.netlify.app/og-image.png" />
 
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#0a192f" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  <!-- Structured data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Kannan M",
+      "jobTitle": "Software Developer",
+      "url": "https://kannan-24.netlify.app/",
+      "sameAs": ["https://github.com/Kannan-24", "https://linkedin.com/in/m-kannan-"]
+    }
+  </script>
 </head>
 
 <body>
+  <noscript>This portfolio needs JavaScript enabled to display.</noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

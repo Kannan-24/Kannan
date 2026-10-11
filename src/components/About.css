@@ -1,0 +1,344 @@
+.abt-grid {
+  display: grid;
+  grid-template-columns: 330px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* ---------- profile card ---------- */
+.abt-card {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 24px 28px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 60% at 50% 0%, var(--accent-soft), transparent 70%),
+    var(--surface);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.abt-avatar {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  margin-bottom: 22px;
+}
+
+.abt-avatar-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--accent), var(--accent-2), transparent 55%, var(--accent));
+  animation: spin 8s linear infinite;
+}
+
+.abt-avatar-ring::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--surface);
+}
+
+.abt-avatar img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-2);
+}
+
+.abt-avatar-status {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--surface);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--glow);
+}
+
+.abt-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.abt-role {
+  margin: 6px 0 14px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.abt-tagline {
+  margin-bottom: 22px;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.abt-socials {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.abt-resume {
+  width: 100%;
+}
+
+/* ---------- details ---------- */
+.abt-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.abt-info {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--border);
+}
+
+.abt-info-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px 20px;
+  background: var(--surface);
+  transition: background-color 0.2s ease;
+}
+
+/* An odd item count would leave an empty cell — let the last one span the row. */
+.abt-info-item:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.abt-info-item:hover {
+  background: var(--surface-2);
+}
+
+.abt-info-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.abt-info-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.abt-info-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.abt-info-value {
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.abt-info-value.is-link:hover {
+  color: var(--accent);
+}
+
+.abt-copy {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 0.8rem;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.abt-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+.abt-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 20px;
+}
+
+.abt-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.abt-stat {
+  --tone: var(--tone-teal);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 108px;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.3s var(--ease), border-color 0.3s ease;
+}
+
+.abt-stat::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--tone);
+  box-shadow: 0 0 12px var(--tone);
+}
+
+.abt-stat:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--tone) 45%, transparent);
+}
+
+.abt-stat.tone-sky { --tone: var(--tone-sky); }
+.abt-stat.tone-violet { --tone: var(--tone-violet); }
+.abt-stat.tone-amber { --tone: var(--tone-amber); }
+
+.abt-stat strong {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.abt-stat span {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.abt-loop {
+  align-self: stretch;
+}
+
+.abt-loop-body {
+  padding: 18px 20px;
+}
+
+.abt-loop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.abt-loop-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-faint);
+  transition: color 0.3s ease, transform 0.3s var(--ease);
+}
+
+.abt-loop-list li.is-done {
+  color: var(--text-muted);
+}
+
+.abt-loop-list li.is-active {
+  color: var(--accent);
+  transform: translateX(6px);
+}
+
+.abt-loop-mark {
+  color: var(--accent);
+}
+
+.abt-quote {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin: 0;
+  padding: 18px 4px 0;
+  border-top: 1px dashed var(--border-strong);
+  color: var(--text-muted);
+}
+
+.abt-quote svg {
+  color: var(--accent-2);
+}
+
+.abt-quote blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+.abt-quote figcaption {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1000px) {
+  .abt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .abt-card {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .abt-info,
+  .abt-row {
+    grid-template-columns: 1fr;
+  }
+}

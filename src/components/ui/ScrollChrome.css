@@ -1,0 +1,46 @@
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 1100;
+  height: 2px;
+  pointer-events: none;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 12px var(--glow);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.back-to-top {
+  position: fixed;
+  right: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), background-color 0.2s ease;
+}
+
+.back-to-top.is-shown {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
