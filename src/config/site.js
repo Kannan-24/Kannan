@@ -34,7 +34,10 @@ export const site = {
   github: "https://github.com/Kannan-24",
   githubHandle: "Kannan-24",
 
-  // --- Contact form options ---------------------------------------------------
+  // --- Contact form ------------------------------------------------------------
+  // Where the form is sent: the contact API on invoice-vm (see contact-api/README.md).
+  // It emails each enquiry to you, with Reply-To set to the client.
+  contactEndpoint: "https://skmnco.in/portfolio-api/contact",
   projectTypes: ["Website", "Web App", "Data & Automation", "Other"],
   budgetRanges: [
     "Under ₹20,000",

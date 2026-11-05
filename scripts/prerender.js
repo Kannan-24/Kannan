@@ -6,6 +6,7 @@
 import { readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { site } from "../src/config/site.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const htmlPath = path.join(root, "dist", "index.html");
@@ -20,10 +21,10 @@ if (!template.includes(PLACEHOLDER)) {
 const { render } = await import(pathToFileURL(path.join(ssrDir, "entry-server.js")).href);
 const appHtml = render();
 
-// Netlify registers forms by scanning the deployed HTML, so a missing form
-// would silently break the contact form. Fail the build instead.
-if (!appHtml.includes('name="contact"') || !appHtml.includes('data-netlify="true"')) {
-  throw new Error("prerender: the Netlify contact form is missing from the rendered HTML");
+// Without JavaScript the contact form posts straight to the contact API, so
+// the rendered form must carry that address. Fail the build if it doesn't.
+if (!appHtml.includes(`action="${site.contactEndpoint}"`)) {
+  throw new Error("prerender: the contact form (with its action URL) is missing from the rendered HTML");
 }
 
 // Replacer function, so "$" characters in the page are inserted literally.

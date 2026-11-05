@@ -1,0 +1,33 @@
+[Unit]
+Description=Portfolio contact-form API, served at https://skmnco.in/portfolio-api via nginx
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/portfolio-contact/server.py
+# SMTP login, MAIL_TO, ALLOWED_ORIGINS, SITE_URL (root-only file, read by systemd)
+EnvironmentFile=/etc/portfolio-contact.env
+Environment=PYTHONUNBUFFERED=1
+# Throwaway system user; saved messages go to /var/lib/portfolio-contact/messages.jsonl
+DynamicUser=yes
+StateDirectory=portfolio-contact
+StateDirectoryMode=0700
+Restart=always
+RestartSec=3
+# Hardening: read-only system, no privilege escalation, private /tmp.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+LockPersonality=true
+MemoryMax=100M
+
+[Install]
+WantedBy=multi-user.target

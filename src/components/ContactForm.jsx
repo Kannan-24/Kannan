@@ -2,16 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { FaCheckCircle, FaChevronDown, FaExclamationTriangle, FaPaperPlane, FaRedo } from "react-icons/fa";
 import { profile, whatsappLink } from "../data/portfolio";
 
-// Netlify Forms: Netlify finds this form in the pre-rendered HTML at deploy time
-// (data-netlify="true" + the hidden "form-name" field) and stores submissions
-// under Site → Forms. With JavaScript we POST it in the background and show
-// the result inline; without JavaScript it submits normally.
-const FORM_NAME = "contact";
-
-const encode = (form) => new URLSearchParams(new FormData(form)).toString();
+// The form posts to the contact API on invoice-vm (contact-api/ in this repo),
+// which emails each enquiry to you. With JavaScript we send it in the background
+// and show the result inline; without JavaScript the browser posts it directly
+// and the API answers with a small "Message sent" page.
+const ENDPOINT = profile.contactEndpoint;
 
 const ContactForm = () => {
   const [status, setStatus] = useState("idle"); // idle | sending | success | error
+  const [errorText, setErrorText] = useState("");
   const successRef = useRef(null);
 
   useEffect(() => {
@@ -22,13 +21,20 @@ const ContactForm = () => {
     event.preventDefault();
     const form = event.currentTarget;
     setStatus("sending");
+    setErrorText("");
     try {
-      const response = await fetch("/", {
+      // URLSearchParams body = a "simple" CORS request (no preflight needed).
+      const response = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode(form),
+        headers: { Accept: "application/json" },
+        body: new URLSearchParams(new FormData(form)),
       });
-      if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.ok) {
+        // Show the API's reason for problems the visitor can fix (400) or wait out (429).
+        if (response.status === 400 || response.status === 429) setErrorText(result.error ?? "");
+        throw new Error(result.error || `Contact form request failed: ${response.status}`);
+      }
       form.reset();
       setStatus("success");
     } catch (error) {
@@ -59,15 +65,7 @@ const ContactForm = () => {
   const whatsapp = whatsappLink();
 
   return (
-    <form
-      className="cf"
-      name={FORM_NAME}
-      method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
-      onSubmit={onSubmit}
-    >
-      <input type="hidden" name="form-name" value={FORM_NAME} />
+    <form className="cf" name="contact" method="POST" action={ENDPOINT} onSubmit={onSubmit}>
       {/* Spam trap: hidden from people, bots fill it in and get discarded. */}
       <p hidden>
         <label>
@@ -133,7 +131,9 @@ const ContactForm = () => {
         <p className="cf-error" role="alert">
           <FaExclamationTriangle aria-hidden="true" />
           <span>
-            Sorry, your message couldn&apos;t be sent. Please try again, or email me at{" "}
+            {errorText
+              ? `${errorText} You can also email me at `
+              : "Sorry, your message couldn't be sent. Please try again, or email me at "}
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             {whatsapp && (
               <>
@@ -142,12 +142,6 @@ const ContactForm = () => {
               </>
             )}
             .
-            {import.meta.env.DEV && (
-              <small className="cf-dev-note">
-                Local dev only: this is expected. Netlify Forms only accept submissions on the
-                deployed Netlify site, not on <code>npm run dev</code> / <code>preview</code>.
-              </small>
-            )}
           </span>
         </p>
       )}
