@@ -1,93 +1,79 @@
 import { useMemo, useState } from "react";
-import { FaArrowRight, FaChevronDown, FaExternalLinkAlt, FaGithub } from "react-icons/fa";
-import { profile, projectCategories, projects } from "../data/portfolio";
+import { FaArrowRight, FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
+import { profile, projectCategories, projects, sectionNumber } from "../data/portfolio";
 import SectionHeading from "./ui/SectionHeading";
-import Window from "./ui/Window";
 import "./Projects.css";
 
-const ProjectRow = ({ project, index, open, onToggle }) => {
-  const bodyId = `prj-body-${index}`;
-  const last = (project.highlights?.length ?? 0) - 1;
+const CASE_ROWS = [
+  ["problem", "Problem"],
+  ["solution", "Solution"],
+  ["result", "Result"],
+];
+
+const ProjectCard = ({ project }) => {
+  const { title, fileName, category, workProject, workflow, tags, liveLink, githubLink } = project;
 
   return (
-    <article className={`prj-row ${open ? "is-open" : ""}`}>
-      <h3 className="prj-row-heading">
-        <button
-          type="button"
-          className="prj-row-head"
-          onClick={onToggle}
-          aria-expanded={open}
-          aria-controls={bodyId}
-        >
-          <span className="prj-index">{String(index + 1).padStart(2, "0")}</span>
-          <span className="prj-titles">
-            <span className="prj-title">{project.title}</span>
-            <span className="prj-subtitle">{project.subtitle}</span>
-          </span>
-          <span className="prj-cat">{project.category}</span>
-          <FaChevronDown className="prj-chevron" aria-hidden="true" />
-        </button>
-      </h3>
+    <article className="prj-card window">
+      <div className="window-bar">
+        <span className="window-dots" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </span>
+        <span className="window-title">{fileName}</span>
+        <span className="window-meta">{category}</span>
+      </div>
 
-      <div className="prj-collapse" id={bodyId} {...(!open && { inert: "" })}>
-        <div className="prj-collapse-inner">
-          <div className="prj-body">
-            <p className="prompt prj-cat-line">
-              <b>kannan@portfolio</b>:~$ cat <span>{project.fileName}</span>
-            </p>
+      <div className="prj-card-body">
+        <h3 className="prj-title">{title}</h3>
+        {workProject && (
+          <p className="prj-note">
+            <FaLock aria-hidden="true" /> Work project: details generalized, no client data or code shown
+          </p>
+        )}
 
-            <p className="prj-desc">{project.text}</p>
-
-            {project.highlights?.length > 0 && (
-              <div className="prj-block">
-                <p className="prj-label">## key contributions</p>
-                <ul className="prj-highlights">
-                  {project.highlights.map((item, i) => (
-                    <li key={item}>
-                      <span aria-hidden="true">{i === last ? "└─" : "├─"}</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {project.workflow && (
-              <div className="prj-block">
-                <p className="prj-label">## pipeline</p>
-                <ol className="prj-pipeline" style={{ "--steps": project.workflow.length }}>
-                  {project.workflow.map((step, i) => (
-                    <li key={step} style={{ "--i": i }}>
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            <div className="prj-block prj-foot">
-              <div className="prj-tags">
-                {project.tags.map((tag) => (
-                  <span className="chip chip-accent" key={tag}>{tag}</span>
-                ))}
-              </div>
-              {(project.githubLink || project.externalLink) && (
-                <div className="prj-links">
-                  {project.githubLink && (
-                    <a className="btn btn-ghost" href={project.githubLink} target="_blank" rel="noopener noreferrer">
-                      <FaGithub aria-hidden="true" /> Source
-                    </a>
-                  )}
-                  {project.externalLink && (
-                    <a className="btn btn-primary" href={project.externalLink} target="_blank" rel="noopener noreferrer">
-                      Live demo <FaExternalLinkAlt aria-hidden="true" />
-                    </a>
-                  )}
-                </div>
-              )}
+        <dl className="prj-case">
+          {CASE_ROWS.map(([key, label]) => (
+            <div className={`prj-case-row is-${key}`} key={key}>
+              <dt>{label}</dt>
+              <dd>{project[key]}</dd>
             </div>
+          ))}
+        </dl>
+
+        {workflow && (
+          <ol className="prj-pipeline" style={{ "--steps": workflow.length }} aria-label="Pipeline">
+            {workflow.map((step, i) => (
+              <li key={step} style={{ "--i": i }}>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+        )}
+
+        <ul className="prj-tags" aria-label="Tech stack">
+          {tags.map((tag) => (
+            <li className="chip chip-accent" key={tag}>{tag}</li>
+          ))}
+        </ul>
+
+        {(liveLink || githubLink) && (
+          <div className="prj-links">
+            {liveLink && (
+              <a className="btn btn-primary" href={liveLink} target="_blank" rel="noopener noreferrer">
+                Live demo <FaExternalLinkAlt aria-hidden="true" />
+                <span className="sr-only">: {title} (opens in a new tab)</span>
+              </a>
+            )}
+            {githubLink && (
+              <a className="btn btn-ghost" href={githubLink} target="_blank" rel="noopener noreferrer">
+                <FaGithub aria-hidden="true" /> GitHub
+                <span className="sr-only">: {title} source code (opens in a new tab)</span>
+              </a>
+            )}
           </div>
-        </div>
+        )}
       </div>
     </article>
   );
@@ -95,7 +81,6 @@ const ProjectRow = ({ project, index, open, onToggle }) => {
 
 const Projects = () => {
   const [filter, setFilter] = useState("All");
-  const [openTitle, setOpenTitle] = useState(projects[0].title);
 
   const counts = useMemo(
     () =>
@@ -113,11 +98,11 @@ const Projects = () => {
       <div className="container">
         <SectionHeading
           id="projects-title"
-          index="04"
+          index={sectionNumber("projects")}
           kicker="projects"
           title="Selected"
           accent="work."
-          lead="Enterprise applications, document intelligence, healthcare platforms, and full-stack systems built through real-world development."
+          lead="Real problems, what I built, and the result. Work projects are described in general terms, with no client data or internal code."
         />
 
         <div className="prj-filters" role="group" aria-label="Filter projects by category" data-reveal>
@@ -138,32 +123,10 @@ const Projects = () => {
           ))}
         </div>
 
-        <div data-reveal style={{ "--reveal-delay": "80ms" }}>
-          <Window
-            title="~/projects/projects.log"
-            meta={`${String(visible.length).padStart(2, "0")} entries`}
-            className="prj-window"
-          >
-            <div className="prj-list">
-              {visible.map((project, i) => (
-                <ProjectRow
-                  key={project.title}
-                  project={project}
-                  index={i}
-                  open={openTitle === project.title}
-                  onToggle={() => setOpenTitle((t) => (t === project.title ? null : project.title))}
-                />
-              ))}
-            </div>
-            <div className="prj-log-foot">
-              <span>
-                <span className="live-dot" aria-hidden="true" /> process complete
-              </span>
-              <span>
-                {visible.length} project{visible.length !== 1 ? "s" : ""} loaded
-              </span>
-            </div>
-          </Window>
+        <div className="prj-grid" data-reveal style={{ "--reveal-delay": "80ms" }}>
+          {visible.map((project) => (
+            <ProjectCard key={project.title} project={project} />
+          ))}
         </div>
 
         <a className="prj-github window" href={profile.github} target="_blank" rel="noopener noreferrer" data-reveal>

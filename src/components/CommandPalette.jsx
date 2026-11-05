@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FaArrowRight, FaCopy, FaDownload, FaEnvelope, FaExternalLinkAlt, FaGithub,
-  FaHashtag, FaLinkedinIn, FaMoon, FaSearch, FaSun,
+  FaHashtag, FaLinkedinIn, FaMoon, FaPaperPlane, FaSearch, FaSun, FaWhatsapp,
 } from "react-icons/fa";
 import { useTheme } from "../context/theme";
-import { mailtoLink, profile, sections } from "../data/portfolio";
+import { mailtoLink, profile, sections, whatsappLink } from "../data/portfolio";
 import { copyText } from "../lib/utils";
 import "./CommandPalette.css";
 
@@ -27,6 +27,13 @@ const CommandPalette = ({ open, onClose }) => {
         icon: FaHashtag,
         run: () => document.getElementById(s.id)?.scrollIntoView(),
       })),
+      {
+        id: "hire", group: "Actions", label: "Hire me: start a project", icon: FaPaperPlane,
+        run: () => {
+          document.getElementById("contact")?.scrollIntoView();
+          document.getElementById("cf-name")?.focus({ preventScroll: true });
+        },
+      },
       { id: "copy-email", group: "Actions", label: "Copy email address", hint: profile.email, icon: FaCopy, run: () => copyText(profile.email, "Email copied") },
       { id: "send-email", group: "Actions", label: "Send an email", icon: FaEnvelope, run: () => { window.location.href = mailtoLink; } },
       { id: "open-resume", group: "Actions", label: "Open resume", icon: FaExternalLinkAlt, run: () => openUrl(profile.resume) },
@@ -42,6 +49,9 @@ const CommandPalette = ({ open, onClose }) => {
       { id: "theme", group: "Actions", label: `Switch to ${theme === "dark" ? "light" : "dark"} theme`, icon: theme === "dark" ? FaSun : FaMoon, run: toggleTheme },
       { id: "github", group: "Links", label: "GitHub", hint: `@${profile.githubHandle}`, icon: FaGithub, run: () => openUrl(profile.github) },
       { id: "linkedin", group: "Links", label: "LinkedIn", icon: FaLinkedinIn, run: () => openUrl(profile.linkedin) },
+      ...(profile.whatsapp
+        ? [{ id: "whatsapp", group: "Links", label: "Chat on WhatsApp", icon: FaWhatsapp, run: () => openUrl(whatsappLink()) }]
+        : []),
     ],
     [theme, toggleTheme]
   );

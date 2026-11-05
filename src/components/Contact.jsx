@@ -1,14 +1,27 @@
-import { FaArrowRight, FaCopy, FaEnvelope, FaGithub, FaLinkedinIn, FaPhoneAlt } from "react-icons/fa";
-import { mailtoLink, profile } from "../data/portfolio";
+import { FaArrowRight, FaCopy, FaEnvelope, FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
+import { mailtoLink, profile, sectionNumber, whatsappLink } from "../data/portfolio";
 import { copyText } from "../lib/utils";
+import ContactForm from "./ContactForm";
 import SectionHeading from "./ui/SectionHeading";
 import Window from "./ui/Window";
 import "./Contact.css";
 
+// Let long addresses break after the "@" instead of mid-word.
+const [emailUser, emailDomain] = profile.email.split("@");
+const emailDisplay = (
+  <>
+    {emailUser}@<wbr />
+    {emailDomain}
+  </>
+);
+
 const channels = [
-  { icon: FaLinkedinIn, label: "LinkedIn", value: "in/m-kannan-", href: profile.linkedin, external: true },
+  { icon: FaEnvelope, label: "Email", value: emailDisplay, href: mailtoLink, copy: profile.email },
+  ...(profile.whatsapp
+    ? [{ icon: FaWhatsapp, label: "WhatsApp", value: "Chat with me", href: whatsappLink(), external: true }]
+    : []),
+  { icon: FaLinkedinIn, label: "LinkedIn", value: profile.linkedinHandle, href: profile.linkedin, external: true },
   { icon: FaGithub, label: "GitHub", value: `@${profile.githubHandle}`, href: profile.github, external: true },
-  { icon: FaPhoneAlt, label: "Phone", value: profile.phoneDisplay, href: `tel:${profile.phone}` },
 ];
 
 const Contact = () => (
@@ -17,11 +30,11 @@ const Contact = () => (
     <div className="container">
       <SectionHeading
         id="contact-title"
-        index="06"
+        index={sectionNumber("contact")}
         kicker="contact"
         title="Let's build"
         accent="something."
-        lead="Have a project, a role, or just want to talk shop? My inbox is always open."
+        lead={`Tell me about your project. I'll reply ${profile.responseTime} with questions or next steps.`}
       />
 
       <Window title="ssh kannan@portfolio" meta="connected" className="cnt-window" bodyClassName="cnt-body" data-reveal>
@@ -36,45 +49,41 @@ const Contact = () => (
         </div>
 
         <div className="cnt-main">
-          <div className="cnt-email">
-            <span className="cnt-email-label">Drop me a line</span>
-            <a className="cnt-email-link" href={mailtoLink}>
-              {profile.email}
-            </a>
-            <div className="cnt-email-actions">
-              <a className="btn btn-primary" href={mailtoLink}>
-                <FaEnvelope aria-hidden="true" /> Send an email
-              </a>
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() => copyText(profile.email, "Email copied")}
-              >
-                <FaCopy aria-hidden="true" /> Copy address
-              </button>
-            </div>
-          </div>
+          <ContactForm />
 
-          <ul className="cnt-channels">
-            {channels.map(({ icon: Icon, label, value, href, external }) => (
-              <li key={label}>
-                <a
-                  className="cnt-channel"
-                  href={href}
-                  {...(external && { target: "_blank", rel: "noopener noreferrer" })}
-                >
-                  <span className="cnt-channel-icon">
-                    <Icon aria-hidden="true" />
-                  </span>
-                  <span className="cnt-channel-text">
-                    <span>{label}</span>
-                    <strong>{value}</strong>
-                  </span>
-                  <FaArrowRight className="cnt-channel-go" aria-hidden="true" />
-                </a>
-              </li>
-            ))}
-          </ul>
+          <aside className="cnt-aside" aria-labelledby="cnt-direct-title">
+            <h3 className="cnt-aside-title" id="cnt-direct-title">Prefer a direct line?</h3>
+            <ul className="cnt-channels">
+              {channels.map(({ icon: Icon, label, value, href, external, copy }) => (
+                <li key={label} className="cnt-channel-row">
+                  <a
+                    className="cnt-channel"
+                    href={href}
+                    {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                  >
+                    <span className={`cnt-channel-icon is-${label.toLowerCase()}`}>
+                      <Icon aria-hidden="true" />
+                    </span>
+                    <span className="cnt-channel-text">
+                      <span>{label}</span>
+                      <strong>{value}</strong>
+                    </span>
+                    <FaArrowRight className="cnt-channel-go" aria-hidden="true" />
+                  </a>
+                  {copy && (
+                    <button
+                      type="button"
+                      className="cnt-copy"
+                      onClick={() => copyText(copy, "Email copied")}
+                      aria-label="Copy email address"
+                    >
+                      <FaCopy aria-hidden="true" />
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </aside>
         </div>
       </Window>
     </div>

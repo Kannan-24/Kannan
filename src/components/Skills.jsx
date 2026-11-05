@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaChevronDown, FaFolder, FaFolderOpen, FaRegFileCode } from "react-icons/fa";
-import { skillCategories } from "../data/portfolio";
+import { sectionNumber, skillCategories } from "../data/portfolio";
 import SectionHeading from "./ui/SectionHeading";
 import "./Skills.css";
 
@@ -38,7 +38,7 @@ const Skills = () => {
       <div className="container">
         <SectionHeading
           id="skills-title"
-          index="03"
+          index={sectionNumber("skills")}
           kicker="skills"
           title="My technical"
           accent="stack."

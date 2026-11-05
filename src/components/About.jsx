@@ -3,7 +3,7 @@ import {
   FaBriefcase, FaCalendarAlt, FaCopy, FaDownload, FaEnvelope, FaGithub,
   FaGraduationCap, FaLinkedinIn, FaMapMarkerAlt, FaPhoneAlt, FaQuoteLeft,
 } from "react-icons/fa";
-import { profile, stats } from "../data/portfolio";
+import { profile, sectionNumber, stats } from "../data/portfolio";
 import { copyText, prefersReducedMotion } from "../lib/utils";
 import SectionHeading from "./ui/SectionHeading";
 import Window from "./ui/Window";
@@ -53,7 +53,7 @@ const About = () => (
     <div className="container">
       <SectionHeading
         id="about-title"
-        index="01"
+        index={sectionNumber("about")}
         kicker="about"
         title="Get to know"
         accent="me."

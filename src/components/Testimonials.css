@@ -1,0 +1,94 @@
+.tst-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tst-card figure {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 26px 24px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(100% 50% at 100% 0%, var(--accent-soft), transparent 70%),
+    var(--surface);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), border-color 0.3s ease;
+}
+
+.tst-card:hover figure {
+  transform: translateY(-3px);
+  border-color: var(--accent-line);
+}
+
+/* dev-only placeholders get a dashed border so they are obvious */
+.tst-card.is-placeholder figure {
+  border-style: dashed;
+  border-color: var(--tone-amber);
+}
+
+.tst-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tst-mark {
+  flex-shrink: 0;
+  font-size: 1.4rem;
+  color: var(--accent);
+  opacity: 0.8;
+}
+
+.tst-quote {
+  flex: 1;
+  margin: 14px 0 22px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text);
+}
+
+.tst-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-strong);
+}
+
+.tst-avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: var(--accent-ink);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.tst-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.tst-who strong {
+  font-weight: 700;
+}
+
+.tst-who span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}

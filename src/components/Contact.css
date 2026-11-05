@@ -41,43 +41,226 @@
 
 .cnt-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
   gap: clamp(24px, 4vw, 48px);
-  align-items: center;
+  align-items: start;
 }
 
-.cnt-email-label {
-  display: block;
-  margin-bottom: 8px;
+/* ---------- form ---------- */
+.cf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.cf-field-full {
+  grid-column: 1 / -1;
+}
+
+.cf-field label {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cf-optional {
+  text-transform: none;
+  letter-spacing: 0;
   color: var(--text-faint);
 }
 
-.cnt-email-link {
-  display: inline-block;
-  max-width: 100%;
-  font-size: clamp(0.98rem, 4.4vw, 2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-  overflow-wrap: anywhere;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2)) left bottom / 0 2px no-repeat;
-  transition: background-size 0.4s var(--ease), color 0.2s ease;
+.cf-field input,
+.cf-field select,
+.cf-field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem; /* 16px+ stops iOS from zooming into fields */
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.cnt-email-link:hover {
-  background-size: 100% 2px;
+.cf-field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.cf-field ::placeholder {
+  color: var(--text-faint);
+  opacity: 1;
+}
+
+.cf-field input:hover,
+.cf-field select:hover,
+.cf-field textarea:hover {
+  border-color: var(--accent-line);
+}
+
+.cf-field input:focus,
+.cf-field select:focus,
+.cf-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.cf-select {
+  position: relative;
+}
+
+.cf-select select {
+  padding-right: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+.cf-select select:invalid {
+  color: var(--text-faint);
+}
+
+.cf-select option {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.cf-select svg {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.cf-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, #f87171 45%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, #f87171 10%, transparent);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.cf-dev-note {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.cf-error svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: #f87171;
+}
+
+:root[data-theme="light"] .cf-error svg {
+  color: #b91c1c;
+}
+
+.cf-error a,
+.cf-success a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.cf-submit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 18px;
+  margin-top: 20px;
+}
+
+.cf-submit .btn:disabled {
+  cursor: progress;
+  opacity: 0.7;
+  transform: none;
+}
+
+.cf-hint {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.cf-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 28px;
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  animation: cf-pop 0.45s var(--ease);
+}
+
+.cf-success-icon {
+  font-size: 2rem;
   color: var(--accent);
 }
 
-.cnt-email-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 24px;
+.cf-success-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.cf-success-title:focus {
+  outline: none;
+}
+
+.cf-success p {
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+.cf-success .btn {
+  margin-top: 6px;
+}
+
+@keyframes cf-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+}
+
+/* ---------- direct channels ---------- */
+.cnt-aside-title {
+  margin-bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
 }
 
 .cnt-channels {
@@ -89,10 +272,17 @@
   list-style: none;
 }
 
+.cnt-channel-row {
+  display: flex;
+  gap: 8px;
+}
+
 .cnt-channel {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 14px;
+  min-width: 0;
   padding: 14px 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -117,6 +307,10 @@
   color: var(--accent);
 }
 
+.cnt-channel-icon.is-whatsapp {
+  font-size: 1.15rem;
+}
+
 .cnt-channel-text {
   display: flex;
   flex-direction: column;
@@ -131,11 +325,10 @@
   color: var(--text-faint);
 }
 
+/* wrap (not truncate) so the full email address is always readable */
 .cnt-channel-text strong {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .cnt-channel-go {
@@ -149,14 +342,48 @@
   color: var(--accent);
 }
 
-@media (max-width: 820px) {
+.cnt-copy {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.cnt-copy:hover {
+  color: var(--accent);
+  border-color: var(--accent-line);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
   .cnt-main {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 520px) {
-  .cnt-email-actions .btn {
+@media (max-width: 560px) {
+  .cf-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cf-submit .btn {
     flex: 1 1 100%;
+  }
+
+  .cf-success {
+    padding: 22px 18px;
+  }
+}
+
+/* Narrow phones: give the email address the full row (long-press still copies). */
+@media (max-width: 420px) {
+  .cnt-copy,
+  .cnt-channel-go {
+    display: none;
   }
 }

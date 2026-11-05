@@ -1,35 +1,42 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useSyncExternalStore } from "react";
 import { ThemeContext } from "./theme";
 
 const STORAGE_KEY = "portfolio-theme";
 
-const readSavedTheme = () => {
+// The <html data-theme> attribute is the source of truth: the inline script in
+// index.html sets it from localStorage before first paint. Reading it through
+// useSyncExternalStore lets the pre-rendered HTML (always "dark") hydrate
+// cleanly, after which React switches to the visitor's saved theme.
+const listeners = new Set();
+const subscribe = (callback) => {
+  listeners.add(callback);
+  return () => listeners.delete(callback);
+};
+const getSnapshot = () =>
+  document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+const getServerSnapshot = () => "dark";
+
+const applyTheme = (theme) => {
+  document.documentElement.setAttribute("data-theme", theme);
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "light" || saved === "dark") return saved;
+    localStorage.setItem(STORAGE_KEY, theme);
   } catch {
     // storage unavailable (private mode, blocked cookies)
   }
-  return "dark";
+  listeners.forEach((listener) => listener());
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(readSavedTheme);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
     document
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute("content", theme === "dark" ? "#05080b" : "#f4f7f6");
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      // ignore
-    }
   }, [theme]);
 
   const toggleTheme = useCallback(
-    () => setTheme((prev) => (prev === "dark" ? "light" : "dark")),
+    () => applyTheme(getSnapshot() === "dark" ? "light" : "dark"),
     []
   );
 

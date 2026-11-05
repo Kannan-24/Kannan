@@ -1,5 +1,5 @@
 import { FaBriefcase, FaCodeBranch, FaMapMarkerAlt } from "react-icons/fa";
-import { experiences, profile } from "../data/portfolio";
+import { experiences, profile, sectionNumber } from "../data/portfolio";
 import SectionHeading from "./ui/SectionHeading";
 import Window from "./ui/Window";
 import "./Experience.css";
@@ -28,7 +28,7 @@ const Experience = () => (
     <div className="container">
       <SectionHeading
         id="experience-title"
-        index="02"
+        index={sectionNumber("experience")}
         kicker="experience"
         title="Where I've"
         accent="shipped code."
