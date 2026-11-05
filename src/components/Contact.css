@@ -163,14 +163,6 @@
   color: var(--text);
 }
 
-.cf-dev-note {
-  display: block;
-  margin-top: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
 .cf-error svg {
   flex-shrink: 0;
   margin-top: 4px;

@@ -28,13 +28,15 @@ npm run preview  # serve the production build
 - Testimonials marked `placeholder: true` only show in `npm run dev`, never on the live site.
 - Section order (and the `01 //` numbers) follow the `sections` list in `portfolio.js`.
 
-## Contact form (Netlify Forms)
+## Contact form
 
-The form in `src/components/ContactForm.jsx` is a Netlify Form (`data-netlify="true"` +
-hidden `form-name`). Netlify registers it by scanning the deployed HTML, which is why the
-page is pre-rendered. Submissions appear in the Netlify dashboard under **Forms**.
-Turn on **Form detection** (Site configuration → Forms) and add an email notification
-there. Locally (`npm run dev` / `preview`) submissions fail on purpose: only Netlify accepts them.
+The form (`src/components/ContactForm.jsx`) posts to the contact API on **invoice-vm**
+(`https://skmnco.in/portfolio-api/contact`, address set in `site.js` → `contactEndpoint`).
+The API emails each enquiry to you with Reply-To set to the client, and keeps a copy on
+the server. Its code, deploy script and operating notes are in [`contact-api/`](contact-api/README.md).
+
+Local dev works too (`localhost:5173` / `4173` are allowed origins), and it sends real
+emails.
 
 ## Pre-rendering
 
@@ -45,7 +47,8 @@ there. Locally (`npm run dev` / `preview`) submissions fail on purpose: only Net
 3. `node scripts/prerender.js`: renders the app to HTML, writes it into `dist/index.html`,
    and deletes `dist-ssr/`
 
-So search engines, link previews and visitors without JavaScript get the full page, and React
+So search engines, link previews and visitors without JavaScript get the full page (the form
+then posts straight to the API), and React
 hydrates it in the browser. Components must render the same output on the server and on the
 first client render: read browser-only things (`window`, `localStorage`, `navigator`) in
 effects or event handlers, not during render. `npm run build:spa` skips pre-rendering.
@@ -69,6 +72,7 @@ src/
 scripts/
   prerender.js            injects the rendered HTML into dist/index.html
   site-html-plugin.js     index.html placeholders, robots.txt, sitemap.xml
+contact-api/              contact-form email API running on invoice-vm (Python, systemd)
 ```
 
 ## Features
