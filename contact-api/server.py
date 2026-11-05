@@ -25,6 +25,7 @@ Configuration (environment, normally /etc/portfolio-contact.env):
   STATE_DIRECTORY        where messages.jsonl is kept (systemd sets this)
 
   python3 server.py --check-smtp   logs in to the SMTP server and exits
+  python3 server.py --send-test    emails a sample enquiry to MAIL_TO and exits
 """
 from __future__ import annotations
 
@@ -312,6 +313,16 @@ def main() -> None:
             pass
         print(f"SMTP login OK ({SMTP_USER} @ {SMTP_HOST}:{SMTP_PORT}); mail goes to {MAIL_TO}")
         return
+    if "--send-test" in sys.argv:
+        sample = {
+            "name": "Test Client", "email": MAIL_TO, "project-type": "Website", "budget": "",
+            "message": "This is a test enquiry sent with --send-test. You can delete it.",
+        }
+        send_email(build_email(sample, datetime.now(IST)))
+        print(f"Test enquiry sent from {SMTP_USER} to {MAIL_TO}")
+        return
+    if SMTP_USER.lower() == MAIL_TO.lower():
+        log.warning("SMTP_USER and MAIL_TO are the same Gmail account: Gmail files such mail under Sent, not Inbox")
     if not ALLOWED_ORIGINS:
         log.warning("ALLOWED_ORIGINS is empty: every form post will be rejected")
     server = ThreadingHTTPServer((HOST, PORT), Handler)
