@@ -9,7 +9,7 @@ Receives the portfolio's contact form and emails it to you. It's one Python file
 | Code | `server.py` (this folder) → `/opt/portfolio-contact/server.py` |
 | Process | systemd unit `portfolio-contact`, `127.0.0.1:8200`, sandboxed, restarts automatically |
 | Web | nginx, `location ^~ /portfolio-api/` in the `skmnco.in` HTTPS block of `/etc/nginx/sites-available/invoice` (backup: `invoice.bak-before-portfolio-api`) |
-| Secrets | `/etc/portfolio-contact.env` (root only): `SMTP_USER`, `SMTP_PASS`, `MAIL_TO`, `ALLOWED_ORIGINS`, `SITE_URL` |
+| Secrets | `/etc/portfolio-contact.env` (root only): `SMTP_USER`, `SMTP_PASS`, `MAIL_TO`, `DELIVER_TO`, `ALLOWED_ORIGINS`, `SITE_URL` |
 | Saved messages | `/var/lib/portfolio-contact/messages.jsonl` (every enquiry, even if the email failed) |
 
 What it does for each submission:
@@ -39,9 +39,11 @@ To change the sending Gmail account, its app password, or where enquiries go, ru
 `bash contact-api/set-smtp.sh`. It asks for the values (password input hidden), updates the
 VM, checks the login (restoring the old settings if it fails), and can send a test enquiry.
 
-Gmail files mail that an account sends to itself under **Sent**, not Inbox, so send FROM a
-different Gmail account than the one you receive enquiries at. (The service logs a warning
-at startup if they are the same.) App passwords: https://myaccount.google.com/apppasswords
+Gmail files mail that an account sends to itself under **Sent**, not Inbox. When the sending
+and receiving Gmail account are the same (the current setup), `DELIVER_TO` in the env file
+delivers via the `+portfolio` alias, so enquiries land in the Inbox while the "To:" line still
+shows `MAIL_TO`. `set-smtp.sh` sets or removes it automatically.
+App passwords: https://myaccount.google.com/apppasswords
 
 Test without the website: `python3 server.py --send-test` (with the env file, as in the
 `--check-smtp` line above) emails a sample enquiry to `MAIL_TO`.
