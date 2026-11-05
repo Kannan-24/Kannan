@@ -22,7 +22,7 @@
 
 .nav.is-scrolled .nav-dock,
 .nav.is-open .nav-dock {
-  max-width: 1040px;
+  max-width: 1180px;
   border-color: var(--border);
   background: var(--nav-bg);
   box-shadow: var(--shadow);
@@ -76,7 +76,7 @@
 
 .nav-link {
   position: relative;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-radius: 10px;
   font-size: 0.9rem;
   font-weight: 600;
@@ -142,7 +142,14 @@
   color: var(--text-muted);
 }
 
-.nav-menu-btn {
+.nav-hire.btn {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 0.88rem;
+}
+
+/* .icon-btn (base.css) would otherwise show this on desktop too */
+.icon-btn.nav-menu-btn {
   display: none;
 }
 
@@ -150,13 +157,21 @@
   display: none;
 }
 
-@media (max-width: 1080px) {
-  .nav-search-label {
+@media (max-width: 1360px) {
+  .nav-search {
+    width: 40px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .nav-search-label,
+  .nav-search kbd {
     display: none;
   }
 }
 
-@media (max-width: 900px) {
+/* Nine section links need ~1180px; below that, use the menu button. */
+@media (max-width: 1180px) {
   .nav-links {
     display: none;
   }
@@ -165,14 +180,14 @@
     margin-left: auto;
   }
 
-  .nav-menu-btn {
+  .icon-btn.nav-menu-btn {
     display: inline-flex;
   }
 
   .nav-mobile:not([hidden]) {
     display: grid;
     gap: 4px;
-    max-width: 1040px;
+    max-width: 1180px;
     margin: 8px auto 0;
     padding: 10px;
     border: 1px solid var(--border);
@@ -208,14 +223,31 @@
     background: var(--accent-soft);
     color: var(--accent);
   }
+
+  .nav-mobile-hire {
+    margin-top: 6px;
+    animation: menu-item-in 0.4s var(--ease) both;
+    animation-delay: calc(var(--i) * 35ms);
+  }
 }
 
 @media (max-width: 480px) {
-  .nav-search kbd {
+  .nav-logo-text {
     display: none;
   }
 
-  .nav-logo-text {
+  .nav-dock {
+    gap: 8px;
+  }
+
+  .nav-hire.btn {
+    padding: 0 14px;
+  }
+}
+
+/* Very narrow phones: the menu still lists every section. */
+@media (max-width: 400px) {
+  .nav-search {
     display: none;
   }
 }

@@ -4,8 +4,10 @@ import { prefersReducedMotion } from "../lib/utils";
 const GLYPHS = "!<>-_\\/[]{}=+*^?#$%&01";
 
 // "Decrypts" text from random glyphs into the final string, left to right.
+// Starts from the real text so the pre-rendered HTML (and no-JS visitors)
+// show the name, and hydration matches the server output.
 export default function useScramble(target, { duration = 1100, delay = 250 } = {}) {
-  const [output, setOutput] = useState(() => (prefersReducedMotion() ? target : ""));
+  const [output, setOutput] = useState(target);
 
   useEffect(() => {
     if (prefersReducedMotion()) {

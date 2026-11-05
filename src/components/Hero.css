@@ -93,6 +93,7 @@
 .hero-copy > *:nth-child(5) { animation-delay: 240ms; }
 .hero-copy > *:nth-child(6) { animation-delay: 300ms; }
 .hero-copy > *:nth-child(7) { animation-delay: 360ms; }
+.hero-copy > *:nth-child(8) { animation-delay: 420ms; }
 
 @keyframes hero-rise {
   from {
@@ -131,28 +132,46 @@
   font-size: 0.9rem;
 }
 
-.hero-title {
+.hero-name {
   font-family: var(--font-sans);
-  font-size: clamp(3rem, 8.5vw, 6rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: -0.045em;
-  background: linear-gradient(180deg, var(--text) 30%, color-mix(in srgb, var(--text) 55%, transparent));
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, var(--text) 30%, color-mix(in srgb, var(--text) 60%, transparent));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   white-space: nowrap;
 }
 
+.hero-title {
+  margin-top: 14px;
+  font-family: var(--font-sans);
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 .hero-role {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
-  min-height: 1.8em;
   margin: 18px 0 22px;
   font-family: var(--font-mono);
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
   font-weight: 500;
+  line-height: 1.6;
   color: var(--accent);
 }
 
@@ -368,10 +387,6 @@
 }
 
 @media (max-width: 520px) {
-  .hero-title {
-    white-space: normal;
-  }
-
   .hero-actions .btn {
     flex: 1 1 100%;
   }

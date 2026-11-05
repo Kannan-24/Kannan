@@ -5,61 +5,121 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <!-- Before first paint: flag that JavaScript runs (scroll-reveal animations only
+       hide content when it does) and apply the saved theme to avoid a flash. -->
   <script>
+    document.documentElement.classList.add("js");
     try {
       var t = localStorage.getItem("portfolio-theme");
       if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
     } catch (e) {}
   </script>
 
-  <title>Kannan M | Software & Full Stack Developer</title>
-  <meta name="title" content="Kannan M | Software & Full Stack Developer" />
-  <meta name="description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
-  <meta name="keywords" content="Kannan M, Software Developer, Full Stack Developer, Python Developer, React, Flask, AWS Textract, OCR, Portfolio" />
-  <meta name="author" content="Kannan M" />
+  <!--
+    %SITE_…% placeholders are filled in from src/config/site.js by the
+    site-html plugin (scripts/site-html-plugin.js). Edit values there, not here.
+  -->
+  <title>%SITE_TITLE%</title>
+  <meta name="title" content="%SITE_TITLE%" />
+  <meta name="description" content="%SITE_DESCRIPTION%" />
+  <meta name="keywords" content="%SITE_KEYWORDS%" />
+  <meta name="author" content="%SITE_NAME%" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://kannan-24.netlify.app/" />
+  <link rel="canonical" href="%SITE_URL%/" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/og-image.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="theme-color" content="#05080b" />
 
-  <!-- Open Graph -->
+  <!-- Open Graph (LinkedIn, WhatsApp, Facebook link previews) -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://kannan-24.netlify.app/" />
-  <meta property="og:title" content="Kannan M | Software & Full Stack Developer" />
-  <meta property="og:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
-  <meta property="og:image" content="https://kannan-24.netlify.app/og-image.png" />
-  <meta property="og:site_name" content="Kannan M Portfolio" />
+  <meta property="og:url" content="%SITE_URL%/" />
+  <meta property="og:title" content="%SITE_TITLE%" />
+  <meta property="og:description" content="%SITE_DESCRIPTION%" />
+  <meta property="og:image" content="%SITE_URL%%SITE_OG_IMAGE%" />
+  <meta property="og:image:alt" content="Portrait of %SITE_NAME%" />
+  <meta property="og:site_name" content="%SITE_NAME% Portfolio" />
+  <meta property="og:locale" content="en_IN" />
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://kannan-24.netlify.app/" />
-  <meta name="twitter:title" content="Kannan M | Software & Full Stack Developer" />
-  <meta name="twitter:description" content="Portfolio of Kannan M, a Python &amp; Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces." />
-  <meta name="twitter:image" content="https://kannan-24.netlify.app/og-image.png" />
+  <!-- Twitter / X (square headshot, so the small "summary" card fits best) -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:url" content="%SITE_URL%/" />
+  <meta name="twitter:title" content="%SITE_TITLE%" />
+  <meta name="twitter:description" content="%SITE_DESCRIPTION%" />
+  <meta name="twitter:image" content="%SITE_URL%%SITE_OG_IMAGE%" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" />
 
-  <!-- Structured data -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Kannan M",
-      "jobTitle": "Software Developer",
-      "url": "https://kannan-24.netlify.app/",
-      "sameAs": ["https://github.com/Kannan-24", "https://linkedin.com/in/m-kannan-"]
-    }
-  </script>
+  <!-- Structured data (schema.org Person + services), generated from site.js -->
+  %SITE_JSON_LD%
+
+  <noscript>
+    <style>
+      .ns {
+        padding-top: 104px;
+        padding-bottom: 8px;
+      }
+      .ns-card {
+        padding: 22px 24px;
+        border: 1px solid var(--accent-line, #3eedb752);
+        border-radius: 14px;
+        background: var(--surface, #0a1117);
+        color: var(--text, #e6edf3);
+        font-family: var(--font-sans, system-ui, sans-serif);
+        line-height: 1.6;
+      }
+      .ns-card p,
+      .ns-card ul {
+        margin: 0 0 12px;
+      }
+      .ns-card ul {
+        padding-left: 20px;
+      }
+      .ns-note,
+      .ns-label {
+        font-family: var(--font-mono, monospace);
+        font-size: 0.8rem;
+        color: var(--text-faint, #7f91a0);
+      }
+      .ns-label {
+        margin-top: 16px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .ns-name {
+        font-size: 1.2rem;
+      }
+      .ns-card a {
+        color: var(--accent, #3eedb7);
+        text-decoration: underline;
+      }
+    </style>
+  </noscript>
 </head>
 
 <body>
-  <noscript>This portfolio needs JavaScript enabled to display.</noscript>
+  <!-- Shown only when JavaScript is turned off. The page below is pre-rendered,
+       so it still shows; this is the short summary for those visitors. -->
+  <noscript>
+    <div class="ns container">
+      <div class="ns-card">
+        <p class="ns-note">JavaScript is turned off, so a few interactive parts won't work. Here's the short version:</p>
+        <p class="ns-name"><strong>%SITE_NAME%</strong> · %SITE_ROLE%</p>
+        <p>I build web apps, websites and automation tools that save your business time. Based in %SITE_LOCATION% and available for freelance projects.</p>
+        <p class="ns-label">Services</p>
+        <ul>
+          <li><strong>Websites &amp; Landing Pages</strong>: responsive business and portfolio sites, fast and SEO-friendly.</li>
+          <li><strong>Web Applications</strong>: dashboards, admin panels, booking and inventory tools (React + Flask).</li>
+          <li><strong>Data &amp; Automation</strong>: PDF/invoice to Excel with OCR, data cleaning, web scraping and Python automation scripts.</li>
+        </ul>
+        <p class="ns-label">Contact</p>
+        <ul>%SITE_CONTACT_LINKS%</ul>
+      </div>
+    </div>
+  </noscript>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

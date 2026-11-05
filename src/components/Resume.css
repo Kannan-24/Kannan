@@ -119,6 +119,11 @@
   border: 0;
 }
 
+.res-pdf-slot {
+  height: 100%;
+  min-height: 520px;
+}
+
 .res-pdf-fallback {
   display: flex;
   flex-direction: column;

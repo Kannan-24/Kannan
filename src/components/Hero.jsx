@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { FaArrowDown, FaArrowRight, FaPaperPlane } from "react-icons/fa";
-import { marquee, mailtoLink, profile } from "../data/portfolio";
+import { marquee, profile } from "../data/portfolio";
 import useScramble from "../hooks/useScramble";
-import useTypewriter from "../hooks/useTypewriter";
 import { prefersReducedMotion } from "../lib/utils";
 import WorkspaceImg from "../assets/developer-workspace.webp";
+import WorkspaceImgSmall from "../assets/developer-workspace-720.webp";
 import "./Hero.css";
 
 const Hero = () => {
@@ -12,7 +12,6 @@ const Hero = () => {
   const visualRef = useRef(null);
   const frame = useRef(0);
   const name = useScramble(profile.name);
-  const role = useTypewriter(profile.roles);
 
   // Spotlight + tilt are written straight to CSS variables — no re-renders.
   const onPointerMove = (e) => {
@@ -69,25 +68,29 @@ const Hero = () => {
             <b>kannan@portfolio</b>:~$ whoami
           </p>
 
-          <h1 className="hero-title" id="hero-title" aria-label={profile.name}>
-            <span aria-hidden="true">{name || " "}</span>
+          <p className="hero-name">
+            <span className="sr-only">{profile.name}</span>
+            <span aria-hidden="true">{name}</span>
+          </p>
+
+          <h1 className="hero-title" id="hero-title">
+            {profile.heroHeadline} <em>{profile.heroHeadlineAccent}</em>
           </h1>
 
-          <p className="hero-role" aria-label={profile.roles.join(", ")}>
+          <p className="hero-role">
             <span className="hero-role-arrow" aria-hidden="true">&gt;</span>
-            <span aria-hidden="true">{role}</span>
-            <span className="caret" aria-hidden="true">▍</span>
+            <span>{profile.heroSubtext}</span>
           </p>
 
           <p className="hero-desc">{profile.heroDescription}</p>
 
           <div className="hero-actions">
-            <a href={mailtoLink} className="btn btn-primary">
+            <a href="#contact" className="btn btn-primary">
               <FaPaperPlane aria-hidden="true" />
-              Let&apos;s connect
+              Hire Me
             </a>
             <a href="#projects" className="btn btn-ghost">
-              View my work
+              View My Work
               <FaArrowRight aria-hidden="true" />
             </a>
           </div>
@@ -103,7 +106,7 @@ const Hero = () => {
             </div>
             <div>
               <dt>Focus</dt>
-              <dd>Python · React · OCR</dd>
+              <dd>Web apps · Automation · OCR</dd>
             </div>
           </dl>
         </div>
@@ -111,18 +114,25 @@ const Hero = () => {
         <div className="hero-visual" ref={visualRef}>
           <div className="hero-visual-glow" aria-hidden="true" />
           <div className="hero-visual-tilt">
+            {/* Largest image on the first screen: load it early, never lazily. */}
             <img
               src={WorkspaceImg}
+              srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
+              sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
               alt="Illustration of a developer coding at a desk with multiple monitors"
               className="hero-image"
               width="1100"
               height="917"
+              // React 18 only passes this through in lowercase (camelCase arrives in React 19).
+              // eslint-disable-next-line react/no-unknown-property
+              fetchpriority="high"
+              decoding="async"
             />
             <span className="hero-badge hero-badge-a">
               <span className="live-dot" aria-hidden="true" /> build passing
             </span>
             <span className="hero-badge hero-badge-b">
-              <b>&lt;/&gt;</b> claims.py
+              <b>&lt;/&gt;</b> automate.py
             </span>
             <span className="hero-badge hero-badge-c">
               AWS Textract <b>+</b> OCR

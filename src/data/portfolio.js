@@ -1,68 +1,134 @@
-// Single source of truth for everything the site displays.
+// Content for everything the site displays.
 // Edit content here — components only handle presentation.
+// Contact details, availability and SEO text live in src/config/site.js.
 import {
   FaPython, FaJs, FaJava, FaLaravel, FaPhp, FaReact, FaHtml5, FaCss3Alt,
   FaBootstrap, FaFigma, FaDatabase, FaEye, FaFilePdf, FaGitAlt, FaGithub,
   FaCogs, FaLinux, FaCloud, FaRobot, FaBrain, FaCode, FaBug, FaVial,
-  FaCheckDouble, FaPalette,
+  FaCheckDouble, FaPalette, FaLaptopCode, FaCubes, FaFileInvoice,
 } from "react-icons/fa";
 import {
   SiStreamlit, SiFlask, SiFastapi, SiDocker, SiAmazonwebservices, SiOpenai,
   SiNodedotjs,
 } from "react-icons/si";
+import { site } from "../config/site";
+import { testimonials } from "./testimonials";
+
+export { mailtoLink, whatsappLink } from "../config/site";
 
 export const profile = {
-  name: "Kannan M",
-  role: "Software Developer",
-  roles: [
-    "Software Developer",
-    "Python & Full Stack Developer",
-  ],
+  ...site,
+  heroHeadline: "I build web apps, websites and automation tools that",
+  heroHeadlineAccent: "save your business time.",
+  heroSubtext: "Python & Full Stack Developer | React • Flask • OCR & Document Automation",
   heroDescription:
-    "I build scalable web applications, automate complex document workflows, and turn ideas into dependable, real-world software.",
+    "From fast business websites to tools that turn piles of PDFs into clean spreadsheets, I handle the whole job: first call, build, launch and support.",
   aboutDescription:
     "A passionate learner, constantly exploring better ways to solve problems with code. I enjoy turning messy, manual processes into clean, automated systems — and building interfaces that make them a pleasure to use.",
   tagline: "Building solutions, learning every day, and turning ideas into real-world applications.",
   quote: "Turning ideas into real-world solutions through code.",
-  email: "kannanmuruganandham1@gmail.com",
-  phone: "+916382511495",
-  phoneDisplay: "+91 63825 11495",
-  location: "Bangalore, India",
   dob: "September 24, 2004",
-  availability: "Open to opportunities",
-  // Set to true to show the "Open to opportunities" badge, avatar dot, and status lines.
-  showAvailability: false,
   education: "B.E. Computer Science",
   company: "NuWare Systems",
-  github: "https://github.com/Kannan-24",
-  githubHandle: "Kannan-24",
-  linkedin: "https://linkedin.com/in/m-kannan-",
   resume: "/Kannan_Resume.pdf",
   resumeFileName: "Kannan_Resume.pdf",
-  site: "https://kannan-24.netlify.app",
 };
 
-export const mailtoLink = `mailto:${profile.email}?subject=${encodeURIComponent(
-  "Project Inquiry / Collaboration"
-)}&body=${encodeURIComponent(
-  "Hi Kannan,\n\nI came across your portfolio and would like to connect regarding a project / opportunity.\n\nBest regards,\n"
-)}`;
-
+// Page order. The navbar, command palette and the "01 //" section numbers
+// all follow this list.
 export const sections = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
+  { id: "services", label: "Services" },
+  { id: "projects", label: "Projects" },
+  { id: "process", label: "Process" },
+  ...(testimonials.length ? [{ id: "testimonials", label: "Reviews" }] : []),
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
   { id: "resume", label: "Resume" },
   { id: "contact", label: "Contact" },
 ];
+
+// "01", "02", … based on the order above (home is 00).
+export const sectionNumber = (id) =>
+  String(Math.max(sections.findIndex((s) => s.id === id), 0)).padStart(2, "0");
 
 export const stats = [
   { value: "B.E CSE", label: "Education", tone: "teal" },
   { value: "1+ Years", label: "Experience", tone: "sky" },
   { value: "Always", label: "Learning", tone: "violet" },
   { value: "Goal", label: "Build impactful products", tone: "amber" },
+];
+
+export const services = [
+  {
+    key: "websites",
+    icon: FaLaptopCode,
+    tone: "teal",
+    title: "Websites & Landing Pages",
+    description:
+      "Responsive business and portfolio sites that load fast, are SEO-friendly, and turn visitors into enquiries.",
+    deliverables: [
+      "Business, portfolio & product landing pages",
+      "Mobile-first, responsive design",
+      "SEO basics, fast loading & analytics",
+      "Enquiry forms & WhatsApp chat buttons",
+    ],
+    stack: "React · HTML/CSS · Netlify",
+  },
+  {
+    key: "web-apps",
+    icon: FaCubes,
+    tone: "sky",
+    title: "Web Applications",
+    description:
+      "Custom tools that replace spreadsheets and paperwork, built with a React front end and a Python (Flask) back end.",
+    deliverables: [
+      "Dashboards & admin panels",
+      "Booking, inventory & billing tools",
+      "User logins, roles & reports",
+      "Databases & REST APIs",
+    ],
+    stack: "React · Flask · SQL",
+  },
+  {
+    key: "automation",
+    icon: FaFileInvoice,
+    tone: "violet",
+    title: "Data & Automation",
+    description:
+      "Python scripts and pipelines that take repetitive data work off your team’s plate.",
+    deliverables: [
+      "PDF / invoice → Excel with OCR",
+      "Data cleaning & spreadsheet automation",
+      "Web scraping & data collection",
+      "Scheduled Python automation scripts",
+    ],
+    stack: "Python · AWS Textract · Tesseract",
+  },
+];
+
+export const processSteps = [
+  {
+    title: "Discuss",
+    text: "We talk through your business, the problem, and what a great result looks like — by call, chat or email.",
+    output: "clear goals",
+  },
+  {
+    title: "Plan & Quote",
+    text: "I propose the scope, tech, timeline and a clear quote, so you know exactly what you’re getting before work starts.",
+    output: "scope + quote",
+  },
+  {
+    title: "Build & Update",
+    text: "I build in small milestones and share regular progress updates and preview links, so you can give feedback early.",
+    output: "regular previews",
+  },
+  {
+    title: "Deliver & Support",
+    text: "I deploy, hand over the code and docs, and stay available for fixes and small changes after launch.",
+    output: "live + supported",
+  },
 ];
 
 export const experiences = [
@@ -79,14 +145,14 @@ export const experiences = [
     contributions: [
       {
         title: "End-to-End Claims Processing",
-        text: "Developed and enhanced automated extraction and verification pipelines for Dental and Professional insurance claims covering file loading, PDF splitting, validation, and SQL Server storage.",
+        text: "Developed and enhanced automated extraction and verification pipelines for insurance claim documents, covering file loading, PDF splitting, validation, and SQL Server storage.",
       },
       {
-        title: "AG Version Tool",
-        text: "Independently developed the AG Version Tool to manage extraction versions, prevent duplicate processing, and maintain complete audit history.",
+        title: "Extraction Version Tracking",
+        text: "Independently built a version-tracking tool that manages extraction versions, prevents duplicate processing, and keeps a complete audit history.",
       },
       {
-        title: "Claim Verification Tool",
+        title: "Claim Verification UI",
         text: "Built full-stack verification functionality allowing operators to inspect source documents alongside extracted data, manage claim queues, edit field values, and update service lines.",
       },
       {
@@ -94,8 +160,8 @@ export const experiences = [
         text: "Integrated AWS Textract with Tesseract OCR as fallback, engineered split-file origin mapping for traceability, and automated file movement and CSV exports.",
       },
       {
-        title: "RAT Enterprise Application",
-        text: "Built a configuration-driven Dynamic Quality Measures section, optimized Coder Dashboard queries, organized audit logging, and supported deployment activities.",
+        title: "Healthcare Quality Analytics",
+        text: "Built a configuration-driven quality-measures module, optimized dashboard queries, organized audit logging, and supported deployment activities.",
       },
     ],
     tech: [
@@ -178,104 +244,88 @@ export const skillCategories = [
   },
 ];
 
-export const projectCategories = [
-  "All",
-  "Enterprise Solutions",
-  "Full-Stack & Web Apps",
-  "Academic & Awards",
-];
+export const projectCategories = ["All", "Data & Automation", "Web Apps", "Websites & UI"];
 
+// Case studies. Each card shows: problem → solution → result, tech tags, and
+// Live demo / GitHub buttons (a button is hidden when its link is missing).
+// `workProject: true` marks work done for an employer: keep those descriptions
+// general (no client names, internal tool names, code or screenshots).
+// TODO: replace qualitative results with real numbers wherever you have them
+// (hours saved per week, documents processed per day, etc.).
 export const projects = [
   {
-    title: "AG Claims Processing Platform",
-    subtitle: "Extraction & Verification",
-    category: "Enterprise Solutions",
-    fileName: "ag_claims_processing.md",
-    text: "Developed and enhanced an end-to-end claims processing workflow for Dental and Professional insurance claims, covering document extraction, database storage, verification, and file processing. Implemented automated document processing including file loading, PDF splitting, extraction, validation, version tracking, and SQL Server storage.",
-    highlights: [
-      "Integrated AWS Textract as primary OCR engine with Tesseract OCR fallback.",
-      "Independently engineered the AG Version Tool to prevent duplicate processing and maintain audit history.",
-      "Implemented split-file origin mapping ensuring full traceability between source and claim documents.",
-      "Enhanced verification workflow with claim assignment, queue management, field editing, and CSV export.",
-    ],
-    workflow: [
-      "Source Documents", "File Loading", "PDF Split", "OCR Extraction",
-      "Validation", "SQL Server", "Verification", "Export",
-    ],
-    tags: ["Python", "Streamlit", "Flask", "AWS Textract", "SQL Server", "PDF Processing", "JavaScript"],
+    title: "Insurance Claims Document Automation",
+    category: "Data & Automation",
+    fileName: "claims_automation.md",
+    workProject: true,
+    problem:
+      "Staff were typing data from large volumes of scanned claim forms (PDF/TIFF) into a database by hand.",
+    solution:
+      "An OCR pipeline that splits incoming PDFs, extracts fields with AWS Textract (Tesseract as fallback), validates them and stores them in SQL Server, plus a review screen that shows each source page beside its extracted data.",
+    result:
+      "Manual data entry replaced by an extract → validate → review flow, with version tracking that stops duplicate processing and every record traceable to its source page.",
+    workflow: ["PDF in", "Split", "OCR", "Validate", "Database", "Review", "Export"],
+    tags: ["Python", "Flask", "Streamlit", "AWS Textract", "Tesseract OCR", "SQL Server"],
   },
   {
-    title: "RAT — Dynamic Quality Measures",
-    subtitle: "Healthcare enterprise application",
-    category: "Enterprise Solutions",
-    fileName: "rat_quality_measures.md",
-    text: "Engineered a dynamic Quality Measures section supporting multiple healthcare measures and services using a configuration-driven approach, drastically reducing repeated hard-coded development. Optimized Coder Dashboard & Review queries and enhanced activity tracking.",
-    highlights: [
-      "Architected a configuration-driven design for dynamic measures and services.",
-      "Enhanced Coder Dashboard and Coder Review functionality with query performance optimizations.",
-      "Added and enhanced critical fields in Member Chart based on clinical application requirements.",
-      "Organized and improved audit-log functionality for end-to-end activity tracking and compliance.",
-    ],
-    tags: ["React", "Python", "SQL", "API Integration", "Audit Logging"],
-  },
-  {
-    title: "Claim Extraction & Verification",
-    subtitle: "Dental & Professional claims",
-    category: "Enterprise Solutions",
-    fileName: "claim_extraction_verification.md",
-    text: "Comprehensive claim extraction and verification pipeline handling source documents, split claim files, and traceability. Created an interactive verification UI displaying source documents alongside extracted data for review and correction.",
-    highlights: [
-      "Built an interactive verification UI to view source documents alongside extracted claim data.",
-      "Claim queue management, assignment, field-level editing, service-line updates, and status tracking.",
-      "Automated file movement based on validation and verification outcomes.",
-      "Comprehensive processing logs, left-out / unprocessed file recovery, and version tracking.",
-    ],
-    workflow: [
-      "Source Documents", "File Processing", "PDF Splitting", "OCR Extraction",
-      "Validation", "SQL Server", "Claim Verification", "Export",
-    ],
-    tags: ["Python", "Flask", "Streamlit", "AWS Textract", "Tesseract OCR", "SQL Server", "PDF/TIFF"],
+    title: "Healthcare Quality Analytics Module",
+    category: "Web Apps",
+    fileName: "quality_measures.md",
+    workProject: true,
+    problem:
+      "Every new healthcare quality measure needed its own hand-coded screens and logic, which slowed down releases.",
+    solution:
+      "A configuration-driven module where measures and services are defined as data, plus faster dashboard queries and organized audit logging.",
+    result:
+      "New measures are added through configuration instead of new code, with a full audit trail of user activity.",
+    tags: ["React", "Python", "SQL", "REST APIs", "Audit Logging"],
   },
   {
     title: "CO-PO Attainment Tracking Tool",
-    subtitle: "Institutional award, 2024–25",
-    category: "Academic & Awards",
+    category: "Web Apps",
     fileName: "co_po_attainment.md",
-    text: "Developed an institutional software application to automate the computation and tracking of Course Outcome–Program Outcome (CO–PO) attainment for engineering curricula. Recognized with an institutional award for this software during the 2024–2025 academic year.",
-    highlights: [
-      "Automates complex attainment mapping and analysis.",
-      "Generates accreditation-ready reports, reducing faculty manual preparation by over 80%.",
-      "Official Certificate of Recognition awarded by Erode Sengunthar Engineering College.",
-    ],
-    tags: ["Laravel", "Database", "Analytics", "Automation", "Reporting"],
-  },
-  {
-    title: "Automated Transport Management System",
-    subtitle: "Campus transport, live tracking",
-    category: "Full-Stack & Web Apps",
-    fileName: "atms.md",
-    text: "Developed a web-based solution to streamline campus transportation. Integrated live tracking, attendance monitoring, and automated reporting to reduce errors and improve operational efficiency.",
-    tags: ["Laravel", "Tailwind CSS", "MySQL", "Live Tracking"],
-    githubLink: "https://github.com/Kannan-24/atms",
+    problem:
+      "Faculty calculated course and programme outcome attainment for accreditation by hand in spreadsheets: slow and error-prone.",
+    solution:
+      "A web application that computes CO–PO attainment from assessment data and generates accreditation-ready reports.",
+    result:
+      "Cut manual report preparation by over 80% and received an institutional award (2024–25).",
+    tags: ["Laravel", "MySQL", "Reporting", "Automation"],
   },
   {
     title: "Invoice Management System",
-    subtitle: "GST-compliant billing",
-    category: "Full-Stack & Web Apps",
+    category: "Web Apps",
     fileName: "invoice_management.md",
-    text: "Built a comprehensive tool to create, manage, and track GST-compliant invoices. Automated payment reminders and financial reporting to enhance billing accuracy and efficiency.",
+    problem:
+      "Writing GST invoices manually and tracking payments from memory led to billing mistakes and late payments.",
+    solution:
+      "A billing app to create, manage and track GST-compliant invoices, with automated payment reminders and financial reports.",
+    result: "More accurate billing, with reminders and reports generated automatically.",
     tags: ["Laravel", "Tailwind CSS", "MySQL", "GST Invoicing"],
     githubLink: "https://github.com/Kannan-24/ims",
   },
   {
-    title: "Spotify Clone",
-    subtitle: "Music streaming UI",
-    category: "Full-Stack & Web Apps",
-    fileName: "spotify_clone.md",
-    text: "Designed and implemented a responsive Spotify-inspired UI using React.js. Built dynamic pages for playlists and music categories with reusable components and modern design practices.",
-    tags: ["React", "HTML", "CSS", "UI/UX"],
+    title: "Automated Transport Management System",
+    category: "Web Apps",
+    fileName: "atms.md",
+    problem:
+      "Campus bus attendance and routes were tracked manually, causing errors and giving staff little visibility.",
+    solution: "A web platform with live bus tracking, attendance monitoring and automated reports.",
+    result: "Fewer manual errors and real-time visibility of the transport fleet.",
+    tags: ["Laravel", "Tailwind CSS", "MySQL", "Live Tracking"],
+    githubLink: "https://github.com/Kannan-24/atms",
+  },
+  {
+    title: "Music Streaming UI (Spotify-inspired)",
+    category: "Websites & UI",
+    fileName: "music_player.md",
+    problem:
+      "Practice project: build a complex streaming-app interface that works on every screen size.",
+    solution: "A responsive React interface with playlist and category pages built from reusable components.",
+    result: "Responsive from mobile to desktop and deployed live on Netlify.",
+    tags: ["React", "HTML", "CSS", "Responsive UI"],
     githubLink: "https://github.com/Kannan-24/music-player",
-    externalLink: "https://kannanmp.netlify.app",
+    liveLink: "https://kannanmp.netlify.app",
   },
 ];
 

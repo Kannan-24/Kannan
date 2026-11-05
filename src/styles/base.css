@@ -13,7 +13,7 @@
   --border-strong: rgba(148, 178, 196, 0.22);
   --text: #e6edf3;
   --text-muted: #9fb0bf;
-  --text-faint: #6b7d8c;
+  --text-faint: #7f91a0; /* was #6b7d8c: below 4.5:1 on panels */
   --accent: #3eedb7;
   --accent-2: #38bdf8;
   --accent-ink: #04140f;
@@ -50,8 +50,8 @@
   --border-strong: rgba(15, 35, 45, 0.18);
   --text: #0d1b24;
   --text-muted: #44566a;
-  --text-faint: #66788a;
-  --accent: #0b9b7d;
+  --text-faint: #5a6b7c; /* was #66788a: below 4.5:1 on tinted panels */
+  --accent: #087f67; /* was #0b9b7d: 3.5:1 on white, too low for text/buttons */
   --accent-2: #0284c7;
   --accent-ink: #ffffff;
   --accent-soft: rgba(11, 155, 125, 0.09);
@@ -465,14 +465,16 @@ button {
 
 /* =========================================================
    Scroll reveal
+   Only when JS runs (html.js is set in index.html), so the
+   pre-rendered page stays fully visible without JavaScript.
    ========================================================= */
-[data-reveal] {
+.js [data-reveal] {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
-[data-reveal].is-visible {
+.js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }
@@ -491,7 +493,7 @@ button {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  [data-reveal] {
+  .js [data-reveal] {
     opacity: 1;
     transform: none;
   }
