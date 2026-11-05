@@ -35,8 +35,16 @@ ssh invoice-vm 'sudo tail -n 5 /var/lib/portfolio-contact/messages.jsonl'   # sa
 ssh invoice-vm 'sudo systemd-run --quiet --pipe --wait -p EnvironmentFile=/etc/portfolio-contact.env -p DynamicUser=yes python3 /opt/portfolio-contact/server.py --check-smtp'   # test the Gmail login
 ```
 
-To change where mail goes, or the Gmail app password: edit `/etc/portfolio-contact.env`
-on the VM, then `sudo systemctl restart portfolio-contact`.
+To change the sending Gmail account, its app password, or where enquiries go, run
+`bash contact-api/set-smtp.sh`. It asks for the values (password input hidden), updates the
+VM, checks the login (restoring the old settings if it fails), and can send a test enquiry.
+
+Gmail files mail that an account sends to itself under **Sent**, not Inbox, so send FROM a
+different Gmail account than the one you receive enquiries at. (The service logs a warning
+at startup if they are the same.) App passwords: https://myaccount.google.com/apppasswords
+
+Test without the website: `python3 server.py --send-test` (with the env file, as in the
+`--check-smtp` line above) emails a sample enquiry to `MAIL_TO`.
 
 ## One-time setup (already done)
 
