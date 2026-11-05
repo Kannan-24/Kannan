@@ -18,6 +18,10 @@ back instead of JSON.
 Configuration (environment, normally /etc/portfolio-contact.env):
   SMTP_USER, SMTP_PASS   required (e.g. Gmail address + app password)
   MAIL_TO                where enquiries are sent (default: SMTP_USER)
+  DELIVER_TO             optional delivery address used instead of MAIL_TO, while
+                         the visible "To:" still shows MAIL_TO. Gmail files mail an
+                         account sends to itself under Sent, not Inbox; delivering
+                         to you+alias@gmail.com puts it in the Inbox.
   SMTP_HOST, SMTP_PORT   default smtp.gmail.com:587 (STARTTLS; 465 = SSL)
   ALLOWED_ORIGINS        comma-separated sites allowed to post the form
   SITE_URL               "back to the portfolio" link on the no-JS page
@@ -64,6 +68,7 @@ SMTP_PORT = int(_env("SMTP_PORT", "587"))
 SMTP_USER = _env("SMTP_USER")
 SMTP_PASS = _env("SMTP_PASS")
 MAIL_TO = _env("MAIL_TO", SMTP_USER)
+DELIVER_TO = os.environ.get("DELIVER_TO") or MAIL_TO
 ALLOWED_ORIGINS = {o.strip().rstrip("/") for o in _env("ALLOWED_ORIGINS", "").split(",") if o.strip()}
 SITE_URL = _env("SITE_URL", "https://kannan-24.netlify.app").rstrip("/")
 STATE_DIR = Path(_env("STATE_DIRECTORY", str(Path(__file__).with_name("data"))))
@@ -156,7 +161,8 @@ def smtp_session() -> smtplib.SMTP:
 
 def send_email(msg: EmailMessage) -> None:
     with smtp_session() as smtp:
-        smtp.send_message(msg)
+        # The envelope recipient decides delivery; the To: header is only what you see.
+        smtp.send_message(msg, to_addrs=[DELIVER_TO])
 
 
 _file_lock = threading.Lock()
@@ -311,7 +317,7 @@ def main() -> None:
     if "--check-smtp" in sys.argv:
         with smtp_session():
             pass
-        print(f"SMTP login OK ({SMTP_USER} @ {SMTP_HOST}:{SMTP_PORT}); mail goes to {MAIL_TO}")
+        print(f"SMTP login OK ({SMTP_USER} @ {SMTP_HOST}:{SMTP_PORT}); mail to {MAIL_TO} (delivered via {DELIVER_TO})")
         return
     if "--send-test" in sys.argv:
         sample = {
@@ -319,15 +325,17 @@ def main() -> None:
             "message": "This is a test enquiry sent with --send-test. You can delete it.",
         }
         send_email(build_email(sample, datetime.now(IST)))
-        print(f"Test enquiry sent from {SMTP_USER} to {MAIL_TO}")
+        print(f"Test enquiry sent from {SMTP_USER} to {MAIL_TO} (delivered via {DELIVER_TO})")
         return
-    if SMTP_USER.lower() == MAIL_TO.lower():
-        log.warning("SMTP_USER and MAIL_TO are the same Gmail account: Gmail files such mail under Sent, not Inbox")
+    if SMTP_USER.lower() == DELIVER_TO.lower():
+        log.warning("Sending to the same Gmail account it is sent from: Gmail files such mail under Sent, "
+                    "not Inbox. Set DELIVER_TO=you+portfolio@gmail.com to fix.")
     if not ALLOWED_ORIGINS:
         log.warning("ALLOWED_ORIGINS is empty: every form post will be rejected")
     server = ThreadingHTTPServer((HOST, PORT), Handler)
     server.daemon_threads = True
-    log.info("listening on %s:%s, mailing %s, origins %s", HOST, PORT, MAIL_TO, sorted(ALLOWED_ORIGINS))
+    log.info("listening on %s:%s, mailing %s (delivered via %s), origins %s",
+             HOST, PORT, MAIL_TO, DELIVER_TO, sorted(ALLOWED_ORIGINS))
     try:
         server.serve_forever()
     except KeyboardInterrupt:
