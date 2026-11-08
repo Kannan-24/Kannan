@@ -11,14 +11,14 @@
 export const site = {
   // --- Identity -------------------------------------------------------------
   name: "Kannan M",
-  role: "Python & Full Stack Developer",
+  role: "Software Developer",
   location: "Bangalore, India",
   url: "https://kannan-24.netlify.app", // no trailing slash
 
-  // --- Freelance availability -------------------------------------------------
-  // Set showAvailability to false to hide the "Available" badge everywhere.
-  showAvailability: true,
-  availability: "Available for freelance projects",
+  // --- Availability -----------------------------------------------------------
+  // Set showAvailability to true to show the availability badge everywhere.
+  showAvailability: false,
+  availability: "Open to opportunities",
   responseTime: "within 24 hours",
 
   // --- Contact channels -------------------------------------------------------
@@ -28,7 +28,7 @@ export const site = {
   // WhatsApp number: digits only, including country code (no +, spaces or dashes).
   // Leave empty ("") to hide every WhatsApp link.
   whatsapp: "916382511495",
-  whatsappMessage: "Hi Kannan, I found your portfolio and would like to discuss a project.",
+  whatsappMessage: "Hi Kannan, I found your portfolio and would like to connect.",
   linkedin: "https://linkedin.com/in/m-kannan-",
   linkedinHandle: "in/m-kannan-",
   github: "https://github.com/Kannan-24",
@@ -36,23 +36,15 @@ export const site = {
 
   // --- Contact form ------------------------------------------------------------
   // Where the form is sent: the contact API on invoice-vm (see contact-api/README.md).
-  // It emails each enquiry to you, with Reply-To set to the client.
+  // It emails each message to you, with Reply-To set to the sender.
   contactEndpoint: "https://skmnco.in/portfolio-api/contact",
-  projectTypes: ["Website", "Web App", "Data & Automation", "Other"],
-  budgetRanges: [
-    "Under ₹20,000",
-    "₹20,000 – ₹50,000",
-    "₹50,000 – ₹1,00,000",
-    "Above ₹1,00,000",
-    "Not sure yet",
-  ],
 
   // --- SEO (search results & link previews) -----------------------------------
-  title: "Kannan M | Freelance Python & Full Stack Developer",
+  title: "Kannan M | Software & Full Stack Developer",
   description:
-    "Freelance Python & Full Stack Developer in Bangalore. I build business websites, React + Flask web apps, and OCR automation that turns PDF invoices into Excel.",
+    "Portfolio of Kannan M, a Python & Full Stack Developer building scalable web applications, document automation pipelines, and clean user interfaces.",
   keywords:
-    "Kannan M, freelance developer, freelance web developer, Python developer, Full Stack Developer, React, Flask, OCR, AWS Textract, PDF to Excel, invoice automation, web scraping, Bangalore",
+    "Kannan M, Software Developer, Full Stack Developer, Python Developer, React, Flask, AWS Textract, OCR, Portfolio",
   ogImage: "/og-image.jpg",
 };
 

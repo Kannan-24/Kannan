@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FaArrowRight, FaCopy, FaDownload, FaEnvelope, FaExternalLinkAlt, FaGithub,
-  FaHashtag, FaLinkedinIn, FaMoon, FaPaperPlane, FaSearch, FaSun, FaWhatsapp,
+  FaHashtag, FaLinkedinIn, FaMoon, FaSearch, FaSun, FaWhatsapp,
 } from "react-icons/fa";
 import { useTheme } from "../context/theme";
 import { mailtoLink, profile, sections, whatsappLink } from "../data/portfolio";
@@ -27,13 +27,6 @@ const CommandPalette = ({ open, onClose }) => {
         icon: FaHashtag,
         run: () => document.getElementById(s.id)?.scrollIntoView(),
       })),
-      {
-        id: "hire", group: "Actions", label: "Hire me: start a project", icon: FaPaperPlane,
-        run: () => {
-          document.getElementById("contact")?.scrollIntoView();
-          document.getElementById("cf-name")?.focus({ preventScroll: true });
-        },
-      },
       { id: "copy-email", group: "Actions", label: "Copy email address", hint: profile.email, icon: FaCopy, run: () => copyText(profile.email, "Email copied") },
       { id: "send-email", group: "Actions", label: "Send an email", icon: FaEnvelope, run: () => { window.location.href = mailtoLink; } },
       { id: "open-resume", group: "Actions", label: "Open resume", icon: FaExternalLinkAlt, run: () => openUrl(profile.resume) },

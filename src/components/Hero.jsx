@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { FaArrowDown, FaArrowRight, FaPaperPlane } from "react-icons/fa";
 import { marquee, profile } from "../data/portfolio";
 import useScramble from "../hooks/useScramble";
+import useTypewriter from "../hooks/useTypewriter";
 import { prefersReducedMotion } from "../lib/utils";
 import WorkspaceImg from "../assets/developer-workspace.webp";
 import WorkspaceImgSmall from "../assets/developer-workspace-720.webp";
@@ -12,6 +13,7 @@ const Hero = () => {
   const visualRef = useRef(null);
   const frame = useRef(0);
   const name = useScramble(profile.name);
+  const role = useTypewriter(profile.roles);
 
   // Spotlight + tilt are written straight to CSS variables — no re-renders.
   const onPointerMove = (e) => {
@@ -68,18 +70,14 @@ const Hero = () => {
             <b>kannan@portfolio</b>:~$ whoami
           </p>
 
-          <p className="hero-name">
-            <span className="sr-only">{profile.name}</span>
+          <h1 className="hero-title" id="hero-title" aria-label={profile.name}>
             <span aria-hidden="true">{name}</span>
-          </p>
-
-          <h1 className="hero-title" id="hero-title">
-            {profile.heroHeadline} <em>{profile.heroHeadlineAccent}</em>
           </h1>
 
-          <p className="hero-role">
+          <p className="hero-role" aria-label={profile.roles.join(", ")}>
             <span className="hero-role-arrow" aria-hidden="true">&gt;</span>
-            <span>{profile.heroSubtext}</span>
+            <span aria-hidden="true">{role}</span>
+            <span className="caret" aria-hidden="true">▍</span>
           </p>
 
           <p className="hero-desc">{profile.heroDescription}</p>
@@ -87,10 +85,10 @@ const Hero = () => {
           <div className="hero-actions">
             <a href="#contact" className="btn btn-primary">
               <FaPaperPlane aria-hidden="true" />
-              Hire Me
+              Let&apos;s connect
             </a>
             <a href="#projects" className="btn btn-ghost">
-              View My Work
+              View my work
               <FaArrowRight aria-hidden="true" />
             </a>
           </div>
@@ -106,7 +104,7 @@ const Hero = () => {
             </div>
             <div>
               <dt>Focus</dt>
-              <dd>Web apps · Automation · OCR</dd>
+              <dd>Python · React · OCR</dd>
             </div>
           </dl>
         </div>

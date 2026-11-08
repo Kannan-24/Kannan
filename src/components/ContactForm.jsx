@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { FaCheckCircle, FaChevronDown, FaExclamationTriangle, FaPaperPlane, FaRedo } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationTriangle, FaPaperPlane, FaRedo } from "react-icons/fa";
 import { profile, whatsappLink } from "../data/portfolio";
 
 // The form posts to the contact API on invoice-vm (contact-api/ in this repo),
-// which emails each enquiry to you. With JavaScript we send it in the background
+// which emails each message to you. With JavaScript we send it in the background
 // and show the result inline; without JavaScript the browser posts it directly
 // and the API answers with a small "Message sent" page.
 const ENDPOINT = profile.contactEndpoint;
@@ -84,36 +84,6 @@ const ContactForm = () => {
           <input id="cf-email" name="email" type="email" autoComplete="email" required maxLength={200} />
         </div>
 
-        <div className="cf-field">
-          <label htmlFor="cf-type">Project type</label>
-          <div className="cf-select">
-            <select id="cf-type" name="project-type" required defaultValue="">
-              <option value="" disabled>
-                Choose one…
-              </option>
-              {profile.projectTypes.map((type) => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-            <FaChevronDown aria-hidden="true" />
-          </div>
-        </div>
-
-        <div className="cf-field">
-          <label htmlFor="cf-budget">
-            Budget range <span className="cf-optional">(optional)</span>
-          </label>
-          <div className="cf-select">
-            <select id="cf-budget" name="budget" defaultValue="">
-              <option value="">Select a range…</option>
-              {profile.budgetRanges.map((range) => (
-                <option key={range} value={range}>{range}</option>
-              ))}
-            </select>
-            <FaChevronDown aria-hidden="true" />
-          </div>
-        </div>
-
         <div className="cf-field cf-field-full">
           <label htmlFor="cf-message">Message</label>
           <textarea
@@ -122,7 +92,7 @@ const ContactForm = () => {
             rows={5}
             required
             maxLength={5000}
-            placeholder="What do you need built, and what problem should it solve?"
+            placeholder="A role, a project, or just a hello: what would you like to talk about?"
           />
         </div>
       </div>

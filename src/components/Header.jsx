@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaBars, FaMoon, FaPaperPlane, FaSearch, FaSun, FaTimes } from "react-icons/fa";
+import { FaBars, FaMoon, FaSearch, FaSun, FaTimes } from "react-icons/fa";
 import { useTheme } from "../context/theme";
 import useActiveSection from "../hooks/useActiveSection";
 import { sections } from "../data/portfolio";
@@ -26,7 +26,7 @@ const Header = ({ onOpenPalette }) => {
   useEffect(() => {
     if (!menuOpen) return undefined;
     const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
-    const onResize = () => window.innerWidth > 1180 && setMenuOpen(false);
+    const onResize = () => window.innerWidth > 900 && setMenuOpen(false);
     window.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
     return () => {
@@ -73,9 +73,6 @@ const Header = ({ onOpenPalette }) => {
           >
             {theme === "dark" ? <FaSun aria-hidden="true" /> : <FaMoon aria-hidden="true" />}
           </button>
-          <a href="#contact" className="btn btn-primary nav-hire" onClick={() => setMenuOpen(false)}>
-            Hire Me
-          </a>
           <button
             type="button"
             className="icon-btn nav-menu-btn"
@@ -102,14 +99,6 @@ const Header = ({ onOpenPalette }) => {
             {label}
           </a>
         ))}
-        <a
-          href="#contact"
-          className="btn btn-primary nav-mobile-hire"
-          onClick={() => setMenuOpen(false)}
-          style={{ "--i": NAV_LINKS.length }}
-        >
-          <FaPaperPlane aria-hidden="true" /> Hire Me
-        </a>
       </nav>
     </header>
   );

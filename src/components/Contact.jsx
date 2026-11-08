@@ -34,7 +34,7 @@ const Contact = () => (
         kicker="contact"
         title="Let's build"
         accent="something."
-        lead={`Tell me about your project. I'll reply ${profile.responseTime} with questions or next steps.`}
+        lead="Have a project, a role, or just want to talk shop? My inbox is always open."
       />
 
       <Window title="ssh kannan@portfolio" meta="connected" className="cnt-window" bodyClassName="cnt-body" data-reveal>

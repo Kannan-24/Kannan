@@ -72,14 +72,7 @@
   color: var(--text-muted);
 }
 
-.cf-optional {
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--text-faint);
-}
-
 .cf-field input,
-.cf-field select,
 .cf-field textarea {
   width: 100%;
   min-height: 48px;
@@ -105,48 +98,16 @@
 }
 
 .cf-field input:hover,
-.cf-field select:hover,
 .cf-field textarea:hover {
   border-color: var(--accent-line);
 }
 
 .cf-field input:focus,
-.cf-field select:focus,
 .cf-field textarea:focus {
   outline: none;
   border-color: var(--accent);
   background: var(--surface);
   box-shadow: 0 0 0 4px var(--accent-soft);
-}
-
-.cf-select {
-  position: relative;
-}
-
-.cf-select select {
-  padding-right: 40px;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-
-.cf-select select:invalid {
-  color: var(--text-faint);
-}
-
-.cf-select option {
-  color: var(--text);
-  background: var(--surface);
-}
-
-.cf-select svg {
-  position: absolute;
-  top: 50%;
-  right: 14px;
-  font-size: 0.75rem;
-  color: var(--text-faint);
-  transform: translateY(-50%);
-  pointer-events: none;
 }
 
 .cf-error {

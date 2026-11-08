@@ -5,24 +5,21 @@ import {
   FaPython, FaJs, FaJava, FaLaravel, FaPhp, FaReact, FaHtml5, FaCss3Alt,
   FaBootstrap, FaFigma, FaDatabase, FaEye, FaFilePdf, FaGitAlt, FaGithub,
   FaCogs, FaLinux, FaCloud, FaRobot, FaBrain, FaCode, FaBug, FaVial,
-  FaCheckDouble, FaPalette, FaLaptopCode, FaCubes, FaFileInvoice,
+  FaCheckDouble, FaPalette,
 } from "react-icons/fa";
 import {
   SiStreamlit, SiFlask, SiFastapi, SiDocker, SiAmazonwebservices, SiOpenai,
   SiNodedotjs,
 } from "react-icons/si";
 import { site } from "../config/site";
-import { testimonials } from "./testimonials";
 
 export { mailtoLink, whatsappLink } from "../config/site";
 
 export const profile = {
   ...site,
-  heroHeadline: "I build web apps, websites and automation tools that",
-  heroHeadlineAccent: "save your business time.",
-  heroSubtext: "Python & Full Stack Developer | React • Flask • OCR & Document Automation",
+  roles: ["Software Developer", "Python & Full Stack Developer"],
   heroDescription:
-    "From fast business websites to tools that turn piles of PDFs into clean spreadsheets, I handle the whole job: first call, build, launch and support.",
+    "I build scalable web applications, automate complex document workflows, and turn ideas into dependable, real-world software.",
   aboutDescription:
     "A passionate learner, constantly exploring better ways to solve problems with code. I enjoy turning messy, manual processes into clean, automated systems — and building interfaces that make them a pleasure to use.",
   tagline: "Building solutions, learning every day, and turning ideas into real-world applications.",
@@ -39,12 +36,9 @@ export const profile = {
 export const sections = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
-  { id: "services", label: "Services" },
-  { id: "projects", label: "Projects" },
-  { id: "process", label: "Process" },
-  ...(testimonials.length ? [{ id: "testimonials", label: "Reviews" }] : []),
   { id: "experience", label: "Experience" },
   { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
   { id: "resume", label: "Resume" },
   { id: "contact", label: "Contact" },
 ];
@@ -58,77 +52,6 @@ export const stats = [
   { value: "1+ Years", label: "Experience", tone: "sky" },
   { value: "Always", label: "Learning", tone: "violet" },
   { value: "Goal", label: "Build impactful products", tone: "amber" },
-];
-
-export const services = [
-  {
-    key: "websites",
-    icon: FaLaptopCode,
-    tone: "teal",
-    title: "Websites & Landing Pages",
-    description:
-      "Responsive business and portfolio sites that load fast, are SEO-friendly, and turn visitors into enquiries.",
-    deliverables: [
-      "Business, portfolio & product landing pages",
-      "Mobile-first, responsive design",
-      "SEO basics, fast loading & analytics",
-      "Enquiry forms & WhatsApp chat buttons",
-    ],
-    stack: "React · HTML/CSS · Netlify",
-  },
-  {
-    key: "web-apps",
-    icon: FaCubes,
-    tone: "sky",
-    title: "Web Applications",
-    description:
-      "Custom tools that replace spreadsheets and paperwork, built with a React front end and a Python (Flask) back end.",
-    deliverables: [
-      "Dashboards & admin panels",
-      "Booking, inventory & billing tools",
-      "User logins, roles & reports",
-      "Databases & REST APIs",
-    ],
-    stack: "React · Flask · SQL",
-  },
-  {
-    key: "automation",
-    icon: FaFileInvoice,
-    tone: "violet",
-    title: "Data & Automation",
-    description:
-      "Python scripts and pipelines that take repetitive data work off your team’s plate.",
-    deliverables: [
-      "PDF / invoice → Excel with OCR",
-      "Data cleaning & spreadsheet automation",
-      "Web scraping & data collection",
-      "Scheduled Python automation scripts",
-    ],
-    stack: "Python · AWS Textract · Tesseract",
-  },
-];
-
-export const processSteps = [
-  {
-    title: "Discuss",
-    text: "We talk through your business, the problem, and what a great result looks like — by call, chat or email.",
-    output: "clear goals",
-  },
-  {
-    title: "Plan & Quote",
-    text: "I propose the scope, tech, timeline and a clear quote, so you know exactly what you’re getting before work starts.",
-    output: "scope + quote",
-  },
-  {
-    title: "Build & Update",
-    text: "I build in small milestones and share regular progress updates and preview links, so you can give feedback early.",
-    output: "regular previews",
-  },
-  {
-    title: "Deliver & Support",
-    text: "I deploy, hand over the code and docs, and stay available for fixes and small changes after launch.",
-    output: "live + supported",
-  },
 ];
 
 export const experiences = [

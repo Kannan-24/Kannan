@@ -4,6 +4,14 @@ Personal portfolio site, deployed at <https://kannan-24.netlify.app>.
 
 Built with React 18 + Vite. No UI framework: styling is plain CSS with design tokens (dark and light themes).
 
+## Branches
+
+- `main`: the live site (Netlify deploys every push).
+- `freelance`: the freelance version (Services, How I Work, Testimonials, client-focused
+  hero, Hire Me buttons, project type and budget in the contact form). It's paused for now.
+  To bring it back, revert the "remove freelance content" commit on `main`
+  (`git revert <commit>`), or merge `freelance` into `main`.
+
 ## Develop
 
 ```bash
@@ -18,14 +26,12 @@ npm run preview  # serve the production build
 
 | What | Where |
 | --- | --- |
-| Contact details, WhatsApp number, availability badge, form options, SEO title/description | **`src/config/site.js`** |
-| Hero text, services, projects (case studies), process steps, experience, skills | **`src/data/portfolio.js`** |
-| Client testimonials (section hides itself when empty) | **`src/data/testimonials.js`** |
+| Contact details, WhatsApp number, availability badge, contact form address, SEO title/description | **`src/config/site.js`** |
+| Hero text, projects (case studies), experience, skills | **`src/data/portfolio.js`** |
 | `<noscript>` summary and meta tags layout | `index.html` (values come from `site.js`) |
 
 - Resume PDF: `public/Kannan_Resume.pdf` (path set in `profile.resume`)
 - Images: `src/assets/*.webp`
-- Testimonials marked `placeholder: true` only show in `npm run dev`, never on the live site.
 - Section order (and the `01 //` numbers) follow the `sections` list in `portfolio.js`.
 
 ## Contact form
@@ -62,7 +68,6 @@ effects or event handlers, not during render. `npm run build:spa` skips pre-rend
 src/
   config/site.js          contact details, availability, SEO
   data/portfolio.js       content
-  data/testimonials.js    testimonials
   styles/base.css         tokens, reset, shared primitives (window, buttons, chips)
   components/             one component + one CSS file per section
   components/ui/          Window, SectionHeading, Toaster, ScrollChrome

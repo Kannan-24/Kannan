@@ -39,11 +39,6 @@ const jsonLd = () => {
     address: { "@type": "PostalAddress", addressLocality: site.location },
     sameAs: [site.github, site.linkedin].filter(Boolean),
     knowsAbout: ["Python", "React", "Flask", "OCR", "AWS Textract", "Document automation"],
-    makesOffer: [
-      "Websites & Landing Pages",
-      "Web Applications",
-      "Data & Automation",
-    ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
   };
   // Escape "<" so the JSON can never close the <script> tag early.
   const json = JSON.stringify(data, null, 2).replace(/</g, "\\u003c");

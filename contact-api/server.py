@@ -9,8 +9,8 @@ https://skmnco.in/portfolio-api/  (see README.md in this folder).
 Endpoints
   GET  /health    -> {"ok": true}
   POST /contact   -> {"ok": true} | {"ok": false, "error": "..."}
-       fields: name, email, project-type, message (required),
-               budget (optional), bot-field (spam trap, must be empty)
+       fields: name, email, message (required),
+               project-type, budget (optional), bot-field (spam trap, must be empty)
 
 Browsers without JavaScript post the form directly and get a small HTML page
 back instead of JSON.
@@ -79,7 +79,7 @@ RATE_WINDOW = 600  # …per 10 minutes
 IST = timezone(timedelta(hours=5, minutes=30))
 
 LIMITS = {"name": 100, "email": 200, "project-type": 50, "budget": 50, "message": 5000}
-REQUIRED = ("name", "email", "project-type", "message")
+REQUIRED = ("name", "email", "message")
 EMAIL_RE = re.compile(r"^[^@\s<>,;\"']+@[^@\s<>,;\"']+\.[A-Za-z]{2,}$")
 
 
@@ -129,18 +129,23 @@ def clean(form: dict[str, str]) -> dict[str, str]:
 
 def build_email(data: dict[str, str], received: datetime) -> EmailMessage:
     msg = EmailMessage()
-    msg["Subject"] = f"Portfolio enquiry: {data['project-type']} from {data['name']}"
+    topic = f"enquiry: {data['project-type']}" if data["project-type"] else "message"
+    msg["Subject"] = f"Portfolio {topic} from {data['name']}"
     msg["From"] = formataddr(("Portfolio contact form", SMTP_USER))
     msg["To"] = MAIL_TO
     msg["Reply-To"] = formataddr((data["name"], data["email"]))
     msg["Date"] = formatdate()
     msg["Message-ID"] = make_msgid(domain=SMTP_USER.rpartition("@")[2] or None)
+    details = "".join(
+        f"{label:<15}{data[field]}\n"
+        for field, label in (("project-type", "Project type:"), ("budget", "Budget:"))
+        if data[field]
+    )
     msg.set_content(
-        f"New enquiry from {SITE_URL}\n\n"
+        f"New message from {SITE_URL}\n\n"
         f"Name:          {data['name']}\n"
         f"Email:         {data['email']}\n"
-        f"Project type:  {data['project-type']}\n"
-        f"Budget:        {data['budget'] or 'not given'}\n\n"
+        f"{details}\n"
         f"Message:\n{data['message']}\n\n"
         f"--\nReply to this email to answer {data['name']} directly.\n"
         f"Received {received:%d %b %Y, %H:%M} IST\n"
@@ -306,7 +311,7 @@ class Handler(BaseHTTPRequestHandler):
         save(entry)
 
         if entry["emailed"]:
-            log.info("enquiry emailed (%s)", data["project-type"])
+            log.info("message emailed%s", f" ({data['project-type']})" if data["project-type"] else "")
             self.reply(200, True)
         else:
             self.reply(502, False, "The message was saved, but the email could not be sent.")
