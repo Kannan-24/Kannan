@@ -9,8 +9,14 @@ Built with React 18 + Vite. No UI framework: styling is plain CSS with design to
 - `main`: the live site (Netlify deploys every push).
 - `freelance`: the freelance version (Services, How I Work, Testimonials, client-focused
   hero, Hire Me buttons, project type and budget in the contact form). It's paused for now.
-  To bring it back, revert the "remove freelance content" commit on `main`
-  (`git revert <commit>`), or merge `freelance` into `main`.
+  To bring it back on `main`, undo the commit that removed it:
+
+  ```bash
+  git revert 87405de                                        # stops on one old cache file
+  git rm -q contact-api/__pycache__/server.cpython-314.pyc  # (it was deleted later; not needed)
+  git revert --continue --no-edit
+  git push                                                  # Netlify redeploys
+  ```
 
 ## Develop
 
