@@ -12,8 +12,9 @@ Built with React 18 + Vite. No UI framework: styling is plain CSS with design to
   To bring it back on `main`, undo the commit that removed it:
 
   ```bash
-  git revert 87405de                                        # stops on one old cache file
-  git rm -q contact-api/__pycache__/server.cpython-314.pyc  # (it was deleted later; not needed)
+  git revert 037fb6e                                        # stops on two files:
+  git rm -q contact-api/__pycache__/server.cpython-314.pyc  #   old cache file (deleted later)
+  git checkout --ours README.md && git add README.md        #   keep the current README
   git revert --continue --no-edit
   git push                                                  # Netlify redeploys
   ```
