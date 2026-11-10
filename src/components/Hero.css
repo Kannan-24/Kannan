@@ -229,10 +229,14 @@
   transition: transform 0.4s var(--ease);
 }
 
-/* image + live desk clock float together */
+/* illustration card: image + animated layer (HeroScene) float together */
 .hero-art {
   position: relative;
-  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55));
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid var(--border-strong);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6), 0 0 70px -25px var(--glow);
   animation: levitate 6s ease-in-out infinite alternate;
 }
 
@@ -241,31 +245,6 @@
   height: auto;
   user-select: none;
   -webkit-user-drag: none;
-}
-
-.hero-clock {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.hero-clock-time {
-  font-family: var(--font-sans);
-  font-size: 36px; /* in image pixels: the clock screen's original digit height */
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  fill: #f6f8f7;
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.35));
-}
-
-.hero-clock-colon {
-  animation: clock-colon 2s steps(1, end) infinite;
-}
-
-@keyframes clock-colon {
-  50% { opacity: 0.35; }
 }
 
 @keyframes levitate {

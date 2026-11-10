@@ -1,29 +1,13 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { FaArrowDown, FaArrowRight, FaPaperPlane } from "react-icons/fa";
 import { marquee, profile } from "../data/portfolio";
-import useClock from "../hooks/useClock";
 import useScramble from "../hooks/useScramble";
 import useTypewriter from "../hooks/useTypewriter";
 import { prefersReducedMotion } from "../lib/utils";
 import WorkspaceImg from "../assets/developer-workspace.webp";
 import WorkspaceImgSmall from "../assets/developer-workspace-720.webp";
+import HeroScene from "./HeroScene";
 import "./Hero.css";
-
-// Live time on the desk clock in the illustration (its painted digits were removed
-// from the image). Coordinates are pixels of the 1374x1145 source image, so the
-// clock scales and floats with the picture. Pre-rendered HTML shows 11:47.
-const DeskClock = () => {
-  const [hours, minutes] = useClock("11:47").split(":");
-  return (
-    <svg className="hero-clock" viewBox="0 0 1374 1145" aria-hidden="true" focusable="false">
-      <text className="hero-clock-time" x="1069.5" y="651" textAnchor="middle">
-        {hours}
-        <tspan className="hero-clock-colon">:</tspan>
-        {minutes}
-      </text>
-    </svg>
-  );
-};
 
 const Hero = () => {
   const sectionRef = useRef(null);
@@ -31,6 +15,17 @@ const Hero = () => {
   const frame = useRef(0);
   const name = useScramble(profile.name);
   const role = useTypewriter(profile.roles);
+
+  // Pause the illustration's animations while the hero is scrolled out of view.
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section || !("IntersectionObserver" in window)) return undefined;
+    const observer = new IntersectionObserver(([entry]) =>
+      section.classList.toggle("is-offscreen", !entry.isIntersecting)
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
 
   // Spotlight + tilt are written straight to CSS variables — no re-renders.
   const onPointerMove = (e) => {
@@ -135,7 +130,7 @@ const Hero = () => {
                 src={WorkspaceImg}
                 srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
                 sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
-                alt="3D illustration of Kannan M coding at a desk with a laptop and monitor"
+                alt="3D illustration of Kannan M at a desk with a laptop, monitor, coffee mug and a sleeping cat"
                 className="hero-image"
                 width="1100"
                 height="917"
@@ -144,7 +139,7 @@ const Hero = () => {
                 fetchpriority="high"
                 decoding="async"
               />
-              <DeskClock />
+              <HeroScene />
             </div>
             <span className="hero-badge hero-badge-a">
               <span className="live-dot" aria-hidden="true" /> build passing
