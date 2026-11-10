@@ -1,12 +1,29 @@
 import { useRef } from "react";
 import { FaArrowDown, FaArrowRight, FaPaperPlane } from "react-icons/fa";
 import { marquee, profile } from "../data/portfolio";
+import useClock from "../hooks/useClock";
 import useScramble from "../hooks/useScramble";
 import useTypewriter from "../hooks/useTypewriter";
 import { prefersReducedMotion } from "../lib/utils";
 import WorkspaceImg from "../assets/developer-workspace.webp";
 import WorkspaceImgSmall from "../assets/developer-workspace-720.webp";
 import "./Hero.css";
+
+// Live time on the desk clock in the illustration (its painted digits were removed
+// from the image). Coordinates are pixels of the 1374x1145 source image, so the
+// clock scales and floats with the picture. Pre-rendered HTML shows 11:47.
+const DeskClock = () => {
+  const [hours, minutes] = useClock("11:47").split(":");
+  return (
+    <svg className="hero-clock" viewBox="0 0 1374 1145" aria-hidden="true" focusable="false">
+      <text className="hero-clock-time" x="1069.5" y="651" textAnchor="middle">
+        {hours}
+        <tspan className="hero-clock-colon">:</tspan>
+        {minutes}
+      </text>
+    </svg>
+  );
+};
 
 const Hero = () => {
   const sectionRef = useRef(null);
@@ -112,20 +129,23 @@ const Hero = () => {
         <div className="hero-visual" ref={visualRef}>
           <div className="hero-visual-glow" aria-hidden="true" />
           <div className="hero-visual-tilt">
-            {/* Largest image on the first screen: load it early, never lazily. */}
-            <img
-              src={WorkspaceImg}
-              srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
-              sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
-              alt="3D illustration of Kannan M coding at a desk with a laptop and monitor"
-              className="hero-image"
-              width="1100"
-              height="917"
-              // React 18 only passes this through in lowercase (camelCase arrives in React 19).
-              // eslint-disable-next-line react/no-unknown-property
-              fetchpriority="high"
-              decoding="async"
-            />
+            <div className="hero-art">
+              {/* Largest image on the first screen: load it early, never lazily. */}
+              <img
+                src={WorkspaceImg}
+                srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
+                sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
+                alt="3D illustration of Kannan M coding at a desk with a laptop and monitor"
+                className="hero-image"
+                width="1100"
+                height="917"
+                // React 18 only passes this through in lowercase (camelCase arrives in React 19).
+                // eslint-disable-next-line react/no-unknown-property
+                fetchpriority="high"
+                decoding="async"
+              />
+              <DeskClock />
+            </div>
             <span className="hero-badge hero-badge-a">
               <span className="live-dot" aria-hidden="true" /> build passing
             </span>
