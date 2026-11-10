@@ -1,5 +1,26 @@
+import { useEffect, useState } from "react";
+import { FaStop, FaVolumeUp } from "react-icons/fa";
 import useClock from "../hooks/useClock";
 import "./HeroScene.css";
+
+// Spoken introduction (browser text-to-speech), one sentence at a time so the
+// speech bubble can show each one as a caption.
+const INTRO = [
+  "Hi, I'm Kannan!",
+  "I'm a Python and full-stack developer in Bangalore.",
+  "I build web apps and automate document workflows.",
+  "Have a look around, and let's build something together!",
+];
+
+// Prefer an Indian-English voice, then any English one; prefer male voices.
+// Voice names are only hints: every device ships a different set.
+const pickVoice = () => {
+  const english = window.speechSynthesis.getVoices().filter((v) => /^en([-_]|$)/i.test(v.lang));
+  const isMale = (v) =>
+    !/female/i.test(v.name) && /male|ravi|prabhat|rishi|daniel|alex|david|guy|james|fred/i.test(v.name);
+  const indian = english.filter((v) => /IN$/i.test(v.lang));
+  return indian.find(isMale) || indian[0] || english.find(isMale) || english[0] || null;
+};
 
 // Animated layer over the hero illustration. The SVG uses the source image's own
 // pixel grid (1374x1145), so every effect sits on the right spot and scales and
@@ -10,6 +31,37 @@ import "./HeroScene.css";
 const HeroScene = () => {
   // Pre-rendered HTML (and no-JS visitors) show 11:47; the browser shows live time.
   const [hours, minutes] = useClock("11:47").split(":");
+  const [canSpeak, setCanSpeak] = useState(true);
+  const [caption, setCaption] = useState(null); // sentence being spoken, or null
+  const speaking = caption !== null;
+
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) {
+      setCanSpeak(false);
+      return undefined;
+    }
+    window.speechSynthesis.getVoices(); // some browsers load voices lazily
+    return () => window.speechSynthesis.cancel();
+  }, []);
+
+  const toggleSpeech = () => {
+    const synth = window.speechSynthesis;
+    synth.cancel();
+    if (speaking) {
+      setCaption(null);
+      return;
+    }
+    const voice = pickVoice();
+    INTRO.forEach((text, i) => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = voice?.lang ?? "en-IN";
+      if (voice) utterance.voice = voice;
+      utterance.onstart = () => setCaption(text);
+      utterance.onerror = () => setCaption(null);
+      if (i === INTRO.length - 1) utterance.onend = () => setCaption(null);
+      synth.speak(utterance);
+    });
+  };
 
   return (
     <>
@@ -19,6 +71,10 @@ const HeroScene = () => {
             <stop offset="0" stopColor="#8a4a2d" />
             <stop offset="1" stopColor="#a35634" />
           </linearGradient>
+          <radialGradient id="hs-mouth-fill">
+            <stop offset="0" stopColor="#1c0705" />
+            <stop offset="1" stopColor="#4d1a12" />
+          </radialGradient>
           <linearGradient id="hs-lid-right" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stopColor="#b36239" />
             <stop offset="1" stopColor="#a85834" />
@@ -30,6 +86,14 @@ const HeroScene = () => {
             <feGaussianBlur stdDeviation="4" />
           </filter>
         </defs>
+
+        {/* Me: mouth opens and closes while the spoken introduction plays */}
+        <g className="hs-anim" transform="rotate(-5 331 420)">
+          <g className={`hs-mouth${speaking ? " is-talking" : ""}`}>
+            <ellipse cx="331" cy="424" rx="17" ry="7" fill="url(#hs-mouth-fill)" />
+            <ellipse cx="331" cy="419.5" rx="11" ry="2.4" fill="#efe4dc" />
+          </g>
+        </g>
 
         {/* Me: eyelids close for a moment every few seconds */}
         <g className="hs-anim">
@@ -98,16 +162,34 @@ const HeroScene = () => {
         </text>
       </svg>
 
-      {/* Speech bubble by my head: typing dots, then a line, three lines in turn */}
-      <div className="hs-bubble" aria-hidden="true">
-        <span className="hs-bubble-dots">
-          <i />
-          <i />
-          <i />
+      {/* Speech bubble by my head: typing dots, then a line, three lines in turn.
+          The speaker button reads my introduction aloud and shows it as captions. */}
+      <div className={`hs-bubble${speaking ? " is-speaking" : ""}`}>
+        <span className="hs-bubble-text" aria-hidden="true">
+          <span className="hs-bubble-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className="hs-bubble-msg">Hi, I&apos;m Kannan 👋</span>
+          <span className="hs-bubble-msg">Turning ideas into code…</span>
+          <span className="hs-bubble-msg">Let&apos;s build something!</span>
         </span>
-        <span className="hs-bubble-msg">Hi, I&apos;m Kannan 👋</span>
-        <span className="hs-bubble-msg">Turning ideas into code…</span>
-        <span className="hs-bubble-msg">Let&apos;s build something!</span>
+        {speaking && (
+          <span className="hs-bubble-caption" aria-hidden="true">
+            {caption}
+          </span>
+        )}
+        {canSpeak && (
+          <button
+            type="button"
+            className="hs-speak"
+            onClick={toggleSpeech}
+            aria-label={speaking ? "Stop the spoken introduction" : "Hear Kannan's spoken introduction"}
+          >
+            {speaking ? <FaStop aria-hidden="true" /> : <FaVolumeUp aria-hidden="true" />}
+          </button>
+        )}
       </div>
     </>
   );

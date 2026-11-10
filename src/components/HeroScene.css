@@ -91,13 +91,41 @@
   52%, 100% { opacity: 0; transform: translateY(-16px); }
 }
 
+/* ---------- me: talking mouth (only while the introduction is spoken) ---------- */
+.hs-mouth {
+  opacity: 0;
+  transform: scaleY(0.1);
+  transform-box: fill-box;
+  transform-origin: 50% 0%; /* opens downward from the line between the lips */
+}
+
+.hs-mouth.is-talking {
+  opacity: 1;
+  animation: hs-talk 0.9s steps(1, end) infinite;
+}
+
+@keyframes hs-talk {
+  0% { transform: scaleY(0.25); }
+  12% { transform: scaleY(0.85); }
+  25% { transform: scaleY(0.4); }
+  37% { transform: scaleY(1); }
+  50% { transform: scaleY(0.2); }
+  62% { transform: scaleY(0.7); }
+  75% { transform: scaleY(0.35); }
+  87% { transform: scaleY(0.9); }
+  100% { transform: scaleY(0.25); }
+}
+
 /* ---------- me: speech bubble ---------- */
 .hs-bubble {
   position: absolute;
   left: 24%;
   top: 8%;
-  display: grid;
-  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 66%;
+  padding: 6px 7px 6px 12px;
   border: 1px solid var(--accent-line);
   border-radius: 14px 14px 14px 4px;
   background: rgba(8, 13, 18, 0.82);
@@ -126,10 +154,71 @@
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-/* all children share one cell, so the bubble is as wide as the longest line */
-.hs-bubble > * {
+/* the cycling lines share one cell, so the bubble is as wide as the longest line */
+.hs-bubble-text {
+  display: grid;
+}
+
+.hs-bubble-text > * {
   grid-area: 1 / 1;
   align-self: center;
+}
+
+/* while speaking: the spoken sentence replaces the cycling lines */
+.hs-bubble.is-speaking .hs-bubble-text {
+  display: none;
+}
+
+.hs-bubble-caption {
+  white-space: normal;
+  line-height: 1.35;
+  animation: hs-caption-in 0.25s ease-out;
+}
+
+@keyframes hs-caption-in {
+  from { opacity: 0; transform: translateY(2px); }
+}
+
+.hs-speak {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 11px;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(62, 237, 183, 0.5);
+  animation: hs-speak-invite 3s ease-out 2s infinite;
+  transition: transform 0.2s ease;
+}
+
+.hs-speak:hover {
+  transform: scale(1.1);
+}
+
+.hs-speak:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.hs-bubble.is-speaking .hs-speak {
+  animation: none;
+}
+
+@keyframes hs-speak-invite {
+  0% { box-shadow: 0 0 0 0 rgba(62, 237, 183, 0.5); }
+  40%, 100% { box-shadow: 0 0 0 8px rgba(62, 237, 183, 0); }
+}
+
+/* the button needs JavaScript (speech runs in the browser) */
+html:not(.js) .hs-speak {
+  display: none;
 }
 
 .hs-bubble-msg {
@@ -179,8 +268,15 @@
 
 @media (max-width: 520px) {
   .hs-bubble {
+    gap: 6px;
+    padding: 4px 5px 4px 9px;
     font-size: 11px;
-    padding: 5px 9px;
+  }
+
+  .hs-speak {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
   }
 }
 
