@@ -117,7 +117,7 @@ const Hero = () => {
               src={WorkspaceImg}
               srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
               sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
-              alt="Illustration of a developer coding at a desk with multiple monitors"
+              alt="3D illustration of Kannan M coding at a desk with a laptop and monitor"
               className="hero-image"
               width="1100"
               height="917"
