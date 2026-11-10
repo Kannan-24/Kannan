@@ -125,21 +125,23 @@ const Hero = () => {
           <div className="hero-visual-glow" aria-hidden="true" />
           <div className="hero-visual-tilt">
             <div className="hero-art">
-              {/* Largest image on the first screen: load it early, never lazily. */}
-              <img
-                src={WorkspaceImg}
-                srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
-                sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
-                alt="3D illustration of Kannan M at a desk with a laptop, monitor, coffee mug and a sleeping cat"
-                className="hero-image"
-                width="1100"
-                height="917"
-                // React 18 only passes this through in lowercase (camelCase arrives in React 19).
-                // eslint-disable-next-line react/no-unknown-property
-                fetchpriority="high"
-                decoding="async"
-              />
-              <HeroScene />
+              <div className="hero-art-inner">
+                {/* Largest image on the first screen: load it early, never lazily. */}
+                <img
+                  src={WorkspaceImg}
+                  srcSet={`${WorkspaceImgSmall} 720w, ${WorkspaceImg} 1100w`}
+                  sizes="(max-width: 960px) min(560px, calc(100vw - 32px)), 600px"
+                  alt="3D illustration of Kannan M at a desk with a laptop, monitor, coffee mug and a sleeping cat"
+                  className="hero-image"
+                  width="1100"
+                  height="917"
+                  // React 18 only passes this through in lowercase (camelCase arrives in React 19).
+                  // eslint-disable-next-line react/no-unknown-property
+                  fetchpriority="high"
+                  decoding="async"
+                />
+                <HeroScene />
+              </div>
             </div>
             <span className="hero-badge hero-badge-a">
               <span className="live-dot" aria-hidden="true" /> build passing

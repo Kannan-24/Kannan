@@ -6,7 +6,126 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  mix-blend-mode: screen; /* effects only add light to the picture */
+}
+
+.hs-light {
+  mix-blend-mode: screen; /* light effects only brighten the picture */
+}
+
+/* ---------- me: blink ---------- */
+.hs-lid {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-box: fill-box;
+  transform-origin: 50% 0%; /* lids come down from the top */
+  animation: hs-blink-lid 5s ease-in-out infinite;
+  animation-delay: 1.5s;
+}
+
+.hs-lash {
+  fill: none;
+  stroke: #2a120a;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+@keyframes hs-blink-lid {
+  0%, 90% { opacity: 0; transform: scaleY(0); }
+  92%, 95% { opacity: 1; transform: scaleY(1); }
+  97%, 100% { opacity: 0; transform: scaleY(0); }
+}
+
+/* ---------- me: speech bubble ---------- */
+.hs-bubble {
+  position: absolute;
+  left: 24%;
+  top: 8%;
+  display: grid;
+  padding: 7px 12px;
+  border: 1px solid var(--accent-line);
+  border-radius: 14px 14px 14px 4px;
+  background: rgba(8, 13, 18, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.7);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: #e6edf3;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: hs-bubble-in 0.6s 0.8s var(--ease) both;
+}
+
+/* tail pointing down-left, towards my head */
+.hs-bubble::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  bottom: -7px;
+  width: 12px;
+  height: 8px;
+  background: inherit;
+  border-left: 1px solid var(--accent-line);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+/* all children share one cell, so the bubble is as wide as the longest line */
+.hs-bubble > * {
+  grid-area: 1 / 1;
+  align-self: center;
+}
+
+.hs-bubble-msg {
+  opacity: 0;
+  animation: hs-bubble-msg 15s linear infinite;
+}
+
+.hs-bubble-msg:nth-child(3) { animation-delay: 5s; }
+.hs-bubble-msg:nth-child(4) { animation-delay: 10s; }
+
+@keyframes hs-bubble-msg {
+  0%, 6% { opacity: 0; transform: translateY(3px); }
+  8%, 30% { opacity: 1; transform: none; }
+  33%, 100% { opacity: 0; transform: none; }
+}
+
+.hs-bubble-dots {
+  display: inline-flex;
+  gap: 4px;
+  animation: hs-bubble-dots 5s linear infinite;
+}
+
+.hs-bubble-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: hs-dot 0.9s ease-in-out infinite;
+}
+
+.hs-bubble-dots i:nth-child(2) { animation-delay: 0.15s; }
+.hs-bubble-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes hs-bubble-dots {
+  0%, 18% { opacity: 1; }
+  20%, 100% { opacity: 0; }
+}
+
+@keyframes hs-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+
+@keyframes hs-bubble-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.92); }
+}
+
+@media (max-width: 520px) {
+  .hs-bubble {
+    font-size: 11px;
+    padding: 5px 9px;
+  }
 }
 
 /* ---------- monitor: current line + cursor ----------
@@ -153,12 +272,24 @@
 
 /* ---------- pause when the hero is off screen; respect reduced motion ---------- */
 .hero.is-offscreen .hero-scene *,
-.hero.is-offscreen .hero-art {
+.hero.is-offscreen .hs-bubble,
+.hero.is-offscreen .hs-bubble *,
+.hero.is-offscreen .hero-art,
+.hero.is-offscreen .hero-art::before {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hs-anim {
     display: none;
+  }
+
+  /* speech bubble: just the first line, no cycling */
+  .hs-bubble-dots {
+    display: none;
+  }
+
+  .hs-bubble-msg:nth-child(2) {
+    opacity: 1;
   }
 }
