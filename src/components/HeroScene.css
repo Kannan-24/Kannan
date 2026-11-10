@@ -1,5 +1,5 @@
 /* Animated layer over the hero illustration (see HeroScene.jsx).
-   All lengths are in the illustration's own pixels (viewBox 1374x1145). */
+   All lengths are in the illustration's own pixels (viewBox 1373x1145). */
 .hero-scene {
   position: absolute;
   inset: 0;
@@ -93,8 +93,8 @@
 
 /* ---------- monitor: current line + cursor ----------
    One stop per code line: [y centre, x where the line ends]
-   368/817 378.5/881 388/821 398.5/855 410.5/946 420.5/894
-   435/1016 450/816 475.5/948 492.5/892 508/1019            */
+   368/812 378.5/875 388/814 399/849 410.5/940 420.5/887
+   435/1009 450/810 475/941 492/885 507.5/1011              */
 .hs-code-line {
   fill: rgba(62, 237, 183, 0.13);
   animation: hs-code-line 8.8s step-end infinite;
@@ -113,28 +113,28 @@
   0% { transform: translateY(368px); }
   9.09% { transform: translateY(378.5px); }
   18.18% { transform: translateY(388px); }
-  27.27% { transform: translateY(398.5px); }
+  27.27% { transform: translateY(399px); }
   36.36% { transform: translateY(410.5px); }
   45.45% { transform: translateY(420.5px); }
   54.55% { transform: translateY(435px); }
   63.64% { transform: translateY(450px); }
-  72.73% { transform: translateY(475.5px); }
-  81.82% { transform: translateY(492.5px); }
-  90.91%, 100% { transform: translateY(508px); }
+  72.73% { transform: translateY(475px); }
+  81.82% { transform: translateY(492px); }
+  90.91%, 100% { transform: translateY(507.5px); }
 }
 
 @keyframes hs-code-caret {
-  0% { transform: translate(817px, 368px); }
-  9.09% { transform: translate(881px, 378.5px); }
-  18.18% { transform: translate(821px, 388px); }
-  27.27% { transform: translate(855px, 398.5px); }
-  36.36% { transform: translate(946px, 410.5px); }
-  45.45% { transform: translate(894px, 420.5px); }
-  54.55% { transform: translate(1016px, 435px); }
-  63.64% { transform: translate(816px, 450px); }
-  72.73% { transform: translate(948px, 475.5px); }
-  81.82% { transform: translate(892px, 492.5px); }
-  90.91%, 100% { transform: translate(1019px, 508px); }
+  0% { transform: translate(812px, 368px); }
+  9.09% { transform: translate(875px, 378.5px); }
+  18.18% { transform: translate(814px, 388px); }
+  27.27% { transform: translate(849px, 399px); }
+  36.36% { transform: translate(940px, 410.5px); }
+  45.45% { transform: translate(887px, 420.5px); }
+  54.55% { transform: translate(1009px, 435px); }
+  63.64% { transform: translate(810px, 450px); }
+  72.73% { transform: translate(941px, 475px); }
+  81.82% { transform: translate(885px, 492px); }
+  90.91%, 100% { transform: translate(1011px, 507.5px); }
 }
 
 @keyframes hs-blink {

@@ -229,21 +229,16 @@
   transition: transform 0.4s var(--ease);
 }
 
-/* illustration card: the image + animated layer (HeroScene), rounded, no border.
-   Everything floats together. */
+/* illustration (transparent cut-out) + animated layer (HeroScene) float together */
 .hero-art {
   position: relative;
-  border-radius: 24px;
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55));
   animation: levitate 6s ease-in-out infinite alternate;
 }
 
 .hero-art-inner {
   position: relative;
-  overflow: hidden;
   isolation: isolate;
-  border-radius: 24px;
-  background: #031a1b; /* the scene's own background colour while the image loads */
 }
 
 .hero-image {
@@ -283,7 +278,7 @@
   font-weight: 600;
 }
 
-.hero-badge-a { top: -2.5%; left: 5%; } /* overhangs the card top, clear of the speech bubble */
+.hero-badge-a { top: 6%; left: 2%; }
 .hero-badge-b { top: 44%; right: -2%; animation-delay: -1.5s; }
 .hero-badge-c { bottom: 8%; left: 8%; animation-delay: -3s; }
 
