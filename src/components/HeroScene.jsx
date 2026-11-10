@@ -45,6 +45,21 @@ const HeroScene = () => {
           </g>
         </g>
 
+        {/* Watch on my wrist: buzz ripples, the screen lights up, a check pings up */}
+        <g className="hs-anim hs-light">
+          <ellipse className="hs-ripple" cx="665" cy="745" rx="26" ry="16" />
+          <ellipse className="hs-ripple hs-ripple-2" cx="665" cy="745" rx="26" ry="16" />
+          <polygon
+            className="hs-watch-screen"
+            points="642,738 680,742 688,751 648,749"
+            filter="url(#hs-soft)"
+          />
+        </g>
+        <g className="hs-anim hs-ping">
+          <circle cx="684" cy="712" r="12" />
+          <path d="M678.5 712.5 l4 4 l7.5 -8.5" />
+        </g>
+
         {/* Monitor: the current line steps through the code, cursor at the line end */}
         <g className="hs-anim hs-light">
           <rect className="hs-code-line" x="766" y="-5.5" width="308" height="11" rx="2" />

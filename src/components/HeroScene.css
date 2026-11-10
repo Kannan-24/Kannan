@@ -35,6 +35,62 @@
   97%, 100% { opacity: 0; transform: scaleY(0); }
 }
 
+/* ---------- me: watch notification (6s cycle) ---------- */
+.hs-ripple {
+  fill: none;
+  stroke: #3eedb7;
+  stroke-width: 2.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hs-ripple 6s ease-out infinite;
+}
+
+.hs-ripple-2 { animation-delay: 0.3s; }
+
+@keyframes hs-ripple {
+  0% { opacity: 0.85; transform: scale(0.5); }
+  18% { opacity: 0; transform: scale(1.9); }
+  100% { opacity: 0; transform: scale(1.9); }
+}
+
+.hs-watch-screen {
+  fill: #3eedb7;
+  opacity: 0;
+  animation: hs-watch-screen 6s ease-out infinite;
+}
+
+@keyframes hs-watch-screen {
+  0% { opacity: 0; }
+  4% { opacity: 0.95; }
+  40% { opacity: 0.55; }
+  55%, 100% { opacity: 0; }
+}
+
+.hs-ping {
+  opacity: 0;
+  animation: hs-ping 6s ease-out infinite;
+}
+
+.hs-ping circle {
+  fill: #3eedb7;
+}
+
+.hs-ping path {
+  fill: none;
+  stroke: #04140f;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes hs-ping {
+  0%, 3% { opacity: 0; transform: translateY(8px); }
+  10% { opacity: 1; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-6px); }
+  52%, 100% { opacity: 0; transform: translateY(-16px); }
+}
+
 /* ---------- me: speech bubble ---------- */
 .hs-bubble {
   position: absolute;
@@ -274,8 +330,7 @@
 .hero.is-offscreen .hero-scene *,
 .hero.is-offscreen .hs-bubble,
 .hero.is-offscreen .hs-bubble *,
-.hero.is-offscreen .hero-art,
-.hero.is-offscreen .hero-art::before {
+.hero.is-offscreen .hero-art {
   animation-play-state: paused;
 }
 

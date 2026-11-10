@@ -229,40 +229,20 @@
   transition: transform 0.4s var(--ease);
 }
 
-/* illustration card: a soft outline with a teal/blue light sweeping around it,
-   and the image + animated layer (HeroScene) inside. Everything floats together. */
+/* illustration card: the image + animated layer (HeroScene), rounded, no border.
+   Everything floats together. */
 .hero-art {
   position: relative;
-  padding: 2px; /* border width */
-  overflow: hidden;
-  isolation: isolate;
   border-radius: 24px;
-  background: var(--border-strong);
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6), 0 0 70px -25px var(--glow);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
   animation: levitate 6s ease-in-out infinite alternate;
-}
-
-/* the moving light: an oversized conic gradient spinning behind the inner card */
-.hero-art::before {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  z-index: -1;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    var(--accent) 50deg,
-    var(--accent-2) 100deg,
-    transparent 160deg,
-    transparent 360deg
-  );
-  animation: spin 8s linear infinite;
 }
 
 .hero-art-inner {
   position: relative;
   overflow: hidden;
-  border-radius: 22px;
+  isolation: isolate;
+  border-radius: 24px;
   background: #031a1b; /* the scene's own background colour while the image loads */
 }
 
